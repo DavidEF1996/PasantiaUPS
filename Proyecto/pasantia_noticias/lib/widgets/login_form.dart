@@ -15,17 +15,17 @@ class LoginForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InputTextFormulario(
-              iconosPath: 'assets/usuario.svg', placeHolder: 'Usuario'),
+              iconosPath: 'assets/usuario.svg',
+              placeHolder: 'Nombre de Usuario'),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           InputTextFormulario(
               iconosPath: 'assets/contrasena.svg', placeHolder: 'Contraseña'),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height * 0.1,
           ),
-         BotonReusable(onPressed: (){}, label: "Comenzar"),
-          SizedBox(height: 200),
+          BotonReusable(onPressed: () {}, label: "Iniciar Sesión"),
         ],
       ),
     );

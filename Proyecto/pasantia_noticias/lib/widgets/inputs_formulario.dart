@@ -13,22 +13,25 @@ class InputTextFormulario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       prefix: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+        ),
         padding: EdgeInsets.all(2),
-        width: 40,
-        height: 30,
         child: SvgPicture.asset(
           this.iconosPath,
+          height: 40,
         ),
       ),
       placeholder: this.placeHolder,
-      style: TextStyle(fontFamily: 'sans'),
-      placeholderStyle: TextStyle(fontFamily: 'sans', color: Color(0xffcccccc)),
+      style: TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 16),
+      placeholderStyle: TextStyle(
+          fontFamily: 'sans', color: Colors.blueGrey[700], fontSize: 16),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            width: 1,
+            width: 0,
             color: Color(0xffdddddd),
           ),
         ),

@@ -24,29 +24,29 @@ class Welcome extends StatelessWidget {
                   height: contraints.maxHeight * 0.7,
                 ),
                 Positioned(
-                  top: contraints.maxHeight * 0.60,
-                  child: SvgPicture.asset('assets/Chica.svg'),
-                  width: contraints.maxWidth * 0.3,
-                  height: contraints.maxHeight * 0.4,
-                ),
-                Positioned(
-                    top: contraints.maxHeight * 0.75,
+                    top: contraints.maxHeight * 0.76,
                     child: Column(
                       children: [
                         Text(
-                          "Bienvenido",
+                          "     Bienvenido",
                           style: TextStyle(
-                              fontFamily: 'raleway',
-                              fontSize: responsive.diagonalPorcentaje(3),
+                              fontFamily: 'sans',
+                              fontSize: responsive.diagonalPorcentaje(5),
                               fontWeight: FontWeight.bold),
                         ),
                         Container(
-                          height: 3,
+                          height: responsive.diagonalPorcentaje(0.1),
                           width: contraints.maxWidth,
-                          color: Color(0xffeeeeeee),
+                          color: Colors.grey,
                         ),
                       ],
                     )),
+                Positioned(
+                  top: contraints.maxHeight * 0.72,
+                  child: SvgPicture.asset('assets/Chica.svg'),
+                  width: contraints.maxWidth * 0.3,
+                  height: contraints.maxHeight * 0.34,
+                ),
               ],
             ),
           );

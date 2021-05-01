@@ -50,6 +50,8 @@ flutter:
    - assets/logo.png
    - assets/usuario.svg
    - assets/contrasena.svg
+   - assets/fondo1.jpg
+   - assets/fondo2.jpg
 
     
 
