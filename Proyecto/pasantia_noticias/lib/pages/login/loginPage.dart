@@ -20,24 +20,53 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Color.fromRGBO(255, 236, 192, 1)),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment(0.7, 0), // 10% of the width, so there are ten blinds.
+          colors: [
+            const Color.fromRGBO(28, 26, 24, 1),
+            const Color.fromRGBO(28, 26, 24, 1),
+          ], // red to yellow
+          tileMode: TileMode.repeated, // repeats the gradient over the canvas
+        ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          child: Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Welcome(),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment(0.7, 0.5),
+                      colors: [
+                        const Color.fromRGBO(255, 226, 199, 1),
+                        const Color.fromRGBO(255, 186, 0, 1),
+                      ], // red to yellow
+                      tileMode: TileMode
+                          .repeated, // repeats the gradient over the canvas
+                    ),
                   ),
-                  LoginForm(),
-                ],
-              ),
+                  child: Welcome(),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Color.fromRGBO(101, 91, 80, 0.7),
+                  ),
+                  padding: EdgeInsets.all(19),
+                  child: LoginForm(),
+                )
+              ],
             ),
           ),
         ),

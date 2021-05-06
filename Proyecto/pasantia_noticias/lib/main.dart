@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
+import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
+import 'package:pasantia_noticias/pages/login/widgets/notices_card.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'sans',
       ),
-      home: LoginPage(),
+      home: ListNotices(),
     );
   }
 }

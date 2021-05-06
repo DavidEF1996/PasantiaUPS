@@ -14,6 +14,7 @@ class Welcome extends StatelessWidget {
         aspectRatio: 16 / 10,
         child: LayoutBuilder(builder: (_, contraints) {
           return Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
             child: Stack(
               children: <Widget>[
                 Positioned(

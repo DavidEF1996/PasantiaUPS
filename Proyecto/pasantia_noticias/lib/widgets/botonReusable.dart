@@ -16,14 +16,14 @@ class BotonReusable extends StatelessWidget {
         child: Text(
           this.label,
           style: TextStyle(
-              color: Colors.white,
+              color: Color.fromRGBO(28, 26, 24, 1),
               fontFamily: 'sans',
               letterSpacing: 1,
               fontSize: 25),
         ),
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         decoration: BoxDecoration(
-            color: Colors.black,
+            color: Color.fromRGBO(255, 186, 0, 0.85),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)]),
       ),

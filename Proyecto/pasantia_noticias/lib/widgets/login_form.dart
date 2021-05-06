@@ -23,7 +23,7 @@ class LoginForm extends StatelessWidget {
           InputTextFormulario(
               iconosPath: 'assets/contrasena.svg', placeHolder: 'Contraseña'),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
           BotonReusable(onPressed: () {}, label: "Iniciar Sesión"),
         ],

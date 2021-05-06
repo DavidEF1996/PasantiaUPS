@@ -13,6 +13,7 @@ class InputTextFormulario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      decoration: BoxDecoration(color: Color.fromRGBO(255, 226, 199, 1)),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       prefix: Container(
         decoration: BoxDecoration(
@@ -26,16 +27,8 @@ class InputTextFormulario extends StatelessWidget {
       ),
       placeholder: this.placeHolder,
       style: TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 16),
-      placeholderStyle: TextStyle(
-          fontFamily: 'sans', color: Colors.blueGrey[700], fontSize: 16),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 0,
-            color: Color(0xffdddddd),
-          ),
-        ),
-      ),
+      placeholderStyle:
+          TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 16),
     );
   }
 }
