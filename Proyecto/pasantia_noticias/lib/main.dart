@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'sans',
       ),
-      home: ListNotices(),
+     // home: ListNotices(),
+     home: LoginPage()
     );
   }
 }
