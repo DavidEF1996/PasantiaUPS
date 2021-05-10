@@ -34,6 +34,7 @@ class ListNoticesState extends State<ListNotices> {
                       noticias.removeAt(index);
                     });
                   },
+                  
                 );
               }),
         ],

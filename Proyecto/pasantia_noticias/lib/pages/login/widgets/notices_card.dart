@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 
 class CardNotices extends StatelessWidget {
@@ -11,7 +12,7 @@ class CardNotices extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-          image: AssetImage("assets/ofertaLaboral.jpg"),
+          image: AssetImage(noticias.image),
           fit: BoxFit.cover,
           colorFilter: new ColorFilter.mode(
               Colors.black.withOpacity(0.6), BlendMode.dstATop),
@@ -20,6 +21,12 @@ class CardNotices extends StatelessWidget {
         child: InkWell(
           onTap: () {
             print(noticias.name);
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) => new NoticiasInformacion(noticias),
+              ),
+            );
           },
           child: Card(
             color: Colors.transparent,
