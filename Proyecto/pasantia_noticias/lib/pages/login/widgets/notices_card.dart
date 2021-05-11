@@ -20,7 +20,7 @@ class CardNotices extends StatelessWidget {
         height: 150,
         child: InkWell(
           onTap: () {
-            print(noticias.name);
+            print(noticias.categoria);
             Navigator.push(
               context,
               new MaterialPageRoute(
@@ -33,7 +33,7 @@ class CardNotices extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                padding(Text(noticias.title,
+                padding(Text(noticias.titulo,
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
