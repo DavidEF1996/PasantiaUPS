@@ -35,6 +35,13 @@ class Noticias {
           "Este es el horario de exámenes para...",
           Colors.black,
           "assets/titulacion.jpg",
+          "10/05/2021"),
+      Noticias(
+          "Examenes",
+          "Horarios de Examenes Primer Interciclo",
+          "Este es el horario de exámenes para...",
+          Colors.black,
+          "assets/titulacion.jpg",
           "10/05/2021")
     ];
   }
