@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
@@ -13,9 +15,11 @@ class NoticiasInformacion extends StatelessWidget {
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: new AppBar(
+        automaticallyImplyLeading: false,
         title: Container(
           alignment: Alignment.center,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [Text("Usuario:")],
           ),
         ),
@@ -43,7 +47,12 @@ class NoticiasInformacion extends StatelessWidget {
                   children: [
                     BotonRegresar(
                         onPressed: () {
-                          print("Regresar");
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                              builder: (context) => new PrincipalNoticias(),
+                            ),
+                          );
                         },
                         label: "Regresar"),
                     SizedBox(width: responsive.diagonalPorcentaje(4.5)),
