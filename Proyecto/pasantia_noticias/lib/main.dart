@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/pages/login/Administracion.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices_card.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'sans',
       ),
      // home: ListNotices(),
-     home: LoginPage()
+     //home: LoginPage()
+     home: Administracion(),
     );
   }
 }
