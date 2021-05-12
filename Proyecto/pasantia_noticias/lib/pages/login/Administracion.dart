@@ -170,7 +170,7 @@ class _AdministracionState extends State<Administracion> {
                     Container(
                       padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           BotonReusable(
                               onPressed: () {

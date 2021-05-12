@@ -21,7 +21,7 @@ class BotonReusable extends StatelessWidget {
               letterSpacing: 1,
               fontSize: 25),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
         decoration: BoxDecoration(
             color: Color.fromRGBO(255, 186, 0, 0.85),
             borderRadius: BorderRadius.circular(20),

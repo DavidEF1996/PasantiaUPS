@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
 import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
@@ -12,7 +13,6 @@ class PrincipalNoticias extends StatelessWidget {
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: new AppBar(
-        automaticallyImplyLeading: false,
         title: Container(
           alignment: Alignment.center,
           child: Row(
@@ -21,6 +21,7 @@ class PrincipalNoticias extends StatelessWidget {
           ),
         ),
       ),
+      drawer: MenuLateral(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
