@@ -1,0 +1,10 @@
+notificaciòn urgente:
+texto imagen link video
+
+en el menu lateral tener notificaciones y una ventana con todas las notificaciones urgentes
+que suene la notificacion
+
+implementar una paginacion para las noticias
+
+
+agregar categorias de examenes y quitar la de solicitudes
