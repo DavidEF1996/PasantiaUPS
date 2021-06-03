@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  cupertino_icons:
+    dependency: "direct main"
+    description:
+      name: cupertino_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -55,6 +62,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_pagewise:
+    dependency: "direct main"
+    description:
+      name: flutter_pagewise
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -142,6 +156,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "19.1.66"
+  syncfusion_flutter_datagrid:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datagrid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "19.1.66-beta"
   term_glyph:
     dependency: transitive
     description:

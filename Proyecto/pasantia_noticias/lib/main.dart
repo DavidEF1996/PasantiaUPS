@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/Administracion.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices_card.dart';
+import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: ListNotices(),
       //home: LoginPage()
-      home: LoginPage(),
+      home: PrincipalNoticias(),
     );
   }
 }
