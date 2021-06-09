@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: ListNotices(),
       //home: LoginPage()
-      home: PrincipalNoticias(),
+      home: LoginPage(),
     );
   }
 }

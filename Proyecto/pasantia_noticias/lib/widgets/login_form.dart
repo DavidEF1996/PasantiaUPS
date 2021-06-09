@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pasantia_noticias/pages/CrearCuenta.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
+import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 
@@ -11,6 +13,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return Container(
       width: 330,
       child: Column(
@@ -46,6 +49,19 @@ class LoginForm extends StatelessWidget {
                 );
               },
               label: "Iniciar Sesión"),
+          FlatButton(
+            textColor: Colors.white,
+            child: Text(
+              'Crear cuenta',
+              style: TextStyle(fontSize: responsive.diagonalPorcentaje(2.5)),
+            ),
+            onPressed: () {
+              final route = MaterialPageRoute(builder: (context) {
+                return CrearCuenta();
+              });
+              Navigator.push(context, route);
+            },
+          )
         ],
       ),
     );

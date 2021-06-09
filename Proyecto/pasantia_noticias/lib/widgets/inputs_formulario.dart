@@ -37,22 +37,20 @@ class _InputTextFormularioState extends State<InputTextFormulario> {
   }
 
   void _checkValidation() {
-
-    if(widget.validator!=null){
-     final isOk =  widget.validator(_controller.text);
-     if(_validationOk!=isOk){
-       setState(() {
-                _validationOk=isOk;
-              });
-     }
+    if (widget.validator != null) {
+      final isOk = widget.validator(_controller.text);
+      if (_validationOk != isOk) {
+        setState(() {
+          _validationOk = isOk;
+        });
+      }
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
-      onChanged: (text)=>_checkValidation(),
+      onChanged: (text) => _checkValidation(),
       controller: _controller,
       decoration: BoxDecoration(color: Color.fromRGBO(255, 226, 199, 1)),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
@@ -66,8 +64,10 @@ class _InputTextFormularioState extends State<InputTextFormulario> {
           height: 40,
         ),
       ),
-      suffix: widget.validator != null ? Icon(Icons.check_circle,
-      color: _validationOk?Colors.blue:Colors.red) : null,
+      suffix: widget.validator != null
+          ? Icon(Icons.check_circle,
+              color: _validationOk ? Colors.blue : Colors.red)
+          : null,
       placeholder: this.widget.placeHolder,
       style: TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 16),
       placeholderStyle:

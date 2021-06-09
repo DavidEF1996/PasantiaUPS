@@ -28,6 +28,8 @@ dependencies:
   cupertino_icons: ^1.0.0
   syncfusion_flutter_datagrid: ^19.1.54-beta.1
   flutter_pagewise: ^2.0.1
+  http: ^0.13.1
+  encrypt: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +56,7 @@ flutter:
     - assets/ofertaLaboral.jpg
     - assets/titulacion.jpg
     - assets/donBosco.png
+    - assets/escritura.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

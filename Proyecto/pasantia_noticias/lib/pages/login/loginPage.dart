@@ -4,8 +4,11 @@ import 'package:pasantia_noticias/widgets/login_form.dart';
 import 'package:pasantia_noticias/widgets/welcome.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  final String usuario;
+  final String contrasena;
 
+  const LoginPage({Key key, this.usuario = "", this.contrasena = ""})
+      : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
