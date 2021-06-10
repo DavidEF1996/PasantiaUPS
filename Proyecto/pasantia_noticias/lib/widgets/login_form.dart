@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/CrearCuenta.dart';
-import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
+import 'package:pasantia_noticias/services/LoginService.dart';
+import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
 import 'package:pasantia_noticias/widgets/inputpassword.dart';
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
+import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart' as utl;
 
 class LoginForm extends StatefulWidget {
   final String usuario;
@@ -19,6 +21,10 @@ class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
+
+UserService servicioLogin = new UserService();
+String user;
+String password;
 
 class _LoginFormState extends State<LoginForm> {
   @override
@@ -39,6 +45,7 @@ class _LoginFormState extends State<LoginForm> {
             iconosPath: 'assets/usuario.svg',
             placeHolder: 'Nombre de Usuario',
             validator: (text) {
+              user = text;
               return text.trim().length > 0;
             },
             usuario: widget.usuario,
@@ -50,6 +57,7 @@ class _LoginFormState extends State<LoginForm> {
             iconosPath: 'assets/contrasena.svg',
             placeHolder: 'Contraseña',
             validator: (text) {
+              password = text;
               return text.trim().length > 0;
             },
             usuario: widget.contrasena,
@@ -59,12 +67,9 @@ class _LoginFormState extends State<LoginForm> {
           ),
           BotonReusable(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => new PrincipalNoticias(),
-                  ),
-                );
+                print(user);
+                print(password);
+                iniciarSesion();
               },
               label: "Iniciar Sesión"),
           FlatButton(
@@ -83,5 +88,40 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
+  }
+
+  Future<void> iniciarSesion() async {
+    final String usuario = user;
+    final String contrasena = password;
+    var passwordController;
+    final result =
+        await servicioLogin.loginUsuario(usuario, utl.encode(contrasena));
+    print((result['acceso']));
+    //print("El codigo de Usuario es: " + result['codigoUsuario']);
+
+    if (result == null) {
+      //mostrarAlerta(context, "Error para acceder al servidor!");
+    } else {
+      if (result['acceso']) {
+        if (result['bandera'] == 0) {
+          final route = MaterialPageRoute(builder: (context) {
+            return CambioContrasena(result['codigoUsuario']);
+          });
+          Navigator.push(context, route);
+        } else {
+          final _preferences = new Preferences();
+          print(result);
+          // _preferences.codigoUsuario = result['codigoUsuario'];
+          //_preferences.nombres = UserService.usuariologueado;
+
+          final route = MaterialPageRoute(builder: (context) {
+            return PrincipalNoticias();
+          });
+          Navigator.push(context, route);
+        }
+      } else {
+        // mostrarAlerta(context, "Error de usuario");
+      }
+    }
   }
 }

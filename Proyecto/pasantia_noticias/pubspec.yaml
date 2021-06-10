@@ -30,6 +30,7 @@ dependencies:
   flutter_pagewise: ^2.0.1
   http: ^0.13.1
   encrypt: ^4.1.0
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

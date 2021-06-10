@@ -14,7 +14,6 @@ class Usuario {
     this.nombres,
     this.apellidos,
     this.fechaNacimiento,
-    this.codigoUsuario,
     this.token,
     this.usuario,
     this.contrasena,
@@ -25,7 +24,7 @@ class Usuario {
   String nombres;
   String apellidos;
   DateTime fechaNacimiento;
-  String codigoUsuario;
+
   String token;
   String usuario;
   String contrasena;
@@ -36,7 +35,6 @@ class Usuario {
         nombres: json["nombres"],
         apellidos: json["apellidos"],
         fechaNacimiento: DateTime.parse(json["fechaNacimiento"]),
-        codigoUsuario: json["codigoUsuario"],
         token: json["token"],
         usuario: json["usuario"],
         contrasena: json["contrasena"],
@@ -49,7 +47,6 @@ class Usuario {
         "apellidos": apellidos,
         "fechaNacimiento":
             "${fechaNacimiento.year.toString().padLeft(4, '0')}-${fechaNacimiento.month.toString().padLeft(2, '0')}-${fechaNacimiento.day.toString().padLeft(2, '0')}",
-        "codigoUsuario": codigoUsuario,
         "token": token,
         "usuario": usuario,
         "contrasena": contrasena,

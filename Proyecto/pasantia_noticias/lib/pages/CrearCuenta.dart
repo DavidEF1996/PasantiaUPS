@@ -135,7 +135,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                           print(recibir.apellidos);
                           print(recibir.fechaNacimiento);
 
-                          print(recibir.codigoUsuario);
+                          //  print(recibir.codigoUsuario);
                           print(recibir.token);
                           print(recibir.usuario);
                           print(recibir.contrasena);
@@ -188,11 +188,10 @@ class _CrearCuentaState extends State<CrearCuenta> {
     d.nombres = nombres;
     d.apellidos = apellidos;
     d.fechaNacimiento = currentDate;
-    d.codigoUsuario = "1-b";
-    d.token = "123";
-    d.usuario = credenciales[0]; //prueba
+    d.token = "";
+    d.usuario = credenciales[0];
     d.contrasena = encode(credenciales[1]);
-    d.tipoUsuario = "admin";
+    d.tipoUsuario = "usuarios";
     print(credenciales[0]);
     print(apellidos);
     return d;

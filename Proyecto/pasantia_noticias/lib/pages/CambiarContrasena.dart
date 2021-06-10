@@ -1,105 +1,128 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pasantia_noticias/model/modeloUsuario.dart';
-import 'package:pasantia_noticias/services/usuario.dart';
-import 'package:pasantia_noticias/utils/credencialesAleatorias.dart';
+import 'package:pasantia_noticias/model/CambiarContrasenaModelo.dart';
+import 'package:pasantia_noticias/pages/login/loginPage.dart';
+import 'package:pasantia_noticias/services/LoginService.dart';
+import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
-import 'package:pasantia_noticias/widgets/botonReusable.dart';
-import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
-import 'package:pasantia_noticias/widgets/login_form.dart';
 
-class CambiarContrasena extends StatefulWidget {
+class CambioContrasena extends StatefulWidget {
+  final int id;
+  CambioContrasena(this.id);
+
   @override
-  _CambiarContrasenaState createState() => _CambiarContrasenaState();
+  State<StatefulWidget> createState() => new _State();
 }
 
-String usuario;
-String contrasena;
-String cedula;
+class _State extends State<CambioContrasena> {
+  int _id;
+  @override
+  void initState() {
+    _id = widget.id;
+    super.initState();
+  }
 
-class _CambiarContrasenaState extends State<CambiarContrasena> {
+  TextEditingController nuevaContrasena = TextEditingController();
+  TextEditingController repNuevaContrasena = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: Text("Cambiar Contraseña"),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end:
-                Alignment(0.7, 0), // 10% of the width, so there are ten blinds.
-            colors: [
-              const Color.fromRGBO(28, 26, 24, 1),
-              const Color.fromRGBO(28, 26, 24, 1),
-            ], // red to yellow
-            tileMode: TileMode.repeated, // repeats the gradient over the canvas
-          ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color.fromRGBO(101, 91, 80, 0.7),
+        body: Padding(
+            padding: EdgeInsets.all(10),
+            child: ListView(
+              children: <Widget>[
+                Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'Bienvenido',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 30),
+                    )),
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                    obscureText: true,
+                    controller: nuevaContrasena,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Escriba su nueva contraseña aquí",
+                    ),
+                  ),
                 ),
-                padding: EdgeInsets.all(19),
-                child: Column(
-                  children: [
-                    InputTextFormulario(
-                      iconosPath: 'assets/escritura.svg',
-                      placeHolder: 'Usuario',
-                      validator: (text) {
-                        usuario = text;
-                        return text.trim().length > 0;
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                    obscureText: true,
+                    controller: repNuevaContrasena,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Repita la contraseña",
+                    ),
+                    onTap: () {
+                      if (nuevaContrasena != repNuevaContrasena) {
+                        return "Las contraseñas no coinciden";
+                      } else {
+                        return "";
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                    height: 50,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.blue,
+                      child: Text('Enviar'),
+                      onPressed: () {
+                        print(_id);
+                        enviar(context, _id, repNuevaContrasena.text);
                       },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    InputTextFormulario(
-                      iconosPath: 'assets/escritura.svg',
-                      placeHolder: 'Contraseña',
-                      validator: (text) {
-                        contrasena = text;
-                        return text.trim().length > 0;
+                    )),
+                Container(
+                    height: 50,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.blue,
+                      child: Text('Cancelar'),
+                      onPressed: () {
+                        final route = MaterialPageRoute(builder: (context) {
+                          return LoginPage();
+                        });
+                        Navigator.pushReplacement(context, route);
                       },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    BotonReusable(
-                        onPressed: () async {}, label: "Iniciar Sesión"),
-                  ],
-                ))
-          ],
-        ),
-      ),
-    );
+                    )),
+              ],
+            )));
   }
 
-  int age = 0;
-  int months = 0;
-  DateTime currentDate = DateTime.now();
-  Future<String> selectDate(BuildContext context) async {
-    final DateTime pickedDate = await showDatePicker(
-        context: context,
-        initialDate: currentDate,
-        firstDate: DateTime(1930),
-        lastDate: DateTime(2100));
-
-    if (pickedDate != null && pickedDate != currentDate)
-      setState(() {
-        currentDate = pickedDate;
-      });
-    return currentDate.toString();
+  Future enviar(BuildContext context, int id, String pass) async {
+    if (nuevaContrasena.text != repNuevaContrasena.text) {
+      //popRegUsuario.handleClickMe(context, 'Las contraseñas no coinciden');
+    } else if (nuevaContrasena.text == repNuevaContrasena.text) {
+      print("llegue a cambiar de contra");
+      Changepass c = Changepass();
+      c.codigoUsuario = id;
+      c.password = encode(pass);
+      final resultado = await UserService.changePass(jsonEncode(c.toJson()));
+      // String valor = resultado;
+      print(resultado.toString());
+      if (resultado) {
+        //final _preferences = new Preferences();
+        //_preferences.id = id;
+        final route = MaterialPageRoute(builder: (context) {
+          return LoginPage();
+        });
+        Navigator.pushReplacement(context, route);
+      } else {
+        // mostrarAlerta(context, "Error de acceso");
+      }
+    }
   }
 }
