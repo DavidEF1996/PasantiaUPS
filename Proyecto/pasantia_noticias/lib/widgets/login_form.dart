@@ -6,10 +6,26 @@ import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
+import 'package:pasantia_noticias/widgets/inputpassword.dart';
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({Key key}) : super(key: key);
+class LoginForm extends StatefulWidget {
+  final String usuario;
+  final String contrasena;
+
+  const LoginForm({Key key, this.usuario = "", this.contrasena = ""})
+      : super(key: key);
+
+  @override
+  _LoginFormState createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  @override
+  void initState() {
+    super.initState();
+    print("------------------------------------" + widget.usuario);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +41,18 @@ class LoginForm extends StatelessWidget {
             validator: (text) {
               return text.trim().length > 0;
             },
+            usuario: widget.usuario,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
-          InputTextFormulario(
+          InputPassword(
             iconosPath: 'assets/contrasena.svg',
             placeHolder: 'Contraseña',
             validator: (text) {
               return text.trim().length > 0;
             },
+            usuario: widget.contrasena,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.05,

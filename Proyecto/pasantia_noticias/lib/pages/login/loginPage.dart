@@ -10,14 +10,15 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key key, this.usuario = "", this.contrasena = ""})
       : super(key: key);
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<StatefulWidget> createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    print(widget.usuario);
   }
 
   @override
@@ -67,7 +68,10 @@ class _LoginPageState extends State<LoginPage> {
                     color: Color.fromRGBO(101, 91, 80, 0.7),
                   ),
                   padding: EdgeInsets.all(19),
-                  child: LoginForm(),
+                  child: LoginForm(
+                    usuario: widget.usuario,
+                    contrasena: widget.contrasena,
+                  ),
                 )
               ],
             ),

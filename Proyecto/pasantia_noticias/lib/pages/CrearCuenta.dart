@@ -2,12 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/modeloUsuario.dart';
+import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
+import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/services/usuario.dart';
 import 'package:pasantia_noticias/utils/credencialesAleatorias.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 import 'package:pasantia_noticias/widgets/login_form.dart';
+
+import 'CambiarContrasena.dart';
 
 class CrearCuenta extends StatefulWidget {
   @override
@@ -136,9 +140,20 @@ class _CrearCuentaState extends State<CrearCuenta> {
                           print(recibir.usuario);
                           print(recibir.contrasena);
                           print(recibir.tipoUsuario);
-
+                          String decodePassword = recibir.contrasena;
                           await UsuarioServicio.crearUsuario(
                               jsonEncode(recibir.toJson()));
+                          final String outputUser = utf8.decode(
+                              latin1.encode(recibir.usuario),
+                              allowMalformed: true);
+
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => LoginPage(
+                                        usuario: outputUser,
+                                        contrasena: decode(decodePassword),
+                                      )));
                         },
                         label: "Iniciar Sesión"),
                   ],
@@ -173,12 +188,11 @@ class _CrearCuentaState extends State<CrearCuenta> {
     d.nombres = nombres;
     d.apellidos = apellidos;
     d.fechaNacimiento = currentDate;
-    d.codigoUsuario = "1-e";
+    d.codigoUsuario = "1-b";
     d.token = "123";
     d.usuario = credenciales[0]; //prueba
     d.contrasena = encode(credenciales[1]);
     d.tipoUsuario = "admin";
-
     print(credenciales[0]);
     print(apellidos);
     return d;

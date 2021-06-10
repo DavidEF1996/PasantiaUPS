@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class InputTextFormulario extends StatefulWidget {
+class InputPassword extends StatefulWidget {
   final String iconosPath;
   final String placeHolder, initValue;
   final bool Function(String text) validator;
   final usuario;
-  const InputTextFormulario(
+  const InputPassword(
       {Key key,
       @required this.iconosPath,
       @required this.placeHolder,
@@ -18,10 +18,10 @@ class InputTextFormulario extends StatefulWidget {
         super(key: key);
 
   @override
-  _InputTextFormularioState createState() => _InputTextFormularioState();
+  _InputPasswordState createState() => _InputPasswordState();
 }
 
-class _InputTextFormularioState extends State<InputTextFormulario> {
+class _InputPasswordState extends State<InputPassword> {
   TextEditingController _controller;
   bool _validationOk = false;
 
@@ -54,6 +54,7 @@ class _InputTextFormularioState extends State<InputTextFormulario> {
   Widget build(BuildContext context) {
     return CupertinoTextField(
       onChanged: (text) => _checkValidation(),
+      obscureText: true,
       controller: _controller,
       decoration: BoxDecoration(color: Color.fromRGBO(255, 226, 199, 1)),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
