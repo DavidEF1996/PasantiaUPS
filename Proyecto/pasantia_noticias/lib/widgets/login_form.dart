@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/model/cambiarTokenModelo.dart';
 import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/CrearCuenta.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
+import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
@@ -115,6 +119,14 @@ class _LoginFormState extends State<LoginForm> {
           //print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb' + result);
           _preferences.id = result['codigoUsuario'];
           _preferences.nombres = UserService.usuariologueado;
+          Token token = Token();
+          token.codigoUsuario = _preferences.id;
+          token.token = PushNotificationService.token;
+          print("/////////////////");
+          print(token.codigoUsuario);
+          print(token.token);
+          print("/////////////////");
+          await servicioLogin.actualizarToken(jsonEncode(token.toJson()));
 
           final route = MaterialPageRoute(builder: (context) {
             return PrincipalNoticias();

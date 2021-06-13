@@ -5,6 +5,7 @@ import 'package:pasantia_noticias/model/modeloNoticia.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
+import 'package:pasantia_noticias/services/ServicioNotificaciones.dart';
 import 'package:pasantia_noticias/services/crearNoticia.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
@@ -246,5 +247,7 @@ class _AdministracionState extends State<Administracion> {
     String guardarCodigo = _preferences.id.toString();
     noticia.codigoUsuario = int.parse(guardarCodigo);
     await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
+    await ServicioNotificaciones.notificarUsuarios(
+        jsonEncode(noticia.toJson()));
   }
 }

@@ -9,6 +9,7 @@ class UserService {
   static var nombreCompletoUsuarioLogueado = "";
   static const URL = Conn.URL;
   static const String servicio_change = "/changePass";
+  static const String servicio_token = "/cambiarToken";
 
   static const headers = {"Content-type": " application/json"};
 
@@ -41,6 +42,17 @@ class UserService {
   static Future<bool> changePass(json) async {
     print("llegue al metodo 2 cambiar contra");
     http.Response response = await http.post(Uri.parse(URL + servicio_change),
+        body: json, headers: headers, encoding: Encoding.getByName("utf-8"));
+    print(response.body);
+    if (response.body.contains('true')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> actualizarToken(json) async {
+    http.Response response = await http.post(Uri.parse(URL + servicio_token),
         body: json, headers: headers, encoding: Encoding.getByName("utf-8"));
     print(response.body);
     if (response.body.contains('true')) {

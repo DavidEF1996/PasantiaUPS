@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/modeloUsuario.dart';
 import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
+import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/usuario.dart';
 import 'package:pasantia_noticias/utils/credencialesAleatorias.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
@@ -188,7 +189,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
     d.nombres = nombres;
     d.apellidos = apellidos;
     d.fechaNacimiento = currentDate;
-    d.token = "";
+    d.token = PushNotificationService.token;
     d.usuario = credenciales[0];
     d.contrasena = encode(credenciales[1]);
     d.tipoUsuario = "usuarios";

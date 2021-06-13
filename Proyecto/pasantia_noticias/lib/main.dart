@@ -1,27 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:pasantia_noticias/pages/login/Administracion.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
-import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalEmergencias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices_card.dart';
-import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
+import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final _preferences = new Preferences();
   await _preferences.initPreferences();
+  WidgetsFlutterBinding.ensureInitialized();
+  await PushNotificationService.initializeApp();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+  final GlobalKey<ScaffoldMessengerState> messengerKey =
+      new GlobalKey<ScaffoldMessengerState>();
+  @override
+  void initState() {
+    super.initState();
+    PushNotificationService.messageStream.listen((message) {
+      print('MyApp: $message');
+
+      if (PushNotificationService.abrir == true) {
+        navigatorKey.currentState?.pushNamed('emergencias', arguments: message);
+      }
+
+      final snackBar = SnackBar(content: Text(message));
+      messengerKey.currentState?.showSnackBar(snackBar);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _preferences = new Preferences();
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey, //NAVEGAR
+      scaffoldMessengerKey: messengerKey, //MOSTRAR SNACKS
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -37,6 +63,9 @@ class MyApp extends StatelessWidget {
       ),
       // home: ListNotices(),
       //home: LoginPage()
+      routes: {
+        'emergencias': (_) => PrincipalEmergencias(),
+      },
       home: (_preferences.id == "") ? LoginPage() : PrincipalNoticias(),
     );
   }

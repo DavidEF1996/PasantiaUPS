@@ -6,6 +6,7 @@ import 'package:pasantia_noticias/services/Conn.dart';
 
 class ServiciosNoticias {
   static const String servicio_crear = "/crearNoticia";
+  static const String servicio_notificacion = "/notificar";
 
   static const String URL = Conn.URL;
 
@@ -21,6 +22,19 @@ class ServiciosNoticias {
     return response;
   }
 
+  static Future<bool> notificarUsuarios(json) async {
+    http.Response response = await http.post(
+        Uri.parse(URL + servicio_notificacion),
+        body: json,
+        headers: headers,
+        encoding: Encoding.getByName("utf-8"));
+    print(response.body);
+    if (response.body.contains('true')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   /*String readTimestamp(int timestamp) {
     var now = new DateTime.now();
     var format = new DateFormat('HH:mm a');
@@ -46,4 +60,5 @@ class ServiciosNoticias {
 
     return time;
   }*/
+
 }
