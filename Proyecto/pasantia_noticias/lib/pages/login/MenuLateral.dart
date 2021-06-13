@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/Administracion.dart';
+import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
+import 'package:pasantia_noticias/services/Preferencias.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -89,6 +91,21 @@ class MenuLateral extends StatelessWidget {
                         builder: (context) => new Administracion(),
                       ),
                     );
+                  },
+                ),
+              ),
+              Ink(
+                color: Colors.blue,
+                child: ListTile(
+                  title: Text("Salir"),
+                  onTap: () {
+                    final preferences = new Preferences();
+                    preferences.id == "";
+
+                    final route = MaterialPageRoute(builder: (context) {
+                      return LoginPage();
+                    });
+                    Navigator.pushReplacement(context, route);
                   },
                 ),
               ),

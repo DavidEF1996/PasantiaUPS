@@ -114,8 +114,8 @@ class _State extends State<CambioContrasena> {
       // String valor = resultado;
       print(resultado.toString());
       if (resultado) {
-        //final _preferences = new Preferences();
-        //_preferences.id = id;
+        final _preferences = new Preferences();
+        _preferences.id = id;
         final route = MaterialPageRoute(builder: (context) {
           return LoginPage();
         });

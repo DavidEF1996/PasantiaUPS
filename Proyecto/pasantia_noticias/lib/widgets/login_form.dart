@@ -96,7 +96,9 @@ class _LoginFormState extends State<LoginForm> {
     var passwordController;
     final result =
         await servicioLogin.loginUsuario(usuario, utl.encode(contrasena));
-    print((result['acceso']));
+
+    // String codigoUsuario = result['codigoUsuario'];
+
     //print("El codigo de Usuario es: " + result['codigoUsuario']);
 
     if (result == null) {
@@ -110,9 +112,9 @@ class _LoginFormState extends State<LoginForm> {
           Navigator.push(context, route);
         } else {
           final _preferences = new Preferences();
-          print(result);
-          // _preferences.codigoUsuario = result['codigoUsuario'];
-          //_preferences.nombres = UserService.usuariologueado;
+          //print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb' + result);
+          _preferences.id = result['codigoUsuario'];
+          _preferences.nombres = UserService.usuariologueado;
 
           final route = MaterialPageRoute(builder: (context) {
             return PrincipalNoticias();

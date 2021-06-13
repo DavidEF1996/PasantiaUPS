@@ -16,14 +16,14 @@ class Preferences {
   }
 
   // GET JSESSIONID
-  get codigoUsuario {
-    return _prefs.getInt('codigoUsuario') ?? '';
+  get id {
+    return _prefs.getInt('id') ?? '';
     //return _prefs.getString('id');
   }
 
   // SET JSESSIONID
-  set codigoUsuario(int codigoUsuario) {
-    _prefs.setInt('codigoUsuario', codigoUsuario);
+  set id(int id) {
+    _prefs.setInt('id', id);
   }
 
   get nombres {

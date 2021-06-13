@@ -5,8 +5,12 @@ import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices_card.dart';
 import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
+import 'package:pasantia_noticias/services/Preferencias.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final _preferences = new Preferences();
+  await _preferences.initPreferences();
   runApp(MyApp());
 }
 
@@ -14,6 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final _preferences = new Preferences();
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -32,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: ListNotices(),
       //home: LoginPage()
-      home: LoginPage(),
+      home: (_preferences.id == "") ? LoginPage() : PrincipalNoticias(),
     );
   }
 }

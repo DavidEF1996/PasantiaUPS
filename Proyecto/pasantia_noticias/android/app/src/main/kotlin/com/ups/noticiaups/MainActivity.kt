@@ -1,4 +1,4 @@
-package com.example.pasantia_noticias
+package com.ups.noticiaups
 
 import io.flutter.embedding.android.FlutterActivity
 

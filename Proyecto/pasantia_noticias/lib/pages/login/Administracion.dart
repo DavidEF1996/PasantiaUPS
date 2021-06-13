@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/model/modeloNoticia.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
+import 'package:pasantia_noticias/services/Preferencias.dart';
+import 'package:pasantia_noticias/services/crearNoticia.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
@@ -14,6 +19,8 @@ class Administracion extends StatefulWidget {
 TextEditingController titulo = new TextEditingController();
 TextEditingController contenido = new TextEditingController();
 List<Noticias> noticias = Noticias.noticias_album();
+final _preferences = new Preferences();
+DateTime fechaNotica = DateTime.now();
 
 class _AdministracionState extends State<Administracion> {
   int _value = 1;
@@ -174,13 +181,24 @@ class _AdministracionState extends State<Administracion> {
                         children: [
                           BotonReusable(
                               onPressed: () {
+                                String categoria;
                                 if (_value == 1) {
-                                  print("Noticias");
+                                  // print("Noticias");
+                                  categoria = "noticias";
                                 } else if (_value == 2) {
-                                  print("Estado de solicitudes");
+                                  categoria = "estadosolicitudes";
+                                  // print("Estado de solicitudes");
                                 }
+                                print("----------------------------------");
+                                print("La fecha es: " + fechaNotica.toString());
                                 print("El título es:" + titulo.text);
                                 print("El contenido es" + contenido.text);
+                                print("La categoria es: " + categoria);
+                                print("El codigo de usuario es: " +
+                                    _preferences.id.toString());
+                                print("----------------------------------");
+
+                                save(categoria);
 
                                 List<Noticias> agregarNoticia() {
                                   Noticias(
@@ -192,7 +210,7 @@ class _AdministracionState extends State<Administracion> {
                                       "11/05/2021");
                                 }
 
-                                agregarNoticia();
+                                //agregarNoticia();
                               },
                               label: "Guardar"),
                           BotonReusable(
@@ -217,5 +235,16 @@ class _AdministracionState extends State<Administracion> {
         ),
       ),
     );
+  }
+
+  save(String categoria) async {
+    Noticia noticia = Noticia();
+    noticia.fechaNacimiento = fechaNotica;
+    noticia.titulo = titulo.text;
+    noticia.contenido = contenido.text;
+    noticia.categoria = categoria;
+    String guardarCodigo = _preferences.id.toString();
+    noticia.codigoUsuario = int.parse(guardarCodigo);
+    await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
   }
 }

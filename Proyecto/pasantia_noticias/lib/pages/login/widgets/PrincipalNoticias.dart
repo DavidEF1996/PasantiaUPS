@@ -4,21 +4,28 @@ import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
+import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
+import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class PrincipalNoticias extends StatelessWidget {
   List<Noticias> noticias = Noticias.noticias_album();
 
   @override
   Widget build(BuildContext context) {
+    print(UserService.usuariologueado);
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: new AppBar(
         title: Container(
-          alignment: Alignment.center,
+          alignment: Alignment.bottomLeft,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Usuario:")],
+            children: [
+              Cabecera(),
+              Text(" "),
+              //usuariologueado.botonSalir(context),
+            ],
           ),
         ),
       ),
