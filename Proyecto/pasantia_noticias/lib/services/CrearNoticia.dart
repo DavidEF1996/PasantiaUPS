@@ -1,12 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
+import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/services/Conn.dart';
+import 'package:pasantia_noticias/services/api_response.dart';
 
 class ServiciosNoticias {
   static const String servicio_crear = "/crearNoticia";
   static const String servicio_notificacion = "/notificar";
+  static const String servicio_listarNombres = "/listaNoticias";
 
   static const String URL = Conn.URL;
 
@@ -35,30 +36,4 @@ class ServiciosNoticias {
       return false;
     }
   }
-  /*String readTimestamp(int timestamp) {
-    var now = new DateTime.now();
-    var format = new DateFormat('HH:mm a');
-    var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
-    var diff = date.difference(now);
-    var time = '';
-
-    if (diff.inSeconds <= 0 ||
-        diff.inSeconds > 0 && diff.inMinutes == 0 ||
-        diff.inMinutes > 0 && diff.inHours == 0 ||
-        diff.inHours > 0 && diff.inDays == 0) {
-      time = format.format(date);
-
-      print("----------");
-      print("----------");
-    } else {
-      if (diff.inDays == 1) {
-        time = diff.inDays.toString() + 'DAY AGO';
-      } else {
-        time = diff.inDays.toString() + 'DAYS AGO';
-      }
-    }
-
-    return time;
-  }*/
-
 }

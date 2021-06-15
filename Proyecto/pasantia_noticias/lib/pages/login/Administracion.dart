@@ -11,6 +11,7 @@ import 'package:pasantia_noticias/model/modeloNoticia.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
+import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
 import 'package:pasantia_noticias/services/ServicioNotificaciones.dart';
 import 'package:pasantia_noticias/services/URLService.dart';
 import 'package:pasantia_noticias/services/crearNoticia.dart';

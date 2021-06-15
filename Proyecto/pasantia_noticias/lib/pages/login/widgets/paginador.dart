@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
 import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
@@ -7,13 +8,17 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class DataPagerWithListView extends StatefulWidget {
+  final List<NoticiaM> noticias;
+  const DataPagerWithListView({Key key, this.noticias}) : super(key: key);
+
   @override
   _DataPagerWithListView createState() => _DataPagerWithListView();
 }
 
-List<Noticias> _paginatedProductData = [];
+List<NoticiaM> _paginatedProductData = [];
+List<NoticiaM> datos = [];
 
-List<Noticias> _products = Noticias.noticias_album();
+List<NoticiaM> _products = [];
 int rowsPerPage = 4;
 
 class _DataPagerWithListView extends State<DataPagerWithListView> {
@@ -24,9 +29,12 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
   @override
   void initState() {
     super.initState();
-    //  _products = List.from(populateData()); //se cargan los productos
+    _products = (widget.noticias == null) ? null : widget.noticias;
+    datos = (widget.noticias == null) ? null : widget.noticias;
     pageCount =
-        (_products.length / rowsPerPage).ceilToDouble(); //cantidad de paginas
+        (datos.length / rowsPerPage).ceilToDouble(); //cantidad de paginas
+
+    print(datos.length);
   }
 
   void rebuildList() {
@@ -101,7 +109,8 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
   }
 
   Widget indexBuilder(BuildContext context, int index) {
-    final Noticias data = _paginatedProductData[index];
+    final NoticiaM data = _paginatedProductData[index];
+    //final NoticiaM data = datos[index];
     return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -132,7 +141,7 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
                               image: DecorationImage(
-                                image: AssetImage(data.image),
+                                image: NetworkImage(data.imagen),
                                 fit: BoxFit.cover,
                                 colorFilter: new ColorFilter.mode(
                                     Colors.black.withOpacity(0.5),
@@ -140,22 +149,13 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                               )),
                           height: 150,
                           child: InkWell(
-                            onTap: () {
-                              print(data.categoria);
-                              Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                  builder: (context) =>
-                                      new NoticiasInformacion(data),
-                                ),
-                              );
-                            },
+                            onTap: () {},
                             child: Card(
                               color: Colors.transparent,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  padding(Text(data.categoria,
+                                  padding(Text(data.categoriaNoticia,
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
@@ -169,7 +169,7 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                                   Column(
                                     children: [
                                       Text(
-                                        data.titulo,
+                                        data.tituloNoticia,
                                         style: TextStyle(
                                             decorationThickness: 3,
                                             height: 2,
