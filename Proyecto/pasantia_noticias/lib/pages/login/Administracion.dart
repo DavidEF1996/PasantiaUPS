@@ -1,29 +1,40 @@
 import 'dart:convert';
+import 'dart:core';
 
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'dart:io' as Io;
+
+import 'package:image_picker/image_picker.dart';
+
 import 'package:pasantia_noticias/model/modeloNoticia.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/ServicioNotificaciones.dart';
+import 'package:pasantia_noticias/services/URLService.dart';
 import 'package:pasantia_noticias/services/crearNoticia.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
-import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 
 class Administracion extends StatefulWidget {
   @override
-  _AdministracionState createState() => _AdministracionState();
+  AdministracionState createState() => AdministracionState();
 }
 
+File foto;
+String base64Image;
 TextEditingController titulo = new TextEditingController();
 TextEditingController contenido = new TextEditingController();
 List<Noticias> noticias = Noticias.noticias_album();
 final _preferences = new Preferences();
-DateTime fechaNotica = DateTime.now();
+List<int> imageBytes;
+var file;
+Widget image;
+List<dynamic> recibir = [];
 
-class _AdministracionState extends State<Administracion> {
+class AdministracionState extends State<Administracion> {
   int _value = 1;
 
   @override
@@ -119,14 +130,14 @@ class _AdministracionState extends State<Administracion> {
                       height: MediaQuery.of(context).size.height * 0.05,
                     ),
                     Container(
-                      //child: Image.asset("#"),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      color: Colors.grey,
+                      child: imagenSinFoto(),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.05,
                     ),
+                    IconButton(
+                        icon: Icon(Icons.photo_size_select_actual),
+                        onPressed: buscarImagen),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
@@ -148,6 +159,9 @@ class _AdministracionState extends State<Administracion> {
                           )
                         ],
                       ),
+                    ),
+                    Container(
+                      child: image,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.05,
@@ -191,7 +205,7 @@ class _AdministracionState extends State<Administracion> {
                                   // print("Estado de solicitudes");
                                 }
                                 print("----------------------------------");
-                                print("La fecha es: " + fechaNotica.toString());
+                                //print("La fecha es: " + fechaNotica.toString());
                                 print("El título es:" + titulo.text);
                                 print("El contenido es" + contenido.text);
                                 print("La categoria es: " + categoria);
@@ -240,14 +254,78 @@ class _AdministracionState extends State<Administracion> {
 
   save(String categoria) async {
     Noticia noticia = Noticia();
-    noticia.fechaNacimiento = fechaNotica;
+
+    DateTime fechaNotica = DateTime.now();
+    noticia.fechaNoticia = fechaNotica;
     noticia.titulo = titulo.text;
     noticia.contenido = contenido.text;
+    noticia.imagen = await UrlServicio.subirImagen(foto);
     noticia.categoria = categoria;
     String guardarCodigo = _preferences.id.toString();
     noticia.codigoUsuario = int.parse(guardarCodigo);
     await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
     await ServicioNotificaciones.notificarUsuarios(
         jsonEncode(noticia.toJson()));
+  }
+
+  _mostrarFoto() {
+    Noticia noticia = Noticia();
+    if (noticia.contenido != "abc") {
+      return Container();
+    } else {
+      return Image(
+        image: AssetImage(foto?.path ?? 'assets/no-image.png'),
+        height: 300.0,
+        width: 300,
+        fit: BoxFit.cover,
+      );
+    }
+  }
+
+  buscarImagen() async {
+    foto = await ImagePicker.pickImage(source: ImageSource.gallery);
+    //imprimir();
+
+    if (foto != null) {}
+    setState(() {});
+  }
+
+  imagenSinFoto() {
+    return Image(
+      // image: AssetImage(foto?.path ?? 'assets/no-image.png'),
+      image: foto != null ? FileImage(foto) : AssetImage('assets/no-image.png'),
+      height: 300.0,
+      width: 300,
+      fit: BoxFit.cover,
+    );
+  }
+
+  mostrarfotodecodificada() {
+    return Image(
+      // image: AssetImage(foto?.path ?? 'assets/no-image.png'),
+      image: AssetImage(file),
+      height: 300.0,
+      width: 300,
+      fit: BoxFit.cover,
+    );
+  }
+
+  imprimir() {
+    print(foto);
+    List<int> imageBytes = foto.readAsBytesSync();
+    print(imageBytes);
+    base64Image = base64Encode(imageBytes);
+
+    print("convertida en base 64--------------------------");
+    print(base64Image);
+    recibir[0] = base64Image;
+    print("------------------------------------------------");
+
+    final _byteImage = Base64Decoder().convert(base64Image);
+    image = Image.memory(_byteImage);
+
+    print("reconstruida -------------------------");
+    print(base64Image);
+    print("------------------------------------------------");
   }
 }

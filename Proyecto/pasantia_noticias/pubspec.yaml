@@ -33,6 +33,10 @@ dependencies:
   firebase_messaging: ^10.0.2
   firebase_core: ^1.3.0
   shared_preferences:
+  intl: ^0.17.0
+  get_it: ^3.0.1
+  image_picker: ^0.6.0+2
+  mime_type: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +64,7 @@ flutter:
     - assets/titulacion.jpg
     - assets/donBosco.png
     - assets/escritura.svg
+    - assets/no-image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

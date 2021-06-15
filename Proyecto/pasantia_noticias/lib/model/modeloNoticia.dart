@@ -10,33 +10,37 @@ String noticiaToJson(Noticia data) => json.encode(data.toJson());
 
 class Noticia {
   Noticia({
-    this.fechaNacimiento,
+    this.fechaNoticia,
     this.titulo,
     this.contenido,
     this.categoria,
+    this.imagen,
     this.codigoUsuario,
   });
 
-  DateTime fechaNacimiento;
+  DateTime fechaNoticia;
   String titulo;
   String contenido;
   String categoria;
+  String imagen;
   int codigoUsuario;
 
   factory Noticia.fromJson(Map<String, dynamic> json) => Noticia(
-        fechaNacimiento: DateTime.parse(json["fechaNacimiento"]),
+        fechaNoticia: DateTime.parse(json["fechaNoticia"]),
         titulo: json["titulo"],
         contenido: json["contenido"],
         categoria: json["categoria"],
+        imagen: json["imagen"],
         codigoUsuario: json["codigoUsuario"],
       );
 
   Map<String, dynamic> toJson() => {
-        "fechaNacimiento":
-            "${fechaNacimiento.year.toString().padLeft(4, '0')}-${fechaNacimiento.month.toString().padLeft(2, '0')}-${fechaNacimiento.day.toString().padLeft(2, '0')}",
+        "fechaNoticia":
+            "${fechaNoticia.year.toString().padLeft(4, '0')}-${fechaNoticia.month.toString().padLeft(2, '0')}-${fechaNoticia.day.toString().padLeft(2, '0')}",
         "titulo": titulo,
         "contenido": contenido,
         "categoria": categoria,
+        "imagen": imagen,
         "codigoUsuario": codigoUsuario,
       };
 }
