@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
+import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class NoticiasInformacion extends StatelessWidget {
-  Noticias noticias;
+  NoticiaM noticias;
   NoticiasInformacion(this.noticias);
 
   @override
@@ -20,7 +22,11 @@ class NoticiasInformacion extends StatelessWidget {
           alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Usuario:")],
+            children: [
+              Cabecera(),
+              Text(" "),
+              //usuariologueado.botonSalir(context),
+            ],
           ),
         ),
       ),
@@ -77,7 +83,7 @@ class NoticiasInformacion extends StatelessWidget {
                             fontSize: responsive.diagonalPorcentaje(2.5)),
                         children: <TextSpan>[
                       TextSpan(
-                          text: noticias.fecha,
+                          text: noticias.fechaNoticia.toString(),
                           style: TextStyle(
                               fontSize: responsive.diagonalPorcentaje(2.2)))
                     ])),
@@ -104,7 +110,7 @@ class NoticiasInformacion extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(noticias.image),
+                          image: NetworkImage(noticias.imagen),
                           fit: BoxFit.cover,
                           colorFilter: new ColorFilter.mode(
                               Colors.black.withOpacity(1), BlendMode.dstATop),
@@ -120,7 +126,7 @@ class NoticiasInformacion extends StatelessWidget {
                       color: Colors.transparent,
                       child: RichText(
                         text: TextSpan(
-                          text: noticias.titulo + "\n",
+                          text: noticias.tituloNoticia + "\n",
                           style: TextStyle(
                               fontSize: responsive.diagonalPorcentaje(3),
                               color: Color.fromRGBO(255, 226, 199, 1),
@@ -128,7 +134,7 @@ class NoticiasInformacion extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(text: " " + "\n"),
                             TextSpan(
-                                text: noticias.contenido,
+                                text: noticias.contenidoNoticia,
                                 style: TextStyle(
                                     fontSize:
                                         responsive.diagonalPorcentaje(2.2))),

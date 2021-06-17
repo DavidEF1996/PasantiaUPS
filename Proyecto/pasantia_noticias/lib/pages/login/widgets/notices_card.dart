@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 
 class CardNotices extends StatelessWidget {
-  Noticias noticias;
+  NoticiaM noticias;
   CardNotices(this.noticias);
 
   @override
@@ -15,7 +16,7 @@ class CardNotices extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
             image: DecorationImage(
-              image: AssetImage(noticias.image),
+              image: NetworkImage(noticias.imagen),
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.5), BlendMode.dstATop),
@@ -23,7 +24,7 @@ class CardNotices extends StatelessWidget {
         height: 150,
         child: InkWell(
           onTap: () {
-            print(noticias.categoria);
+            print(noticias.categoriaNoticia);
             Navigator.push(
               context,
               new MaterialPageRoute(
@@ -36,7 +37,7 @@ class CardNotices extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                padding(Text(noticias.categoria,
+                padding(Text(noticias.categoriaNoticia,
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -49,7 +50,7 @@ class CardNotices extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      noticias.titulo,
+                      noticias.tituloNoticia,
                       style: TextStyle(
                           decorationThickness: 3,
                           height: 2,

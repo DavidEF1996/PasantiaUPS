@@ -1,6 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalEmergencias.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
@@ -30,6 +32,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     PushNotificationService.messageStream.listen((message) {
       print('MyApp: $message');
+      RemoteMessage message1;
 
       if (PushNotificationService.abrir == true) {
         navigatorKey.currentState?.pushNamed('emergencias', arguments: message);
@@ -64,7 +67,9 @@ class _MyAppState extends State<MyApp> {
       // home: ListNotices(),
       //home: LoginPage()
       routes: {
-        'emergencias': (_) => PrincipalEmergencias(),
+        'emergencias': (_) => PrincipalNoticias(
+              categoriaEnviar: "emergencias",
+            ),
       },
       home: (_preferences.id == "") ? LoginPage() : PrincipalNoticias(),
     );

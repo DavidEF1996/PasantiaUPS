@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
-import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
-import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
@@ -10,25 +8,20 @@ import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/cabecera.dart';
 
-class PrincipalNoticias extends StatefulWidget {
-  final String categoriaEnviar;
+class PrincipalNo extends StatefulWidget {
+  PrincipalNo({Key key}) : super(key: key);
 
-  const PrincipalNoticias({Key key, this.categoriaEnviar = ""})
-      : super(key: key);
   @override
-  _PrincipalNoticiasState createState() => _PrincipalNoticiasState();
+  _PrincipalNoState createState() => _PrincipalNoState();
 }
 
-class _PrincipalNoticiasState extends State<PrincipalNoticias> {
+class _PrincipalNoState extends State<PrincipalNo> {
   bool _isLoading = false;
   List<Noticias> noticias = Noticias.noticias_album();
   List<NoticiaM> datos = [];
-  String categoria;
 
   @override
   initState() {
-    categoria =
-        (widget.categoriaEnviar == "") ? "noticias" : widget.categoriaEnviar;
     cargarNoticias();
     super.initState();
   }
@@ -37,7 +30,7 @@ class _PrincipalNoticiasState extends State<PrincipalNoticias> {
     setState(() {
       _isLoading = true;
     });
-    datos = await ListaNoticias.getNoticias(categoria);
+    datos = await ListaNoticias.getNoticiasGenerales();
 
     setState(() {
       _isLoading = false;

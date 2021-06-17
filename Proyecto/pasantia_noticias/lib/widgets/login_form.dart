@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/cambiarTokenModelo.dart';
 import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/CrearCuenta.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
@@ -129,7 +130,7 @@ class _LoginFormState extends State<LoginForm> {
           await servicioLogin.actualizarToken(jsonEncode(token.toJson()));
 
           final route = MaterialPageRoute(builder: (context) {
-            return PrincipalNoticias();
+            return PrincipalNo();
           });
           Navigator.push(context, route);
         }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/Administracion.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 
@@ -28,38 +29,51 @@ class MenuLateral extends StatelessWidget {
               Ink(
                 color: Colors.blue,
                 child: ListTile(
-                  title: Text("Administracion"),
+                  title: Text("Todo"),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) => new Administracion(),
+                        builder: (context) => new PrincipalNo(),
                       ),
                     );
                   },
                 ),
-              ),
-              SizedBox(
-                height: 10,
               ),
               Ink(
                 color: Colors.blue,
                 child: ListTile(
-                  title: Text("Estado de Solicitudes"),
+                  title: Text("Emergencias"),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) => new Administracion(),
+                        builder: (context) => new PrincipalNoticias(
+                          categoriaEnviar: "emergencias",
+                        ),
                       ),
                     );
                   },
                 ),
               ),
-              SizedBox(
-                height: 10,
+              Ink(
+                color: Colors.blue,
+                child: ListTile(
+                  title: Text("Noticias"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => new PrincipalNoticias(
+                          categoriaEnviar: "noticias",
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
               Ink(
                 color: Colors.blue,
@@ -70,19 +84,35 @@ class MenuLateral extends StatelessWidget {
                     Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) => new Administracion(),
+                        builder: (context) => new PrincipalNoticias(
+                          categoriaEnviar: "ofertasCursos",
+                        ),
                       ),
                     );
                   },
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
               Ink(
                 color: Colors.blue,
                 child: ListTile(
                   title: Text("Ofertas Laborales"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => new PrincipalNoticias(
+                          categoriaEnviar: "ofertasLaborales",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Ink(
+                color: Colors.blue,
+                child: ListTile(
+                  title: Text("Administracion"),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.push(

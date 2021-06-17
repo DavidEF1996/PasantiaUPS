@@ -149,7 +149,15 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                               )),
                           height: 150,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                  builder: (context) =>
+                                      new NoticiasInformacion(data),
+                                ),
+                              );
+                            },
                             child: Card(
                               color: Colors.transparent,
                               child: Column(

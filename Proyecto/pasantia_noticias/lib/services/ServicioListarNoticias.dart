@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class ListaNoticias {
   static const URL = Conn.URL;
   static const String servicio_listarNombres = "/listaNoticias";
+  static const String servicio_listarNoticiasGenerales = "/listaGenerales";
 
   static Future<APIResponse<List<NoticiaM>>> listaNoticias(
       String categoria) async {
@@ -34,6 +35,20 @@ class ListaNoticias {
   static Future<List<NoticiaM>> getNoticias(String categoria) async {
     final response =
         await http.get(Uri.parse(URL + servicio_listarNombres + '/$categoria'));
+    if (response.statusCode == 200) {
+      print(response.body);
+      return _listaNoticias(response.body).toList();
+    } else if (response.statusCode == 404) {
+      print(response.statusCode);
+      return null;
+    } else {
+      throw Exception("Error del servidor!!");
+    }
+  }
+
+  static Future<List<NoticiaM>> getNoticiasGenerales() async {
+    final response =
+        await http.get(Uri.parse(URL + servicio_listarNoticiasGenerales));
     if (response.statusCode == 200) {
       print(response.body);
       return _listaNoticias(response.body).toList();

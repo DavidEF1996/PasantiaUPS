@@ -105,11 +105,11 @@ class AdministracionState extends State<Administracion> {
                           value: _value,
                           items: [
                             DropdownMenuItem(
-                              child: Text("Noticias"),
+                              child: Text("Urgente"),
                               value: 1,
                             ),
                             DropdownMenuItem(
-                              child: Text("Estado de Solicitudes"),
+                              child: Text("Noticias"),
                               value: 2,
                             ),
                             DropdownMenuItem(
@@ -200,10 +200,14 @@ class AdministracionState extends State<Administracion> {
                                 String categoria;
                                 if (_value == 1) {
                                   // print("Noticias");
-                                  categoria = "noticias";
+                                  categoria = "emergencias";
                                 } else if (_value == 2) {
-                                  categoria = "estadosolicitudes";
+                                  categoria = "noticias";
                                   // print("Estado de solicitudes");
+                                } else if (_value == 3) {
+                                  categoria = "ofertasLaborales";
+                                } else if (_value == 4) {
+                                  categoria = "ofertasCursos";
                                 }
                                 print("----------------------------------");
                                 //print("La fecha es: " + fechaNotica.toString());
@@ -265,8 +269,8 @@ class AdministracionState extends State<Administracion> {
     String guardarCodigo = _preferences.id.toString();
     noticia.codigoUsuario = int.parse(guardarCodigo);
     await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
-    await ServicioNotificaciones.notificarUsuarios(
-        jsonEncode(noticia.toJson()));
+    //await ServicioNotificaciones.notificarUsuarios(
+    //  jsonEncode(noticia.toJson()));
   }
 
   _mostrarFoto() {
