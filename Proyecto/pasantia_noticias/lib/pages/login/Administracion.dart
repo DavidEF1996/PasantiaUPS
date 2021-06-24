@@ -267,6 +267,7 @@ class AdministracionState extends State<Administracion> {
     noticia.imagen = await UrlServicio.subirImagen(foto);
     noticia.categoria = categoria;
     String guardarCodigo = _preferences.id.toString();
+    print("El codigo de usuario es: " + guardarCodigo);
     noticia.codigoUsuario = int.parse(guardarCodigo);
     await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
     //await ServicioNotificaciones.notificarUsuarios(

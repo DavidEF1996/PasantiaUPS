@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "pasantia_noticias",
+            "cwd": "pasantia_noticias",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "pasantia_noticias (profile mode)",
+            "cwd": "pasantia_noticias",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        }
+    ]
+}

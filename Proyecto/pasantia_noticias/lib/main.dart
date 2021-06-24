@@ -1,18 +1,15 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
-import 'package:pasantia_noticias/pages/login/widgets/PrincipalEmergencias.dart';
-import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PushNotificationService.initializeApp();
   final _preferences = new Preferences();
   await _preferences.initPreferences();
-  WidgetsFlutterBinding.ensureInitialized();
-  await PushNotificationService.initializeApp();
   runApp(MyApp());
 }
 

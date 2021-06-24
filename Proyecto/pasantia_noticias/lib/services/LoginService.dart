@@ -7,6 +7,7 @@ class UserService {
   static var apellidoUsuarioLogueado = "";
   static var usuariologueado = "";
   static var nombreCompletoUsuarioLogueado = "";
+  static var tipoUsuario = "";
   static const URL = Conn.URL;
   static const String servicio_change = "/changePass";
   static const String servicio_token = "/cambiarToken";
@@ -25,7 +26,7 @@ class UserService {
       print(decodedata);
       nombreUsuariologueado = decodedata['nombres'];
       apellidoUsuarioLogueado = decodedata['apellidos'];
-
+      tipoUsuario = decodedata['tipoUsuario'];
       usuariologueado = nombreUsuariologueado.split(" ")[0] +
           " " +
           apellidoUsuarioLogueado.split(" ")[0];
