@@ -25,7 +25,10 @@ class _MenuLateralState extends State<MenuLateral> {
             child: ListView(
               children: [
                 new UserAccountsDrawerHeader(
-                    accountName: Text("UsuarioLogueado"),
+                    accountName: Text(
+                      UserService.usuariologueado,
+                      style: TextStyle(color: Colors.black),
+                    ),
                     accountEmail: Text(""),
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(101, 91, 80, 0.80),
@@ -40,7 +43,9 @@ class _MenuLateralState extends State<MenuLateral> {
                   child: Ink(
                     color: Colors.blue,
                     child: ListTile(
-                      title: Text("Emergencias"),
+                      title: Row(
+                        children: [Text('Emergencias'), Text('')],
+                      ),
                       onTap: () {
                         Navigator.of(context).pop();
                         Navigator.push(
@@ -138,7 +143,8 @@ class _MenuLateralState extends State<MenuLateral> {
   }
 
   Container container() {
-    if (UserService.tipoUsuario == 'usuarios') {
+    if (UserService.tipoUsuario == 'usuarios' ||
+        UserService.tipoUsuario == '') {
       return Container(
         color: Color.fromRGBO(101, 91, 80, 0.7),
         child: Ink(
@@ -157,7 +163,7 @@ class _MenuLateralState extends State<MenuLateral> {
           ),
         ),
       );
-    } else {
+    } else if (UserService.tipoUsuario == 'administrador') {
       return Container(
         color: Color.fromRGBO(101, 91, 80, 0.7),
         child: Column(
@@ -182,13 +188,18 @@ class _MenuLateralState extends State<MenuLateral> {
               child: ListTile(
                 title: Text("Salir"),
                 onTap: () {
-                  final preferences = new Preferences();
-                  preferences.id == "";
+                  final _preferences = new Preferences();
+                  //print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb' + result);
+                  _preferences.id = null;
+                  _preferences.nombres = "";
 
-                  final route = MaterialPageRoute(builder: (context) {
+                  /* final route = MaterialPageRoute(builder: (context) {
                     return LoginPage();
                   });
-                  Navigator.pushReplacement(context, route);
+                  Navigator.pushReplacement(context, route);*/
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      (Route<dynamic> route) => false);
                 },
               ),
             ),

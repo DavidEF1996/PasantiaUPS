@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
-import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
 import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
-import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -19,7 +16,7 @@ List<NoticiaM> _paginatedProductData = [];
 List<NoticiaM> datos = [];
 
 List<NoticiaM> _products = [];
-int rowsPerPage = 4;
+int rowsPerPage = 3;
 
 class _DataPagerWithListView extends State<DataPagerWithListView> {
   static const double dataPagerHeight = 60; //altura
@@ -144,7 +141,7 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                                 image: NetworkImage(data.imagen),
                                 fit: BoxFit.cover,
                                 colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
+                                    Colors.black.withOpacity(0.2),
                                     BlendMode.dstATop),
                               )),
                           height: 150,

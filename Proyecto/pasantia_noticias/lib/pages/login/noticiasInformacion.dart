@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
@@ -56,7 +57,7 @@ class NoticiasInformacion extends StatelessWidget {
                           Navigator.push(
                             context,
                             new MaterialPageRoute(
-                              builder: (context) => new PrincipalNoticias(),
+                              builder: (context) => new PrincipalNo(),
                             ),
                           );
                         },
@@ -83,7 +84,7 @@ class NoticiasInformacion extends StatelessWidget {
                             fontSize: responsive.diagonalPorcentaje(2.5)),
                         children: <TextSpan>[
                       TextSpan(
-                          text: noticias.fechaNoticia.toString(),
+                          text: fecha(noticias),
                           style: TextStyle(
                               fontSize: responsive.diagonalPorcentaje(2.2)))
                     ])),
@@ -150,5 +151,11 @@ class NoticiasInformacion extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String fecha(NoticiaM noticia) {
+    String fecha = noticia.fechaNoticia.toString();
+    String enviar = fecha.substring(0, 10);
+    return enviar;
   }
 }

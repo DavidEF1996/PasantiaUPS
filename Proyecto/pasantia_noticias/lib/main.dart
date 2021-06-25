@@ -4,6 +4,8 @@ import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
+import 'package:pasantia_noticias/utils/contadorProvider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,7 +70,7 @@ class _MyAppState extends State<MyApp> {
               categoriaEnviar: "emergencias",
             ),
       },
-      home: (_preferences.id == "") ? LoginPage() : PrincipalNoticias(),
+      home: (_preferences.id == "") ? PrincipalNoticias() : LoginPage(),
     );
   }
 }

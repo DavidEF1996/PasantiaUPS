@@ -37,6 +37,7 @@ dependencies:
   get_it: ^3.0.1
   image_picker: ^0.6.0+2
   mime_type: ^1.0.0
+  provider:
 
 dev_dependencies:
   flutter_test:

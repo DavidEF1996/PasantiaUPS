@@ -8,6 +8,7 @@ import 'dart:io' as Io;
 import 'package:image_picker/image_picker.dart';
 
 import 'package:pasantia_noticias/model/modeloNoticia.dart';
+import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
@@ -80,7 +81,7 @@ class AdministracionState extends State<Administracion> {
                           Navigator.push(
                             context,
                             new MaterialPageRoute(
-                              builder: (context) => new PrincipalNoticias(),
+                              builder: (context) => new PrincipalNo(),
                             ),
                           );
                         },
@@ -209,26 +210,16 @@ class AdministracionState extends State<Administracion> {
                                 } else if (_value == 4) {
                                   categoria = "ofertasCursos";
                                 }
-                                print("----------------------------------");
+                                /* print("----------------------------------");
                                 //print("La fecha es: " + fechaNotica.toString());
                                 print("El título es:" + titulo.text);
                                 print("El contenido es" + contenido.text);
                                 print("La categoria es: " + categoria);
                                 print("El codigo de usuario es: " +
                                     _preferences.id.toString());
-                                print("----------------------------------");
+                                print("----------------------------------");*/
 
                                 save(categoria);
-
-                                List<Noticias> agregarNoticia() {
-                                  Noticias(
-                                      "Ejemplo de funcionamiento",
-                                      "Producto informático para el Programa de Asesoramiento Empresarial",
-                                      "Nam sodales elementum dolor non semper. Donec ac risus risus. Proin lacus nulla, bibendum aliquam nibh vel, viverra aliquam arcu. Ut eu tempus tellus. Maecenas euismod bibendum nisi, eget mollis urna sagittis sed. Duis molestie, metus ac facilisis pretium, urna nulla varius nisi, in volutpat tellus justo a neque. Sed ac mi dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed lacus dui, laoreet in urna eu, tristique lobortis odio. Donec dignissim erat metus, a molestie lorem vulputate eget. Sed vulputate dignissim purus, ut varius libero elementum at. Curabitur quis diam dui. Nullam a venenatis urna.",
-                                      Colors.black,
-                                      "assets/titulacion.jpg",
-                                      "11/05/2021");
-                                }
 
                                 //agregarNoticia();
                               },
@@ -270,6 +261,9 @@ class AdministracionState extends State<Administracion> {
     print("El codigo de usuario es: " + guardarCodigo);
     noticia.codigoUsuario = int.parse(guardarCodigo);
     await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => PrincipalNo()),
+        (Route<dynamic> route) => false);
     //await ServicioNotificaciones.notificarUsuarios(
     //  jsonEncode(noticia.toJson()));
   }
