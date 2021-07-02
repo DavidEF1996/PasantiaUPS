@@ -56,7 +56,7 @@ class _InputPasswordState extends State<InputPassword> {
       onChanged: (text) => _checkValidation(),
       obscureText: true,
       controller: _controller,
-      decoration: BoxDecoration(color: Color.fromRGBO(255, 226, 199, 1)),
+      decoration: BoxDecoration(color: Colors.white),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       prefix: Container(
         decoration: BoxDecoration(

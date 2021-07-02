@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:pasantia_noticias/model/modeloUsuario.dart';
+
 import 'package:pasantia_noticias/services/Conn.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioServicio {
+  static const String servicio_obtener_Usuario = "/obtenerUsuario";
   static const String IP = Conn.IP;
   static const int PORT = Conn.PORT;
   static const String servicio_crear = "/crear";

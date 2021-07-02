@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:pasantia_noticias/model/NoticiaM.dart';
+
 import 'package:pasantia_noticias/services/Conn.dart';
-import 'package:pasantia_noticias/services/api_response.dart';
 
 class ServiciosNoticias {
   static const String servicio_crear = "/crearNoticia";
@@ -15,12 +14,17 @@ class ServiciosNoticias {
 
   static Future crearNoticia(json) async {
     print(json);
-    http.Response response = await http.post(Uri.parse(URL + servicio_crear),
+    final response = await http.post(Uri.parse(URL + servicio_crear),
         body: json, headers: headers, encoding: Encoding.getByName('utf-8'));
     print(response.statusCode);
     print(response.body);
 
-    return response;
+    if (response.statusCode == 200) {
+      print("EXITO");
+      return response;
+    } else {
+      return null;
+    }
   }
 
   static Future<bool> notificarUsuarios(json) async {

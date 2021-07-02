@@ -16,6 +16,7 @@ class PrincipalEmergencias extends StatelessWidget {
     final args =
         ModalRoute.of(context)?.settings.arguments ?? 'No tiene informacion';
 
+    print("Esto es lo que viene en la notificacion" + args);
     print(UserService.usuariologueado);
     final Responsive responsive = Responsive.of(context);
     return Scaffold(

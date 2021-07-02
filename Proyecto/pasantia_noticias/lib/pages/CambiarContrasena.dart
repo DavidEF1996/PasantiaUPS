@@ -109,13 +109,14 @@ class _State extends State<CambioContrasena> {
       print("llegue a cambiar de contra");
       Changepass c = Changepass();
       c.codigoUsuario = id;
+
       c.password = encode(pass);
       final resultado = await UserService.changePass(jsonEncode(c.toJson()));
       // String valor = resultado;
       print(resultado.toString());
       if (resultado) {
         final _preferences = new Preferences();
-        _preferences.id = id;
+        _preferences.id = id.toString();
         final route = MaterialPageRoute(builder: (context) {
           return LoginPage();
         });

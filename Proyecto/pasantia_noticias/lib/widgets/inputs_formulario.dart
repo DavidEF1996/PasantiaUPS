@@ -55,7 +55,7 @@ class _InputTextFormularioState extends State<InputTextFormulario> {
     return CupertinoTextField(
       onChanged: (text) => _checkValidation(),
       controller: _controller,
-      decoration: BoxDecoration(color: Color.fromRGBO(255, 226, 199, 1)),
+      decoration: BoxDecoration(color: Colors.white),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       prefix: Container(
         decoration: BoxDecoration(

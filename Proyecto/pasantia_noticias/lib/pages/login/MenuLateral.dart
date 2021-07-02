@@ -5,6 +5,8 @@ import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
+import 'package:pasantia_noticias/utils/responsive.dart';
+import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class MenuLateral extends StatefulWidget {
   MenuLateral({Key key}) : super(key: key);
@@ -14,37 +16,66 @@ class MenuLateral extends StatefulWidget {
 }
 
 class _MenuLateralState extends State<MenuLateral> {
+  String rol = "";
+  int contadorEmeregencias;
+  int contadorNoticias;
+  int contadorTodo;
+  int contadorOfertasLaborales;
+  int contadorOfertasCursos;
+  @override
+  void initState() {
+    super.initState();
+    final _preferences = new Preferences();
+    print(_preferences.nombres);
+    print(_preferences.roles);
+    rol = _preferences.roles.toString();
+    contadorEmeregencias = _preferences.noticia1;
+    contadorNoticias = _preferences.noticia2;
+    contadorTodo = _preferences.numeroNoticia;
+    contadorOfertasLaborales = _preferences.noticia3;
+    contadorOfertasCursos = _preferences.noticia4;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return SafeArea(
       child: Container(
         child: new Drawer(
           child: Container(
-            color: Color.fromRGBO(255, 226, 199, 1),
+            color: Colors.white,
             padding: EdgeInsets.all(10),
             child: ListView(
               children: [
                 new UserAccountsDrawerHeader(
-                    accountName: Text(
-                      UserService.usuariologueado,
-                      style: TextStyle(color: Colors.black),
+                    accountName: Container(
+                      alignment: Alignment.bottomCenter,
+                      //child: Cabecera(),
                     ),
-                    accountEmail: Text(""),
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(101, 91, 80, 0.80),
                         image: DecorationImage(
-                          image: AssetImage('assets/donBosco.png'),
-                          fit: BoxFit.cover,
-                          colorFilter: new ColorFilter.mode(
-                              Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                          image: AssetImage('assets/giata.png'),
+                          fit: BoxFit.fill,
+
+                          //  colorFilter: new ColorFilter.mode(
+                          //    Colors.black.withOpacity(0.5), BlendMode.dstATop),
                         ))),
+                Container(
+                  height: responsive.diagonalPorcentaje(7.5),
+                  child: Cabecera(),
+                ),
                 Container(
                   color: Colors.red,
                   child: Ink(
                     color: Colors.blue,
                     child: ListTile(
                       title: Row(
-                        children: [Text('Emergencias'), Text('')],
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Emergencias'),
+                          contadores(contadorEmeregencias)
+                        ],
                       ),
                       onTap: () {
                         Navigator.of(context).pop();
@@ -67,7 +98,10 @@ class _MenuLateralState extends State<MenuLateral> {
                       Ink(
                         color: Colors.blue,
                         child: ListTile(
-                          title: Text("Todo"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [Text('Todo'), contadores(contadorTodo)],
+                          ),
                           onTap: () {
                             Navigator.of(context).pop();
                             Navigator.push(
@@ -82,7 +116,13 @@ class _MenuLateralState extends State<MenuLateral> {
                       Ink(
                         color: Colors.blue,
                         child: ListTile(
-                          title: Text("Noticias"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Noticias'),
+                              contadores(contadorNoticias)
+                            ],
+                          ),
                           onTap: () {
                             Navigator.of(context).pop();
                             Navigator.push(
@@ -99,7 +139,13 @@ class _MenuLateralState extends State<MenuLateral> {
                       Ink(
                         color: Colors.blue,
                         child: ListTile(
-                          title: Text("Ofertas de Cursos"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Ofertas de Cursos'),
+                              contadores(contadorOfertasCursos)
+                            ],
+                          ),
                           onTap: () {
                             Navigator.of(context).pop();
                             Navigator.push(
@@ -116,7 +162,13 @@ class _MenuLateralState extends State<MenuLateral> {
                       Ink(
                         color: Colors.blue,
                         child: ListTile(
-                          title: Text("Ofertas Laborales"),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Ofertas Laborales'),
+                              contadores(contadorOfertasLaborales)
+                            ],
+                          ),
                           onTap: () {
                             Navigator.of(context).pop();
                             Navigator.push(
@@ -133,6 +185,17 @@ class _MenuLateralState extends State<MenuLateral> {
                     ],
                   ),
                 ),
+                Container(
+                  height: responsive.diagonalPorcentaje(12),
+                  alignment: Alignment.bottomCenter,
+                  child: (Text(
+                    "Cuenta: ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: responsive.diagonalPorcentaje(2)),
+                  )),
+                ),
                 container()
               ],
             ),
@@ -142,9 +205,17 @@ class _MenuLateralState extends State<MenuLateral> {
     );
   }
 
+  Text contadores(int contador) {
+    if (contador == 0) {
+      return Text("");
+    } else {
+      return Text(contador.toString());
+    }
+  }
+
   Container container() {
-    if (UserService.tipoUsuario == 'usuarios' ||
-        UserService.tipoUsuario == '') {
+    print(rol);
+    if (rol == 'usuarios') {
       return Container(
         color: Color.fromRGBO(101, 91, 80, 0.7),
         child: Ink(
@@ -152,18 +223,15 @@ class _MenuLateralState extends State<MenuLateral> {
           child: ListTile(
             title: Text("Salir"),
             onTap: () {
-              final preferences = new Preferences();
-              preferences.id == "";
-
-              final route = MaterialPageRoute(builder: (context) {
-                return LoginPage();
-              });
-              Navigator.pushReplacement(context, route);
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return new LoginPage();
+              }), (Route<dynamic> route) => false);
             },
           ),
         ),
       );
-    } else if (UserService.tipoUsuario == 'administrador') {
+    } else if (rol == 'administrador') {
       return Container(
         color: Color.fromRGBO(101, 91, 80, 0.7),
         child: Column(
@@ -173,7 +241,6 @@ class _MenuLateralState extends State<MenuLateral> {
               child: ListTile(
                 title: Text("Administracion"),
                 onTap: () {
-                  Navigator.of(context).pop();
                   Navigator.push(
                     context,
                     new MaterialPageRoute(
@@ -188,18 +255,10 @@ class _MenuLateralState extends State<MenuLateral> {
               child: ListTile(
                 title: Text("Salir"),
                 onTap: () {
-                  final _preferences = new Preferences();
-                  //print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb' + result);
-                  _preferences.id = null;
-                  _preferences.nombres = "";
-
-                  /* final route = MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  });
-                  Navigator.pushReplacement(context, route);*/
                   Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      (Route<dynamic> route) => false);
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return new LoginPage();
+                  }), (Route<dynamic> route) => false);
                 },
               ),
             ),

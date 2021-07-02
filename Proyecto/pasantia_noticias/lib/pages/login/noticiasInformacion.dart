@@ -1,161 +1,245 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
-import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
+import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
+
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
-import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
+
+import 'package:pasantia_noticias/services/Preferencias.dart';
+import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
+import 'package:pasantia_noticias/utils/cabecera.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
-import 'package:pasantia_noticias/widgets/botonReusable.dart';
-import 'package:pasantia_noticias/widgets/cabecera.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class NoticiasInformacion extends StatelessWidget {
+class NoticiasInformacion extends StatefulWidget {
+  final NoticiaM parametro;
+  final bool estado;
+  final int numeroNoticia;
+  NoticiasInformacion(
+      {Key key, this.parametro, this.estado, this.numeroNoticia})
+      : super(key: key);
+
+  @override
+  _NoticiasInformacion2State createState() => _NoticiasInformacion2State();
+}
+
+class _NoticiasInformacion2State extends State<NoticiasInformacion> {
   NoticiaM noticias;
-  NoticiasInformacion(this.noticias);
+  List<NoticiaM> datos = [];
+  String categoria;
+  List categorias = [];
+  bool _isLoading = false;
+  bool estadoVerifiacar;
+  int numNoticia;
+  @override
+  void initState() {
+    super.initState();
+    // cargarNoticias();
+    print("El estado es: " + widget.estado.toString());
+    noticias = (widget.parametro == null) ? null : widget.parametro;
+    estadoVerifiacar = (widget.estado == null) ? null : widget.estado;
+    numNoticia = (widget.numeroNoticia == null) ? null : widget.numeroNoticia;
+    // quitarNotificaciones();
+    print("numeroNoticia: " + numNoticia.toString());
+  }
+
+  cargarNoticias() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final _preferences = new Preferences();
+
+    print(_preferences.categorias);
+    datos = await ListaNoticias.getNoticias(_preferences.categorias.toString());
+    noticias = datos[0];
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
-      appBar: new AppBar(
-        automaticallyImplyLeading: false,
-        title: Container(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Cabecera(),
-              Text(" "),
-              //usuariologueado.botonSalir(context),
-            ],
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment(
-                  0.7, 0), // 10% of the width, so there are ten blinds.
-              colors: [
-                const Color.fromRGBO(28, 26, 24, 1),
-                const Color.fromRGBO(28, 26, 24, 1),
-              ], // red to yellow
-              tileMode:
-                  TileMode.repeated, // repeats the gradient over the canvas
+        appBar: new AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Container(
+            alignment: Alignment.bottomLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //  Cabecera(),
+                Text(" "),
+                //usuariologueado.botonSalir(context),
+              ],
             ),
           ),
-          child: Column(
-            children: [
+        ),
+        drawer: MenuLateral(),
+        body:
+            //Container()
+            SingleChildScrollView(
+          child:
+              //  Container(child: ,)
               Container(
-                child: Row(
-                  children: [
-                    BotonRegresar(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                              builder: (context) => new PrincipalNo(),
-                            ),
-                          );
-                        },
-                        label: "Regresar"),
-                    SizedBox(width: responsive.diagonalPorcentaje(4.5)),
-                    Text(
-                      "Noticias",
-                      style: TextStyle(
-                          fontSize: responsive.diagonalPorcentaje(5),
-                          color: Color.fromRGBO(255, 226, 199, 1),
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(responsive.diagonalPorcentaje(1.5)),
-                alignment: Alignment.centerRight,
-                child: RichText(
-                    text: TextSpan(
-                        text: "Fecha: ",
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    children: [
+                      BotonRegresar(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                builder: (context) => new PrincipalNo(),
+                              ),
+                            );
+                          },
+                          label: "Regresar"),
+                      SizedBox(width: responsive.diagonalPorcentaje(4.5)),
+                      Text(
+                        "Noticias",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: responsive.diagonalPorcentaje(2.5)),
-                        children: <TextSpan>[
-                      TextSpan(
-                          text: fecha(noticias),
-                          style: TextStyle(
-                              fontSize: responsive.diagonalPorcentaje(2.2)))
-                    ])),
-              ),
-              Container(
-                padding: EdgeInsets.all(responsive.diagonalPorcentaje(2.5)),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  //color: Colors.transparent,
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment(
-                        1, 1), // 10% of the width, so there are ten blinds.
-                    colors: [
-                      const Color.fromRGBO(101, 91, 80, 1),
-                      const Color.fromRGBO(28, 26, 24, 1),
-                    ], // red to yellow
-                    tileMode: TileMode
-                        .repeated, // repeats the gradient over the canvas
+                            fontSize: responsive.diagonalPorcentaje(5),
+                            color: Color.fromRGBO(19, 70, 123, 1),
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(noticias.imagen),
-                          fit: BoxFit.cover,
-                          colorFilter: new ColorFilter.mode(
-                              Colors.black.withOpacity(1), BlendMode.dstATop),
-                        ),
-                      ),
-                      width: MediaQuery.of(context).size.height * 0.5,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                    ),
-                    SizedBox(
-                      height: responsive.diagonalPorcentaje(2),
-                    ),
-                    Container(
-                      color: Colors.transparent,
-                      child: RichText(
-                        text: TextSpan(
-                          text: noticias.tituloNoticia + "\n",
+                Container(
+                  padding: EdgeInsets.all(responsive.diagonalPorcentaje(1)),
+                  alignment: Alignment.centerRight,
+                  child: RichText(
+                      text: TextSpan(
+                          text: "Fecha: ",
                           style: TextStyle(
-                              fontSize: responsive.diagonalPorcentaje(3),
-                              color: Color.fromRGBO(255, 226, 199, 1),
-                              fontWeight: FontWeight.bold),
+                              color: Color.fromRGBO(19, 70, 123, 1),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'raleway',
+                              fontSize: responsive.diagonalPorcentaje(1.5)),
                           children: <TextSpan>[
-                            TextSpan(text: " " + "\n"),
-                            TextSpan(
-                                text: noticias.contenidoNoticia,
-                                style: TextStyle(
-                                    fontSize:
-                                        responsive.diagonalPorcentaje(2.2))),
-                          ],
+                        TextSpan(
+                          text: fecha(noticias),
+                          style: TextStyle(
+                              color: Color.fromRGBO(19, 70, 123, 1),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'raleway',
+                              fontSize: responsive.diagonalPorcentaje(1.5)),
+                        )
+                      ])),
+                ),
+                Container(
+                  padding: EdgeInsets.all(responsive.diagonalPorcentaje(0)),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          image: DecorationImage(
+                            image: NetworkImage(noticias.imagen),
+                            fit: BoxFit.cover,
+                            //  colorFilter: new ColorFilter.mode(
+                            //    Colors.black.withOpacity(1), BlendMode.dstATop),
+                          ),
+                        ),
+                        width: MediaQuery.of(context).size.width - 5,
+                        height: MediaQuery.of(context).size.height * 0.6,
+                      ),
+                      SizedBox(
+                        height: responsive.diagonalPorcentaje(2),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.all(responsive.diagonalPorcentaje(2)),
+                        color: Colors.transparent,
+                        child: RichText(
+                          text: TextSpan(
+                            text: utf8.decode(
+                                latin1.encode(noticias.tituloNoticia + "\n"),
+                                allowMalformed: true),
+                            style: TextStyle(
+                                fontSize: responsive.diagonalPorcentaje(3),
+                                color: Color.fromRGBO(19, 70, 123, 1),
+                                fontWeight: FontWeight.bold),
+                            children: <TextSpan>[
+                              TextSpan(text: " " + "\n"),
+                              TextSpan(
+                                  text: utf8.decode(
+                                      latin1.encode(noticias.contenidoNoticia),
+                                      allowMalformed: true),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'sans',
+                                      fontSize:
+                                          responsive.diagonalPorcentaje(2.2))),
+                            ],
+                          ),
                         ),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: responsive.diagonalPorcentaje(1),
+                      ),
+                      SingleChildScrollView(
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Enlace Adjunto:",
+                                style: TextStyle(
+                                  fontSize: responsive.diagonalPorcentaje(3),
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(19, 70, 123, 1),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                height: responsive.diagonalPorcentaje(5),
+                                child: InkWell(
+                                    child: Text(Url(),
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontSize: responsive
+                                                .diagonalPorcentaje(2.2),
+                                            color: Colors.blue)),
+                                    onTap: () => launch('${Url()}')),
+                              ),
+                              SizedBox(
+                                height: responsive.diagonalPorcentaje(1),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   String fecha(NoticiaM noticia) {
     String fecha = noticia.fechaNoticia.toString();
     String enviar = fecha.substring(0, 10);
     return enviar;
+  }
+
+  String Url() {
+    print(noticias.enlaces);
+    if (noticias.enlaces != null) {
+      return "${noticias.enlaces}";
+    } else {
+      return "No tiene enlace";
+    }
   }
 }

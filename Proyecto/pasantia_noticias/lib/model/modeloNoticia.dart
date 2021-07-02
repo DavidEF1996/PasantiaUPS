@@ -16,6 +16,7 @@ class Noticia {
     this.categoria,
     this.imagen,
     this.codigoUsuario,
+    this.enlaces,
   });
 
   DateTime fechaNoticia;
@@ -24,6 +25,7 @@ class Noticia {
   String categoria;
   String imagen;
   int codigoUsuario;
+  String enlaces;
 
   factory Noticia.fromJson(Map<String, dynamic> json) => Noticia(
         fechaNoticia: DateTime.parse(json["fechaNoticia"]),
@@ -32,6 +34,7 @@ class Noticia {
         categoria: json["categoria"],
         imagen: json["imagen"],
         codigoUsuario: json["codigoUsuario"],
+        enlaces: json["enlaces"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,5 +45,6 @@ class Noticia {
         "categoria": categoria,
         "imagen": imagen,
         "codigoUsuario": codigoUsuario,
+        "enlaces": enlaces,
       };
 }

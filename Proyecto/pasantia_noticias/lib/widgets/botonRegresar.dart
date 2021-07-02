@@ -19,7 +19,7 @@ class BotonRegresar extends StatelessWidget {
           child: Icon(
             Icons.arrow_back,
             size: 65,
-            color: Color.fromRGBO(255, 186, 0, 1),
+            color: Color.fromRGBO(19, 70, 123, 1),
           ),
         ),
         onPressed: this.onPressed,

@@ -23,19 +23,51 @@ class UserService {
 
     if (respuesta.statusCode == 200) {
       final decodedata = json.decode(respuesta.body);
-      print(decodedata);
-      nombreUsuariologueado = decodedata['nombres'];
-      apellidoUsuarioLogueado = decodedata['apellidos'];
-      tipoUsuario = decodedata['tipoUsuario'];
-      usuariologueado = nombreUsuariologueado.split(" ")[0] +
-          " " +
-          apellidoUsuarioLogueado.split(" ")[0];
 
-      nombreCompletoUsuarioLogueado =
-          nombreUsuariologueado + " " + apellidoUsuarioLogueado;
-      return decodedata;
+      if (decodedata['acceso']) {
+        nombreUsuariologueado = decodedata['nombres'];
+        apellidoUsuarioLogueado = decodedata['apellidos'];
+        tipoUsuario = decodedata['tipoUsuario'];
+        usuariologueado = nombreUsuariologueado.split(" ")[0] +
+            " " +
+            apellidoUsuarioLogueado.split(" ")[0];
+
+        nombreCompletoUsuarioLogueado =
+            nombreUsuariologueado + " " + apellidoUsuarioLogueado;
+        return decodedata;
+      } else {
+        return null;
+      }
     } else {
-      print(respuesta.statusCode);
+      return null;
+    }
+  }
+
+  Future loginUsuario2(String correo, String contrasena) async {
+    //print(correo + ' ' + contrasena);
+    final body = {"user": correo};
+    var body2 = jsonEncode(body);
+    final respuesta = await http.post(Uri.parse(URL + "/login2"),
+        headers: headers, body: body2, encoding: Encoding.getByName('utf-8'));
+
+    if (respuesta.statusCode == 200) {
+      final decodedata = json.decode(respuesta.body);
+
+      if (decodedata['acceso']) {
+        nombreUsuariologueado = decodedata['nombres'];
+        apellidoUsuarioLogueado = decodedata['apellidos'];
+        tipoUsuario = decodedata['tipoUsuario'];
+        usuariologueado = nombreUsuariologueado.split(" ")[0] +
+            " " +
+            apellidoUsuarioLogueado.split(" ")[0];
+
+        nombreCompletoUsuarioLogueado =
+            nombreUsuariologueado + " " + apellidoUsuarioLogueado;
+        return decodedata;
+      } else {
+        return null;
+      }
+    } else {
       return null;
     }
   }

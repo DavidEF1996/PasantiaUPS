@@ -4,21 +4,19 @@ import 'dart:core';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:io' as Io;
-
 import 'package:image_picker/image_picker.dart';
-
 import 'package:pasantia_noticias/model/modeloNoticia.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
-import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
-import 'package:pasantia_noticias/services/ServicioNotificaciones.dart';
 import 'package:pasantia_noticias/services/URLService.dart';
 import 'package:pasantia_noticias/services/crearNoticia.dart';
+import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
+import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class Administracion extends StatefulWidget {
   @override
@@ -29,9 +27,12 @@ File foto;
 String base64Image;
 TextEditingController titulo = new TextEditingController();
 TextEditingController contenido = new TextEditingController();
+TextEditingController enlaces = new TextEditingController();
 List<Noticias> noticias = Noticias.noticias_album();
 final _preferences = new Preferences();
 List<int> imageBytes;
+int limite = 250;
+String mostrarlimite = "250";
 var file;
 Widget image;
 List<dynamic> recibir = [];
@@ -45,31 +46,18 @@ class AdministracionState extends State<Administracion> {
     return Container(
       child: Scaffold(
         appBar: new AppBar(
-          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(color: Colors.black),
           title: Container(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Usuario:")],
+              children: [],
             ),
           ),
         ),
         body: SingleChildScrollView(
           child: Container(
 //Decoracion principal
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment(
-                    0.7, 0), // 10% of the width, so there are ten blinds.
-                colors: [
-                  const Color.fromRGBO(28, 26, 24, 1),
-                  const Color.fromRGBO(28, 26, 24, 1),
-                ], // red to yellow
-                tileMode:
-                    TileMode.repeated, // repeats the gradient over the canvas
-              ),
-            ),
 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -91,7 +79,7 @@ class AdministracionState extends State<Administracion> {
                       "Registro de" + "\n" + "Información",
                       style: TextStyle(
                           fontSize: responsive.diagonalPorcentaje(4),
-                          color: Color.fromRGBO(255, 226, 199, 1),
+                          color: Color.fromRGBO(19, 70, 123, 1),
                           fontWeight: FontWeight.bold),
                     )
                   ],
@@ -101,10 +89,14 @@ class AdministracionState extends State<Administracion> {
                     Container(
                       padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
                       width: MediaQuery.of(context).size.width * 0.9,
-                      color: Color.fromRGBO(255, 226, 199, 1),
+                      color: Colors.grey,
                       child: DropdownButton(
                           value: _value,
                           items: [
+                            DropdownMenuItem(
+                              child: Text("Seleccione"),
+                              value: 0,
+                            ),
                             DropdownMenuItem(
                               child: Text("Urgente"),
                               value: 1,
@@ -132,18 +124,27 @@ class AdministracionState extends State<Administracion> {
                       height: MediaQuery.of(context).size.height * 0.05,
                     ),
                     Container(
+                      height: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       child: imagenSinFoto(),
                     ),
+                    Container(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Seleccione imagen: "),
+                        IconButton(
+                            icon: Icon(Icons.photo_size_select_actual),
+                            onPressed: buscarImagen),
+                      ],
+                    )),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
-                    IconButton(
-                        icon: Icon(Icons.photo_size_select_actual),
-                        onPressed: buscarImagen),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
-                      color: Color.fromRGBO(255, 226, 199, 1),
+                      color: Colors.grey,
                       child: Column(
                         children: [
                           Text(
@@ -154,6 +155,7 @@ class AdministracionState extends State<Administracion> {
                                 fontWeight: FontWeight.bold),
                           ),
                           TextField(
+                            cursorColor: Colors.black,
                             controller: titulo,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
@@ -171,7 +173,7 @@ class AdministracionState extends State<Administracion> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
-                      color: Color.fromRGBO(255, 226, 199, 1),
+                      color: Colors.grey,
                       child: Column(
                         children: [
                           Text(
@@ -182,9 +184,56 @@ class AdministracionState extends State<Administracion> {
                                 fontWeight: FontWeight.bold),
                           ),
                           TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                if (limite < 0) {
+                                  // mostrarlimite =
+                                  //   "No puede tener mas de 250 caracteres";
+                                } else {
+                                  mostrarlimite = limite.toString();
+                                }
+                                limite = limite - 1;
+                              });
+                            },
+                            cursorColor: Colors.black,
                             controller: contenido,
+                            maxLength: 250,
                             minLines: 1,
-                            maxLines: 5,
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                counterText:
+                                    'Le quedan: ${mostrarlimite} caracteres'),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
+                      color: Colors.grey,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Opcional: ",
+                            style: TextStyle(
+                                fontSize: responsive.diagonalPorcentaje(4),
+                                color: Color.fromRGBO(28, 26, 24, 1),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Agregue un enlace",
+                            style: TextStyle(
+                                fontSize: responsive.diagonalPorcentaje(2.2),
+                                color: Color.fromRGBO(28, 26, 24, 1),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          TextField(
+                            cursorColor: Colors.black,
+                            controller: enlaces,
                             decoration:
                                 InputDecoration(border: OutlineInputBorder()),
                           )
@@ -199,7 +248,9 @@ class AdministracionState extends State<Administracion> {
                           BotonReusable(
                               onPressed: () {
                                 String categoria;
-                                if (_value == 1) {
+                                if (_value == 0) {
+                                  categoria = "";
+                                } else if (_value == 1) {
                                   // print("Noticias");
                                   categoria = "emergencias";
                                 } else if (_value == 2) {
@@ -210,18 +261,20 @@ class AdministracionState extends State<Administracion> {
                                 } else if (_value == 4) {
                                   categoria = "ofertasCursos";
                                 }
-                                /* print("----------------------------------");
-                                //print("La fecha es: " + fechaNotica.toString());
-                                print("El título es:" + titulo.text);
-                                print("El contenido es" + contenido.text);
-                                print("La categoria es: " + categoria);
-                                print("El codigo de usuario es: " +
-                                    _preferences.id.toString());
-                                print("----------------------------------");*/
 
-                                save(categoria);
-
-                                //agregarNoticia();
+                                if (categoria != "" &&
+                                    foto != null &&
+                                    titulo.text != "" &&
+                                    contenido.text != "") {
+                                  print("tengo datos");
+                                  save(categoria);
+                                } else {
+                                  mostrarAlerta(
+                                      context,
+                                      "Revise la Información",
+                                      "Debe llenar todos los campos, solo el de enlaces es opcional");
+                                }
+                                //
                               },
                               label: "Guardar"),
                           BotonReusable(
@@ -229,8 +282,7 @@ class AdministracionState extends State<Administracion> {
                                 Navigator.push(
                                   context,
                                   new MaterialPageRoute(
-                                    builder: (context) =>
-                                        new PrincipalNoticias(),
+                                    builder: (context) => new PrincipalNo(),
                                   ),
                                 );
                               },
@@ -248,24 +300,37 @@ class AdministracionState extends State<Administracion> {
     );
   }
 
+  Noticia noticia = Noticia();
   save(String categoria) async {
-    Noticia noticia = Noticia();
-
     DateTime fechaNotica = DateTime.now();
     noticia.fechaNoticia = fechaNotica;
     noticia.titulo = titulo.text;
     noticia.contenido = contenido.text;
     noticia.imagen = await UrlServicio.subirImagen(foto);
     noticia.categoria = categoria;
+    noticia.enlaces = enlaces.text;
     String guardarCodigo = _preferences.id.toString();
-    print("El codigo de usuario es: " + guardarCodigo);
+
     noticia.codigoUsuario = int.parse(guardarCodigo);
-    await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => PrincipalNo()),
-        (Route<dynamic> route) => false);
-    //await ServicioNotificaciones.notificarUsuarios(
-    //  jsonEncode(noticia.toJson()));
+
+    aceptarNegar(context, "¿Desea Continua?", cargar);
+  }
+
+  Future<void> cargar() async {
+    final result =
+        await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
+
+    if (result != null) {
+      mostrarAlerta(
+          context, "¡Proceso Exitoso!", "La noticia fue insertada con éxito");
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) {
+        return new PrincipalNo();
+      }), (Route<dynamic> route) => false);
+    } else {
+      mostrarAlerta(context, "¡Error!", "No se pudo insertar correctamente");
+    }
   }
 
   _mostrarFoto() {

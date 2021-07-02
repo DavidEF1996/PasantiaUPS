@@ -15,27 +15,25 @@ class Cabecera extends StatelessWidget {
     final Responsive responsive = Responsive.of(context);
     if (data.orientation == Orientation.portrait) {
       return Container(
-          padding: EdgeInsets.all(responsive.diagonalPorcentaje(1)),
           child: Text.rich(
-            TextSpan(
-                text: "Usuario: ",
-                style: TextStyle(
-                  fontSize: responsive.diagonalPorcentaje(2.1),
-                  fontWeight: FontWeight.bold,
-                ),
-                children: <InlineSpan>[
-                  TextSpan(
-                      text: utf8.decode(latin1.encode(_preferences.nombres),
-                          allowMalformed: true),
-                      style: TextStyle(
-                          fontSize: responsive.diagonalPorcentaje(2.1)))
-                ]),
-          ));
+        TextSpan(
+            text: "Bienvenido: ",
+            style: TextStyle(
+                fontSize: responsive.diagonalPorcentaje(2.5),
+                fontWeight: FontWeight.bold),
+            children: <InlineSpan>[
+              TextSpan(
+                  text: utf8.decode(latin1.encode(_preferences.nombres),
+                      allowMalformed: true),
+                  style:
+                      TextStyle(fontSize: responsive.diagonalPorcentaje(2.2)))
+            ]),
+      ));
     } else {
       return Container(
           child: Text.rich(
         TextSpan(
-            text: "Usuario: ",
+            text: "Bienvenido: ",
             style: TextStyle(
                 fontSize: responsive.diagonalPorcentaje(3.5),
                 fontWeight: FontWeight.bold),

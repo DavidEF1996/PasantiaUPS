@@ -13,14 +13,6 @@ class CardNotices extends StatelessWidget {
       scrollDirection: Axis.vertical,
       child: Container(
         margin: EdgeInsets.only(bottom: 10.0),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            image: DecorationImage(
-              image: NetworkImage(noticias.imagen),
-              fit: BoxFit.cover,
-              colorFilter: new ColorFilter.mode(
-                  Colors.black.withOpacity(0.5), BlendMode.dstATop),
-            )),
         height: 150,
         child: InkWell(
           onTap: () {
@@ -28,7 +20,7 @@ class CardNotices extends StatelessWidget {
             Navigator.push(
               context,
               new MaterialPageRoute(
-                builder: (context) => new NoticiasInformacion(noticias),
+                builder: (context) => new NoticiasInformacion(),
               ),
             );
           },

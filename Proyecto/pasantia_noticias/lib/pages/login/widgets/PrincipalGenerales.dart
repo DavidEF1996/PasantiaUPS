@@ -4,6 +4,7 @@ import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
 import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
+import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/cabecera.dart';
@@ -24,6 +25,8 @@ class _PrincipalNoState extends State<PrincipalNo> {
   initState() {
     cargarNoticias();
     super.initState();
+    final _preferences = new Preferences();
+    _preferences.numeroNoticia = 0;
   }
 
   cargarNoticias() async {
@@ -43,12 +46,13 @@ class _PrincipalNoState extends State<PrincipalNo> {
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
         appBar: new AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           title: Container(
             alignment: Alignment.bottomLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Cabecera(),
+                //  Cabecera(),
                 Text(" "),
                 //usuariologueado.botonSalir(context),
               ],
@@ -60,24 +64,29 @@ class _PrincipalNoState extends State<PrincipalNo> {
           if (_isLoading) {
             return Center(child: CircularProgressIndicator());
           } else {
-            return Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment(
-                        0.7, 0), // 10% of the width, so there are ten blinds.
-                    colors: [
-                      const Color.fromRGBO(28, 26, 24, 1),
-                      const Color.fromRGBO(28, 26, 24, 1),
-                    ], // red to yellow
-                    tileMode: TileMode
-                        .repeated, // repeats the gradient over the canvas
-                  ),
-                ),
-                child: DataPagerWithListView(
-                  noticias: datos,
-                ));
+            return comprobar();
           }
         }));
+  }
+
+  Container comprobar() {
+    if (datos.length > 0) {
+      /*  NoticiaM n = new NoticiaM();
+      n.tituloNoticia="Sin datos";
+      n.imagen=null;
+      n.fechaNoticia=DateTime.now();
+      n.enlaces="Sin datos";
+      n.*/
+      print("este es: " + datos.length.toString());
+      return Container(
+          color: Colors.white,
+          child: DataPagerWithListView(
+            noticias: datos,
+          ));
+    } else {
+      return Container(
+        child: Text("Aún no se ha cargado ninguna noticia"),
+      );
+    }
   }
 }

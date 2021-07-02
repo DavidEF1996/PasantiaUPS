@@ -18,22 +18,24 @@ class Welcome extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  top: contraints.maxHeight * 0.05,
+                  top: contraints.maxHeight * 0.001,
                   right: 10,
                   child: Image(image: AssetImage('assets/logo.png')),
                   width: contraints.maxWidth,
-                  height: contraints.maxHeight * 0.7,
+                  height: contraints.maxHeight * 0.65,
                 ),
                 Positioned(
-                    top: contraints.maxHeight * 0.76,
+                    top: contraints.maxHeight * 0.66,
                     child: Column(
                       children: [
                         Text(
                           "     Bienvenido",
                           style: TextStyle(
-                              fontFamily: 'sans',
-                              fontSize: responsive.diagonalPorcentaje(5),
-                              fontWeight: FontWeight.bold),
+                            fontFamily: 'raleway',
+                            fontSize: responsive.diagonalPorcentaje(5.5),
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(0, 0, 102, 1),
+                          ),
                         ),
                         Container(
                           height: responsive.diagonalPorcentaje(0.1),
@@ -43,7 +45,7 @@ class Welcome extends StatelessWidget {
                       ],
                     )),
                 Positioned(
-                  top: contraints.maxHeight * 0.72,
+                  top: contraints.maxHeight * 0.61,
                   child: SvgPicture.asset('assets/Chica.svg'),
                   width: contraints.maxWidth * 0.3,
                   height: contraints.maxHeight * 0.34,

@@ -18,8 +18,9 @@ class PushNotificationService {
     //_messageStreamController
     // .add(message.notification?.title ?? 'No tiene titulo');
     print(message.data);
-    _messageStreamController
-        .add(message.data['producto'] ?? 'No tiene informacion');
+    _messageStreamController.add(
+        message.data['categoria'] + " " + message.data['contenido'] ??
+            'No tiene informacion');
     abrir = true;
   }
 
@@ -28,8 +29,9 @@ class PushNotificationService {
     // _messageStreamController
     // .add(message.notification?.title ?? 'No tiene titulo');
     print(message.data);
-    _messageStreamController
-        .add(message.data['producto'] ?? 'No tiene informacion');
+    _messageStreamController.add(
+        message.data['categoria'] + " " + message.data['contenido'] ??
+            'No tiene informacion');
     abrir = false;
   }
 
@@ -38,8 +40,9 @@ class PushNotificationService {
     //_messageStreamController
     //   .add(message.notification?.title ?? 'No tiene titulo');
     print(message.data);
-    _messageStreamController
-        .add(message.data['producto'] ?? 'No tiene informacion');
+    _messageStreamController.add(
+        message.data['categoria'] + " " + message.data['contenido'] ??
+            'No tiene informacion');
     abrir = true;
   }
 
