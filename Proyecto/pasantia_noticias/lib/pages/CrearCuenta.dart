@@ -8,6 +8,7 @@ import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/usuario.dart';
 import 'package:pasantia_noticias/utils/credencialesAleatorias.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
+import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 import 'package:pasantia_noticias/widgets/login_form.dart';
@@ -22,145 +23,223 @@ class CrearCuenta extends StatefulWidget {
 String nombres;
 String apellidos;
 String cedula;
+String correo;
 
 class _CrearCuentaState extends State<CrearCuenta> {
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: new AppBar(
-        title: Text("Registrar Usuario"),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end:
-                Alignment(0.7, 0), // 10% of the width, so there are ten blinds.
-            colors: [
-              const Color.fromRGBO(28, 26, 24, 1),
-              const Color.fromRGBO(28, 26, 24, 1),
-            ], // red to yellow
-            tileMode: TileMode.repeated, // repeats the gradient over the canvas
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Container(
+          alignment: Alignment.bottomLeft,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [],
           ),
         ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color.fromRGBO(101, 91, 80, 0.7),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.bottomRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.yellow,
+                Colors.white,
+              ],
+            )),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
                 ),
-                padding: EdgeInsets.all(19),
-                child: Column(
-                  children: [
-                    InputTextFormulario(
-                      iconosPath: 'assets/escritura.svg',
-                      placeHolder: 'Cédula',
-                      validator: (text) {
-                        cedula = text;
-                        return text.trim().length > 0;
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    InputTextFormulario(
-                      iconosPath: 'assets/escritura.svg',
-                      placeHolder: 'Nombres',
-                      validator: (text) {
-                        nombres = text;
-                        return text.trim().length > 0;
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    InputTextFormulario(
-                      iconosPath: 'assets/escritura.svg',
-                      placeHolder: 'Apellidos',
-                      validator: (text) {
-                        apellidos = text;
-                        return text.trim().length > 0;
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 226, 199, 1)),
-                      child: Column(children: <Widget>[
-                        Container(
-                            child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(" Fecha de Nacimiento:   "),
-                            Text(currentDate.year.toString() +
-                                "/" +
-                                currentDate.month.toString() +
-                                "/" +
-                                currentDate.day.toString()),
-                            IconButton(
-                              onPressed: () => selectDate(context),
-                              icon: Icon(Icons.date_range),
-                              iconSize: 30,
-                            ),
-                          ],
-                        )),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Llene los campos porfavor:",
+                    style: TextStyle(
+                        color: Color.fromRGBO(0, 0, 102, 1),
+                        fontSize: responsive.diagonalPorcentaje(5)),
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      Container(
+                          width: responsive.diagonalPorcentaje(45),
+                          height: responsive.diagonalPorcentaje(50),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(18, 69, 122, 0.8),
+                          ),
+                          padding: EdgeInsets.all(19),
+                          child: Column(
+                            children: [
+                              InputTextFormulario(
+                                iconosPath: 'assets/escritura.svg',
+                                placeHolder: 'Cédula',
+                                validator: (text) {
+                                  cedula = text;
+                                  return text.trim().length > 0;
+                                },
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              InputTextFormulario(
+                                iconosPath: 'assets/escritura.svg',
+                                placeHolder: 'Nombres',
+                                validator: (text) {
+                                  nombres = text;
+                                  return text.trim().length > 0;
+                                },
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              InputTextFormulario(
+                                iconosPath: 'assets/escritura.svg',
+                                placeHolder: 'Apellidos',
+                                validator: (text) {
+                                  apellidos = text;
+                                  return text.trim().length > 0;
+                                },
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              InputTextFormulario(
+                                iconosPath: 'assets/escritura.svg',
+                                placeHolder: 'Correo Institucional',
+                                validator: (text) {
+                                  correo = text;
+                                  return text.trim().length > 0;
+                                },
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(255, 255, 255, 1)),
+                                child: Column(children: <Widget>[
+                                  Container(
+                                      child: Row(
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                  child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons.line_style,
+                                                      size: 35,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                              Text("  Fecha de Nacimiento:   ",
+                                                  style: TextStyle(
+                                                      fontFamily: 'sans',
+                                                      color: Colors.black,
+                                                      fontSize: 16)),
+                                              IconButton(
+                                                onPressed: () =>
+                                                    selectDate(context),
+                                                icon: Icon(Icons.date_range),
+                                                iconSize: 30,
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                              'Su fecha de nacimiento es: ' +
+                                                  currentDate.year.toString() +
+                                                  "/" +
+                                                  currentDate.month.toString() +
+                                                  "/" +
+                                                  currentDate.day.toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'sans',
+                                                  color: Colors.black,
+                                                  fontSize: 16)),
+                                        ],
+                                      )
+                                    ],
+                                  )),
 
-                        // Text("Edad: "+ ),
-                      ]),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    InputTextFormulario(
-                      iconosPath: 'assets/usuario.svg',
-                      placeHolder: 'Tipo Usuario',
-                      validator: (text) {
-                        return text.trim().length > 0;
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    BotonReusable(
-                        onPressed: () async {
-                          Usuario recibir = save();
-                          print("-------------");
-                          print(recibir.cedula);
-                          print(recibir.nombres);
-                          print(recibir.apellidos);
-                          print(recibir.fechaNacimiento);
+                                  // Text("Edad: "+ ),
+                                ]),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              BotonReusable(
+                                  onPressed: () async {
+                                    Usuario recibir = save();
+                                    print("-------------");
+                                    print(recibir.cedula);
+                                    print(recibir.nombres);
+                                    print(recibir.apellidos);
+                                    print(recibir.fechaNacimiento);
 
-                          //  print(recibir.codigoUsuario);
-                          print(recibir.token);
-                          print(recibir.usuario);
-                          print(recibir.contrasena);
-                          print(recibir.tipoUsuario);
-                          String decodePassword = recibir.contrasena;
-                          await UsuarioServicio.crearUsuario(
-                              jsonEncode(recibir.toJson()));
-                          final String outputUser = utf8.decode(
-                              latin1.encode(recibir.usuario),
-                              allowMalformed: true);
+                                    //  print(recibir.codigoUsuario);
+                                    print(recibir.token);
+                                    print(recibir.usuario);
+                                    print(recibir.contrasena);
+                                    print(recibir.tipoUsuario);
+                                    String decodePassword = recibir.contrasena;
+                                    await UsuarioServicio.crearUsuario(
+                                        jsonEncode(recibir.toJson()));
+                                    final String outputUser = utf8.decode(
+                                        latin1.encode(recibir.usuario),
+                                        allowMalformed: true);
 
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) => LoginPage(
+                                    /*Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) => LoginPage(
+                                            usuario: outputUser,
+                                            contrasena: decode(decodePassword),
+                                          )));*/
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return new LoginPage(
                                         usuario: outputUser,
                                         contrasena: decode(decodePassword),
-                                      )));
-                        },
-                        label: "Iniciar Sesión"),
-                  ],
-                ))
-          ],
-        ),
+                                      );
+                                    }), (Route<dynamic> route) => false);
+                                  },
+                                  label: "Crear"),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
