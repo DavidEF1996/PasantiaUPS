@@ -47,20 +47,23 @@ class _MenuLateralState extends State<MenuLateral> {
             padding: EdgeInsets.all(10),
             child: ListView(
               children: [
-                new UserAccountsDrawerHeader(
-                    accountName: Container(
-                      alignment: Alignment.bottomCenter,
-                      //child: Cabecera(),
-                    ),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(101, 91, 80, 0.80),
-                        image: DecorationImage(
-                          image: AssetImage('assets/giata.png'),
-                          fit: BoxFit.fill,
+                Container(
+                  height: responsive.diagonalPorcentaje(32.5),
+                  child: new UserAccountsDrawerHeader(
+                      accountName: Container(
+                        alignment: Alignment.bottomCenter,
+                        //child: Cabecera(),
+                      ),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(101, 91, 80, 1),
+                          image: DecorationImage(
+                            image: AssetImage('assets/giataLogo.jpg'),
+                            fit: BoxFit.fill,
 
-                          //  colorFilter: new ColorFilter.mode(
-                          //    Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                        ))),
+                            //  colorFilter: new ColorFilter.mode(
+                            //    Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                          ))),
+                ),
                 Container(
                   height: responsive.diagonalPorcentaje(7.5),
                   child: Cabecera(),
@@ -186,7 +189,7 @@ class _MenuLateralState extends State<MenuLateral> {
                   ),
                 ),
                 Container(
-                  height: responsive.diagonalPorcentaje(12),
+                  height: responsive.diagonalPorcentaje(4),
                   alignment: Alignment.bottomCenter,
                   child: (Text(
                     "Cuenta: ",

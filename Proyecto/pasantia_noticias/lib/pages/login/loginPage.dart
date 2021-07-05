@@ -43,46 +43,50 @@ class LoginPageState extends State<LoginPage> {
           begin: Alignment.bottomRight,
           end: Alignment.bottomLeft,
           colors: [
-            Colors.yellow,
+            Color.fromRGBO(252, 216, 127, 1),
             Colors.white,
           ],
         )),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: responsive.diagonalPorcentaje(35),
-                    child: Welcome(),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        // color: Color.fromRGBO(18, 69, 122, 0.8),
-
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color.fromRGBO(18, 69, 122, 1),
-                            Colors.grey,
-                          ],
-                        )),
-                    padding: EdgeInsets.all(19),
-                    child: LoginForm(
-                      usuario: widget.usuario,
-                      contrasena: widget.contrasena,
+          body: Center(
+            child: Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: responsive.diagonalPorcentaje(30),
+                        child: Welcome(),
+                      ),
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: responsive.diagonalPorcentaje(0.001),
+                    ),
+                    Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            // color: Color.fromRGBO(18, 69, 122, 0.8),
+
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                Color.fromRGBO(18, 69, 122, 1),
+                                Colors.grey,
+                              ],
+                            )),
+                        padding: EdgeInsets.all(19),
+                        child: LoginForm(
+                          usuario: widget.usuario,
+                          contrasena: widget.contrasena,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

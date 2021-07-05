@@ -71,21 +71,39 @@ class _PrincipalNoState extends State<PrincipalNo> {
 
   Container comprobar() {
     if (datos.length > 0) {
-      /*  NoticiaM n = new NoticiaM();
-      n.tituloNoticia="Sin datos";
-      n.imagen=null;
-      n.fechaNoticia=DateTime.now();
-      n.enlaces="Sin datos";
-      n.*/
-      print("este es: " + datos.length.toString());
+      print(datos.length);
       return Container(
-          color: Colors.white,
+          color: Color.fromRGBO(250, 250, 250, 1),
           child: DataPagerWithListView(
             noticias: datos,
+            categoriaNombre: 'Todo',
           ));
     } else {
       return Container(
-        child: Text("Aún no se ha cargado ninguna noticia"),
+        padding: EdgeInsets.all(20),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+              child: Text(
+                "No se han cargado noticias",
+                style: TextStyle(color: Colors.black, fontSize: 40),
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Navegue a otra ventana del menu lateral o espere a que un administrador ingrese nuevas noticias.",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       );
     }
   }

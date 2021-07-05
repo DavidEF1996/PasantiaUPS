@@ -41,206 +41,204 @@ class _CrearCuentaState extends State<CrearCuenta> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Colors.yellow,
-                Colors.white,
-              ],
-            )),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Llene los campos porfavor:",
-                    style: TextStyle(
-                        color: Color.fromRGBO(0, 0, 102, 1),
-                        fontSize: responsive.diagonalPorcentaje(5)),
+          child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.bottomRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.yellow,
+            Colors.white,
+          ],
+        )),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              alignment: Alignment.center,
+              child: Text(
+                "Llene los campos porfavor:",
+                style: TextStyle(
+                    color: Color.fromRGBO(0, 0, 102, 1),
+                    fontSize: responsive.diagonalPorcentaje(4)),
+              ),
+            ),
+            Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
                   ),
-                ),
-                Container(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Container(
-                          width: responsive.diagonalPorcentaje(45),
-                          height: responsive.diagonalPorcentaje(50),
+                  Container(
+                    width: responsive.diagonalPorcentaje(45),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(18, 69, 122, 0.8),
+                    ),
+                    padding: EdgeInsets.all(19),
+                    child: Column(
+                      children: [
+                        InputTextFormulario(
+                          iconosPath: 'assets/escritura.svg',
+                          placeHolder: 'Cédula',
+                          validator: (text) {
+                            cedula = text;
+                            return text.trim().length > 0;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        InputTextFormulario(
+                          iconosPath: 'assets/escritura.svg',
+                          placeHolder: 'Nombres',
+                          validator: (text) {
+                            nombres = text;
+                            return text.trim().length > 0;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        InputTextFormulario(
+                          iconosPath: 'assets/escritura.svg',
+                          placeHolder: 'Apellidos',
+                          validator: (text) {
+                            apellidos = text;
+                            return text.trim().length > 0;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        InputTextFormulario(
+                          iconosPath: 'assets/escritura.svg',
+                          placeHolder: 'Correo Institucional',
+                          validator: (text) {
+                            correo = text;
+                            return text.trim().length > 0;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Container(
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(18, 69, 122, 0.8),
-                          ),
-                          padding: EdgeInsets.all(19),
-                          child: Column(
-                            children: [
-                              InputTextFormulario(
-                                iconosPath: 'assets/escritura.svg',
-                                placeHolder: 'Cédula',
-                                validator: (text) {
-                                  cedula = text;
-                                  return text.trim().length > 0;
-                                },
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
-                              ),
-                              InputTextFormulario(
-                                iconosPath: 'assets/escritura.svg',
-                                placeHolder: 'Nombres',
-                                validator: (text) {
-                                  nombres = text;
-                                  return text.trim().length > 0;
-                                },
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
-                              ),
-                              InputTextFormulario(
-                                iconosPath: 'assets/escritura.svg',
-                                placeHolder: 'Apellidos',
-                                validator: (text) {
-                                  apellidos = text;
-                                  return text.trim().length > 0;
-                                },
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
-                              ),
-                              InputTextFormulario(
-                                iconosPath: 'assets/escritura.svg',
-                                placeHolder: 'Correo Institucional',
-                                validator: (text) {
-                                  correo = text;
-                                  return text.trim().length > 0;
-                                },
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
-                                child: Column(children: <Widget>[
-                                  Container(
-                                      child: Row(
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  IconButton(
-                                                    icon: Icon(
-                                                      Icons.line_style,
-                                                      size: 35,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )),
-                                              Text("  Fecha de Nacimiento:   ",
-                                                  style: TextStyle(
-                                                      fontFamily: 'sans',
-                                                      color: Colors.black,
-                                                      fontSize: 16)),
-                                              IconButton(
-                                                onPressed: () =>
-                                                    selectDate(context),
-                                                icon: Icon(Icons.date_range),
-                                                iconSize: 30,
+                              color: Color.fromRGBO(255, 255, 255, 1)),
+                          child: Column(children: <Widget>[
+                            Container(
+                                child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                            child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.line_style,
+                                                size: 35,
                                               ),
-                                            ],
-                                          ),
-                                          Text(
-                                              'Su fecha de nacimiento es: ' +
-                                                  currentDate.year.toString() +
-                                                  "/" +
-                                                  currentDate.month.toString() +
-                                                  "/" +
-                                                  currentDate.day.toString(),
-                                              style: TextStyle(
-                                                  fontFamily: 'sans',
-                                                  color: Colors.black,
-                                                  fontSize: 16)),
-                                        ],
-                                      )
-                                    ],
-                                  )),
+                                            ),
+                                          ],
+                                        )),
+                                        Text("  Fecha de Nacimiento:   ",
+                                            style: TextStyle(
+                                                fontFamily: 'sans',
+                                                color: Colors.black,
+                                                fontSize: 16)),
+                                        IconButton(
+                                          onPressed: () => selectDate(context),
+                                          icon: Icon(Icons.date_range),
+                                          iconSize: 30,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                        'Su fecha de nacimiento es: ' +
+                                            currentDate.year.toString() +
+                                            "/" +
+                                            currentDate.month.toString() +
+                                            "/" +
+                                            currentDate.day.toString(),
+                                        style: TextStyle(
+                                            fontFamily: 'sans',
+                                            color: Colors.black,
+                                            fontSize: 16)),
+                                  ],
+                                )
+                              ],
+                            )),
 
-                                  // Text("Edad: "+ ),
-                                ]),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
-                              ),
-                              BotonReusable(
-                                  onPressed: () async {
-                                    Usuario recibir = save();
-                                    print("-------------");
-                                    print(recibir.cedula);
-                                    print(recibir.nombres);
-                                    print(recibir.apellidos);
-                                    print(recibir.fechaNacimiento);
+                            // Text("Edad: "+ ),
+                          ]),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        BotonReusable(
+                            onPressed: () async {
+                              Usuario recibir = save();
+                              print("-------------");
+                              print(recibir.cedula);
+                              print(recibir.nombres);
+                              print(recibir.apellidos);
+                              print(recibir.fechaNacimiento);
 
-                                    //  print(recibir.codigoUsuario);
-                                    print(recibir.token);
-                                    print(recibir.usuario);
-                                    print(recibir.contrasena);
-                                    print(recibir.tipoUsuario);
-                                    String decodePassword = recibir.contrasena;
-                                    await UsuarioServicio.crearUsuario(
-                                        jsonEncode(recibir.toJson()));
-                                    final String outputUser = utf8.decode(
-                                        latin1.encode(recibir.usuario),
-                                        allowMalformed: true);
+                              //  print(recibir.codigoUsuario);
+                              print(recibir.token);
+                              print(recibir.usuario);
+                              print(recibir.contrasena);
+                              print(recibir.tipoUsuario);
+                              String decodePassword = recibir.contrasena;
+                              await UsuarioServicio.crearUsuario(
+                                  jsonEncode(recibir.toJson()));
+                              final String outputUser = utf8.decode(
+                                  latin1.encode(recibir.usuario),
+                                  allowMalformed: true);
+                              print("llego" + decodePassword);
 
-                                    /*Navigator.pushReplacement(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (BuildContext context) => LoginPage(
+                                      builder: (BuildContext context) =>
+                                          LoginPage(
                                             usuario: outputUser,
                                             contrasena: decode(decodePassword),
-                                          )));*/
+                                          )));
 
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return new LoginPage(
-                                        usuario: outputUser,
-                                        contrasena: decode(decodePassword),
-                                      );
-                                    }), (Route<dynamic> route) => false);
-                                  },
-                                  label: "Crear"),
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
-              ],
-            )),
-      ),
+                              /* Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                return new LoginPage(
+                                  usuario: outputUser,
+                                  contrasena: decode(decodePassword),
+                                );
+                              }), (Route<dynamic> route) => false);*/
+                            },
+                            label: "Crear"),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      )),
     );
   }
 

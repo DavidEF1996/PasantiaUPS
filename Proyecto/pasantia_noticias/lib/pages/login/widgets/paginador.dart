@@ -55,7 +55,7 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
 
   String getNombre(String categoria) {
     if (categoria == "noticias") {
-      return "Noticias: ";
+      return "Noticia: ";
     } else if (categoria == "emergencias") {
       return "Urgente: ";
     } else if (categoria == "ofertasLaborales") {
@@ -114,7 +114,7 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                 data: SfDataPagerThemeData(
                   selectedItemTextStyle: TextStyle(color: Colors.black),
                   // itemTextStyle: TextStyle(color: Colors.black),
-                  selectedItemColor: Colors.yellow,
+                  selectedItemColor: Color.fromRGBO(252, 216, 127, 1),
                   itemBorderRadius: BorderRadius.circular(10),
                   //radio cirular del indicador de paginas
                 ),
@@ -181,8 +181,8 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                           );
                           // }
                         },
-                        child:
-                            Card(color: Colors.transparent, child: Container()),
+                        child: Container(
+                            color: Colors.transparent, child: Container()),
                       ),
                     ),
                   ),
@@ -212,41 +212,63 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
                         },
                         child: SingleChildScrollView(
                           child: Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(18, 69, 122, 1),
+                              border: Border(
+                                bottom:
+                                    BorderSide(width: 1, color: Colors.black),
+                                left: BorderSide(width: 1, color: Colors.black),
+                                right:
+                                    BorderSide(width: 1, color: Colors.black),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.8),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
                             //height: constraint.minHeight,
                             padding: EdgeInsets.all(
                                 responsive.diagonalPorcentaje(1)),
-                            color: Color.fromRGBO(0, 142, 211, 1),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                RichText(
-                                  text: TextSpan(
-                                    text: getNombre(nombre),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        fontSize:
-                                            responsive.diagonalPorcentaje(1.8)),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text: utf8.decode(
-                                              latin1.encode(data.tituloNoticia),
-                                              allowMalformed: true),
-                                          style: TextStyle(
-                                              fontSize: responsive
-                                                  .diagonalPorcentaje(1.7))),
-                                    ],
-                                  ),
-                                ),
-                                // Row(
-                                // crossAxisAlignment: CrossAxisAlignment.start,
-                                // children: [
-                                //padding(Icon(Icons.check)),
-                                //padding(Text(noticias.name, style: TextStyle(fontSize: 10))),
 
-                                //  ],
-                                // )
-                              ],
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  RichText(
+                                    text: TextSpan(
+                                      text: getNombre(nombre),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: responsive
+                                              .diagonalPorcentaje(1.8)),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: utf8.decode(
+                                                latin1
+                                                    .encode(data.tituloNoticia),
+                                                allowMalformed: true),
+                                            style: TextStyle(
+                                                fontSize: responsive
+                                                    .diagonalPorcentaje(1.7))),
+                                      ],
+                                    ),
+                                  ),
+                                  // Row(
+                                  // crossAxisAlignment: CrossAxisAlignment.start,
+                                  // children: [
+                                  //padding(Icon(Icons.check)),
+                                  //padding(Text(noticias.name, style: TextStyle(fontSize: 10))),
+
+                                  //  ],
+                                  // )
+                                ],
+                              ),
                             ),
                           ),
                         ),

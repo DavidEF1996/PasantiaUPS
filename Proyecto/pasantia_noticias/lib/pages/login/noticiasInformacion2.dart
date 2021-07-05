@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
@@ -50,13 +52,13 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
         appBar: new AppBar(
-          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(color: Colors.black),
           title: Container(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Cabecera(),
+                //  Cabecera(),
                 Text(" "),
                 //usuariologueado.botonSalir(context),
               ],
@@ -73,20 +75,8 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
               child:
                   //  Container(child: ,)
                   Container(
+                color: Colors.white,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment(
-                        0.7, 0), // 10% of the width, so there are ten blinds.
-                    colors: [
-                      const Color.fromRGBO(28, 26, 24, 1),
-                      const Color.fromRGBO(28, 26, 24, 1),
-                    ], // red to yellow
-                    tileMode: TileMode
-                        .repeated, // repeats the gradient over the canvas
-                  ),
-                ),
                 child: Column(
                   children: [
                     Container(
@@ -107,82 +97,78 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
                             "Noticias",
                             style: TextStyle(
                                 fontSize: responsive.diagonalPorcentaje(5),
-                                color: Color.fromRGBO(255, 226, 199, 1),
+                                color: Color.fromRGBO(19, 70, 123, 1),
                                 fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.all(responsive.diagonalPorcentaje(1.5)),
+                      padding: EdgeInsets.all(responsive.diagonalPorcentaje(1)),
                       alignment: Alignment.centerRight,
                       child: RichText(
                           text: TextSpan(
                               text: "Fecha: ",
                               style: TextStyle(
+                                  color: Color.fromRGBO(19, 70, 123, 1),
                                   fontWeight: FontWeight.bold,
-                                  fontSize: responsive.diagonalPorcentaje(2.5)),
+                                  fontFamily: 'raleway',
+                                  fontSize: responsive.diagonalPorcentaje(1.5)),
                               children: <TextSpan>[
                             TextSpan(
-                                text: fecha(noticias),
-                                style: TextStyle(
-                                    fontSize:
-                                        responsive.diagonalPorcentaje(2.2)))
+                              text: fecha(noticias),
+                              style: TextStyle(
+                                  color: Color.fromRGBO(19, 70, 123, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'raleway',
+                                  fontSize: responsive.diagonalPorcentaje(1.5)),
+                            )
                           ])),
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.all(responsive.diagonalPorcentaje(2.5)),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        //color: Colors.transparent,
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomRight,
-                          end: Alignment(1,
-                              1), // 10% of the width, so there are ten blinds.
-                          colors: [
-                            const Color.fromRGBO(101, 91, 80, 1),
-                            const Color.fromRGBO(28, 26, 24, 1),
-                          ], // red to yellow
-                          tileMode: TileMode
-                              .repeated, // repeats the gradient over the canvas
-                        ),
-                      ),
+                      padding: EdgeInsets.all(responsive.diagonalPorcentaje(0)),
                       child: Column(
                         children: [
                           Container(
                             decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
                               image: DecorationImage(
                                 image: NetworkImage(noticias.imagen),
                                 fit: BoxFit.cover,
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(1),
-                                    BlendMode.dstATop),
+                                //  colorFilter: new ColorFilter.mode(
+                                //    Colors.black.withOpacity(1), BlendMode.dstATop),
                               ),
                             ),
-                            width: MediaQuery.of(context).size.height * 0.5,
-                            height: MediaQuery.of(context).size.height * 0.35,
+                            width: MediaQuery.of(context).size.width - 5,
+                            height: MediaQuery.of(context).size.height * 0.6,
                           ),
                           SizedBox(
                             height: responsive.diagonalPorcentaje(2),
                           ),
                           Container(
+                            padding: EdgeInsets.all(
+                                responsive.diagonalPorcentaje(2)),
                             color: Colors.transparent,
                             child: RichText(
                               text: TextSpan(
-                                text: noticias.tituloNoticia + "\n",
+                                text: utf8.decode(
+                                    latin1
+                                        .encode(noticias.tituloNoticia + "\n"),
+                                    allowMalformed: true),
                                 style: TextStyle(
                                     fontSize: responsive.diagonalPorcentaje(3),
-                                    color: Color.fromRGBO(255, 226, 199, 1),
+                                    color: Color.fromRGBO(19, 70, 123, 1),
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
+                                  TextSpan(text: " " + "\n"),
                                   TextSpan(
-                                    text: " " + "\n",
-                                  ),
-                                  TextSpan(
-                                      text: noticias.contenidoNoticia,
+                                      text: utf8.decode(
+                                          latin1.encode(
+                                              noticias.contenidoNoticia),
+                                          allowMalformed: true),
                                       style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'sans',
                                           fontSize: responsive
                                               .diagonalPorcentaje(2.2))),
                                 ],
@@ -190,12 +176,42 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
                             ),
                           ),
                           SizedBox(
-                            height: responsive.diagonalPorcentaje(2),
+                            height: responsive.diagonalPorcentaje(1),
                           ),
                           SingleChildScrollView(
-                            child: InkWell(
-                                child: Text(Url()),
-                                onTap: () => launch('${Url()}')),
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Enlace Adjunto:",
+                                    style: TextStyle(
+                                      fontSize:
+                                          responsive.diagonalPorcentaje(3),
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(19, 70, 123, 1),
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    height: responsive.diagonalPorcentaje(5),
+                                    child: InkWell(
+                                        child: Text(Url(),
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                fontSize: responsive
+                                                    .diagonalPorcentaje(2.2),
+                                                color: Colors.blue)),
+                                        onTap: () => launch('${Url()}')),
+                                  ),
+                                  SizedBox(
+                                    height: responsive.diagonalPorcentaje(1),
+                                  ),
+                                ],
+                              ),
+                            ),
                           )
                         ],
                       ),

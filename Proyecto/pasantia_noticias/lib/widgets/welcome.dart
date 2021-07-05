@@ -22,10 +22,10 @@ class Welcome extends StatelessWidget {
                   right: 10,
                   child: Image(image: AssetImage('assets/logo.png')),
                   width: contraints.maxWidth,
-                  height: contraints.maxHeight * 0.65,
+                  height: contraints.maxHeight * 0.55,
                 ),
                 Positioned(
-                    top: contraints.maxHeight * 0.66,
+                    top: contraints.maxHeight * 0.56,
                     child: Column(
                       children: [
                         Text(
@@ -45,7 +45,7 @@ class Welcome extends StatelessWidget {
                       ],
                     )),
                 Positioned(
-                  top: contraints.maxHeight * 0.61,
+                  top: contraints.maxHeight * 0.53,
                   child: SvgPicture.asset('assets/Chica.svg'),
                   width: contraints.maxWidth * 0.3,
                   height: contraints.maxHeight * 0.34,

@@ -75,7 +75,7 @@ class _InputPasswordState extends State<InputPassword> {
       placeholder: this.widget.placeHolder,
       style: TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 16),
       placeholderStyle:
-          TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 16),
+          TextStyle(fontFamily: 'sans', color: Colors.black, fontSize: 12.5),
     );
   }
 }

@@ -68,6 +68,7 @@ flutter:
     - assets/escritura.svg
     - assets/no-image.png
     - assets/giata.png
+    - assets/giataLogo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

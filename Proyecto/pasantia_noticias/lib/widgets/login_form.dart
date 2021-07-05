@@ -55,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           InputTextFormulario(
             iconosPath: 'assets/usuario.svg',
-            placeHolder: 'Nombre de Usuario',
+            placeHolder: 'Correo Institucional o Usuario',
             validator: (text) {
               user = text;
               return text.trim().length > 0;
