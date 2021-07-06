@@ -97,15 +97,16 @@ class _MyAppState extends State<MyApp> {
 
       final snackBar = SnackBar(
           backgroundColor: Color.fromRGBO(255, 0, 122, 1),
-          action: SnackBarAction(
+          duration: const Duration(seconds: 5),
+          /* action: SnackBarAction(
             label: 'Ir',
             onPressed: () {
               navigatorKey.currentState
                   ?.pushNamed('message', arguments: message);
             },
-          ),
+          ),*/
           content: Text(
-            "Nueva notificacion: " +
+            "Nueva notificación: " +
                 _preferences.idNoticias.toString().toUpperCase(),
             style: TextStyle(color: Colors.white),
           ));

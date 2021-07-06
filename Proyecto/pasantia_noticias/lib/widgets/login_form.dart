@@ -173,7 +173,7 @@ class _LoginFormState extends State<LoginForm> {
           //  Navigator.push(context, route);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) {
-            return new PrincipalNoticias();
+            return new PrincipalNo();
           }), (Route<dynamic> route) => false);
         }
       } else {

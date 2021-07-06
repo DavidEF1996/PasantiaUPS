@@ -38,7 +38,19 @@ Widget image;
 List<dynamic> recibir = [];
 
 class AdministracionState extends State<Administracion> {
+  bool status = true;
   int _value = 1;
+  disableButton() {
+    setState(() {
+      status = false;
+    });
+  }
+
+  enableButton() {
+    setState(() {
+      status = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -317,6 +329,7 @@ class AdministracionState extends State<Administracion> {
   }
 
   Future<void> cargar() async {
+    mostrarAlerta(context, "Espere porfavor...", "Se esta enviando la noticia");
     final result =
         await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
 

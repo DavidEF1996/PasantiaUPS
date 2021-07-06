@@ -18,6 +18,7 @@ class Usuario {
     this.usuario,
     this.contrasena,
     this.tipoUsuario,
+    this.correo,
   });
 
   String cedula;
@@ -29,6 +30,7 @@ class Usuario {
   String usuario;
   String contrasena;
   String tipoUsuario;
+  String correo;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
         cedula: json["cedula"],
@@ -39,6 +41,7 @@ class Usuario {
         usuario: json["usuario"],
         contrasena: json["contrasena"],
         tipoUsuario: json["tipoUsuario"],
+        correo: json["correo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,5 +54,6 @@ class Usuario {
         "usuario": usuario,
         "contrasena": contrasena,
         "tipoUsuario": tipoUsuario,
+        "correo": correo,
       };
 }

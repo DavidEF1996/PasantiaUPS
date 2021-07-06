@@ -1,15 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:pasantia_noticias/model/correoModelo.dart';
 import 'package:pasantia_noticias/model/modeloUsuario.dart';
 import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
+import 'package:pasantia_noticias/services/servicioCorreo.dart';
 import 'package:pasantia_noticias/services/usuario.dart';
 import 'package:pasantia_noticias/utils/credencialesAleatorias.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
+import 'package:pasantia_noticias/widgets/cedula.dart';
+import 'package:pasantia_noticias/widgets/correo.dart';
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 import 'package:pasantia_noticias/widgets/login_form.dart';
 
@@ -56,16 +60,26 @@ class _CrearCuentaState extends State<CrearCuenta> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(4),
               alignment: Alignment.center,
               child: Text(
                 "Llene los campos porfavor:",
                 style: TextStyle(
                     color: Color.fromRGBO(0, 0, 102, 1),
-                    fontSize: responsive.diagonalPorcentaje(4)),
+                    fontSize: responsive.diagonalPorcentaje(3)),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              alignment: Alignment.center,
+              child: Text(
+                "Revise que tenga todos los campos con un visto verde y toque en Crear Cuenta:",
+                style: TextStyle(
+                    color: Color.fromRGBO(0, 0, 102, 1),
+                    fontSize: responsive.diagonalPorcentaje(2)),
               ),
             ),
             Container(
@@ -82,12 +96,13 @@ class _CrearCuentaState extends State<CrearCuenta> {
                     padding: EdgeInsets.all(19),
                     child: Column(
                       children: [
-                        InputTextFormulario(
+                        InputTextCedula(
                           iconosPath: 'assets/escritura.svg',
                           placeHolder: 'Cédula',
                           validator: (text) {
                             cedula = text;
-                            return text.trim().length > 0;
+
+                            return text.trim().length == 10;
                           },
                         ),
                         SizedBox(
@@ -115,7 +130,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        InputTextFormulario(
+                        InputTextCorreo(
                           iconosPath: 'assets/escritura.svg',
                           placeHolder: 'Correo Institucional',
                           validator: (text) {
@@ -191,45 +206,61 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         ),
                         BotonReusable(
                             onPressed: () async {
-                              Usuario recibir = save();
-                              print("-------------");
-                              print(recibir.cedula);
-                              print(recibir.nombres);
-                              print(recibir.apellidos);
-                              print(recibir.fechaNacimiento);
+                              if (cedula != "" &&
+                                  nombres != "" &&
+                                  apellidos != "" &&
+                                  correo != "") {
+                                mostrarAlerta(context,
+                                    "Espere mientras se crea su cuenta", "");
+                                Usuario recibir = save();
 
-                              //  print(recibir.codigoUsuario);
-                              print(recibir.token);
-                              print(recibir.usuario);
-                              print(recibir.contrasena);
-                              print(recibir.tipoUsuario);
-                              String decodePassword = recibir.contrasena;
-                              await UsuarioServicio.crearUsuario(
-                                  jsonEncode(recibir.toJson()));
-                              final String outputUser = utf8.decode(
-                                  latin1.encode(recibir.usuario),
-                                  allowMalformed: true);
-                              print("llego" + decodePassword);
+                                String decodePassword = recibir.contrasena;
+                                final result2 =
+                                    await UsuarioServicio.crearUsuario(
+                                        jsonEncode(recibir.toJson()));
+                                final String outputUser = utf8.decode(
+                                    latin1.encode(recibir.usuario),
+                                    allowMalformed: true);
+                                if (result2 != null) {
+                                  print("llegue");
+                                  Correo correo = Correo();
+                                  correo.correo = recibir.correo;
+                                  correo.asunto =
+                                      "Bienvenido, estos son los datos Iniciales de su Cuenta";
+                                  correo.cuerpo =
+                                      "Su usuario es ${recibir.usuario} y su contraseña es ${recibir.contrasena}";
+                                  final result =
+                                      await CorreoServicio.crearCorreo(
+                                          jsonEncode(correo.toJson()));
+                                  CorreoServicio.correoGlobal = recibir.correo;
 
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          LoginPage(
-                                            usuario: outputUser,
-                                            contrasena: decode(decodePassword),
-                                          )));
-
-                              /* Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                return new LoginPage(
-                                  usuario: outputUser,
-                                  contrasena: decode(decodePassword),
-                                );
-                              }), (Route<dynamic> route) => false);*/
+                                  mostrarAlerta(
+                                      context,
+                                      "Se ha creado su cuenta",
+                                      "Su usuario y contraseña a sido enviado a su correo");
+                                  print(
+                                      "ENVIEEEEEEEEEEEEEEEEEEEEE EL CORREOOOOOOOOOOO");
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                    return new LoginPage(
+                                      usuario: outputUser,
+                                      contrasena: decode(decodePassword),
+                                    );
+                                  }), (Route<dynamic> route) => false);
+                                  print("LLEGUEEEEEEEEEEEEEEEE A LOGIN");
+                                } else {
+                                  print("SALIOOOOOOOOOOOOO MALLLLL");
+                                  mostrarAlerta(context, "Algo a salido mal",
+                                      "Repita el proceso o espere un tiempo");
+                                }
+                              } else {
+                                print("llego");
+                                mostrarAlerta(
+                                    context, "Falta llenar algunos campos", "");
+                              }
                             },
-                            label: "Crear"),
+                            label: "Crear Cuenta"),
                       ],
                     ),
                   )
@@ -262,6 +293,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
   Usuario save() {
     List<String> credenciales = generateUser(nombres, apellidos);
     Usuario d = new Usuario();
+
     d.cedula = cedula;
     d.nombres = nombres;
     d.apellidos = apellidos;
@@ -270,6 +302,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
     d.usuario = credenciales[0];
     d.contrasena = encode(credenciales[1]);
     d.tipoUsuario = "usuarios";
+    d.correo = correo;
     print(credenciales[0]);
     print(apellidos);
     return d;
