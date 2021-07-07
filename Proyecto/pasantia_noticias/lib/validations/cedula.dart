@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.Dart';
+import 'package:pasantia_noticias/utils/ValidacionesGlobales.dart';
 
-class InputTextCorreo extends StatefulWidget {
+class InputTextCedula extends StatefulWidget {
   final String iconosPath;
   final String placeHolder, initValue;
   final bool Function(String text) validator;
   final usuario;
-  const InputTextCorreo(
+  const InputTextCedula(
       {Key key,
       @required this.iconosPath,
       @required this.placeHolder,
@@ -19,10 +20,10 @@ class InputTextCorreo extends StatefulWidget {
         super(key: key);
 
   @override
-  _InputTextCorreoState createState() => _InputTextCorreoState();
+  _InputTextCedulaState createState() => _InputTextCedulaState();
 }
 
-class _InputTextCorreoState extends State<InputTextCorreo> {
+class _InputTextCedulaState extends State<InputTextCedula> {
   TextEditingController _controller;
   bool _validationOk = false;
 
@@ -43,32 +44,21 @@ class _InputTextCorreoState extends State<InputTextCorreo> {
   void _checkValidation() {
     final isOk = widget.validator(_controller.text);
 
-    String recibir = validateEmail(_controller.text);
-    if (recibir == null) {
+    bool recibir = validarCedula(_controller.text);
+    if (recibir == true) {
       if (_validationOk != isOk) {
         setState(() {
           _validationOk = isOk;
+          ValidacionesGlobales.validacionCedula = true;
         });
       }
     } else {
       setState(() {
         _validationOk = false;
+        ValidacionesGlobales.validacionCedula = false;
       });
     }
     //   }
-  }
-
-  String validateEmail(String value) {
-    String pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(pattern);
-    if (value.length == 0) {
-      return "El correo es necesario";
-    } else if (!regExp.hasMatch(value)) {
-      return "Correo invalido";
-    } else {
-      return null;
-    }
   }
 
   bool validarCedula(String cedula) {
@@ -92,6 +82,9 @@ class _InputTextCorreoState extends State<InputTextCorreo> {
     return CupertinoTextField(
       onChanged: (text) => _checkValidation(),
       controller: _controller,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(10),
+      ],
       decoration: BoxDecoration(color: Colors.white),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       prefix: Container(

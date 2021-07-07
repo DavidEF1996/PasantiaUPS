@@ -8,12 +8,16 @@ import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/servicioCorreo.dart';
 import 'package:pasantia_noticias/services/usuario.dart';
+import 'package:pasantia_noticias/utils/ValidacionesGlobales.dart';
 import 'package:pasantia_noticias/utils/credencialesAleatorias.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
+import 'package:pasantia_noticias/validations/apellidos.dart';
+import 'package:pasantia_noticias/validations/cedula.dart';
+import 'package:pasantia_noticias/validations/correo.dart';
+import 'package:pasantia_noticias/validations/nombres.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
-import 'package:pasantia_noticias/widgets/cedula.dart';
-import 'package:pasantia_noticias/widgets/correo.dart';
+
 import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
 import 'package:pasantia_noticias/widgets/login_form.dart';
 
@@ -30,6 +34,27 @@ String cedula;
 String correo;
 
 class _CrearCuentaState extends State<CrearCuenta> {
+  bool isButtonClickable;
+  @override
+  void initState() {
+    super.initState();
+    isButtonClickable = true;
+  }
+
+  void ocultarBoton() {
+    setState(() {
+      isButtonClickable = false;
+      print("Clicked Once");
+    });
+  }
+
+  void mostrarBoton() {
+    setState(() {
+      isButtonClickable = true;
+      print("Clicked Once");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
@@ -69,17 +94,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                 "Llene los campos porfavor:",
                 style: TextStyle(
                     color: Color.fromRGBO(0, 0, 102, 1),
-                    fontSize: responsive.diagonalPorcentaje(3)),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.center,
-              child: Text(
-                "Revise que tenga todos los campos con un visto verde y toque en Crear Cuenta:",
-                style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 102, 1),
-                    fontSize: responsive.diagonalPorcentaje(2)),
+                    fontSize: responsive.diagonalPorcentaje(4)),
               ),
             ),
             Container(
@@ -108,7 +123,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        InputTextFormulario(
+                        InputTextNomApe(
                           iconosPath: 'assets/escritura.svg',
                           placeHolder: 'Nombres',
                           validator: (text) {
@@ -119,7 +134,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        InputTextFormulario(
+                        InputTextApe(
                           iconosPath: 'assets/escritura.svg',
                           placeHolder: 'Apellidos',
                           validator: (text) {
@@ -132,7 +147,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         ),
                         InputTextCorreo(
                           iconosPath: 'assets/escritura.svg',
-                          placeHolder: 'Correo Institucional',
+                          placeHolder: 'Correo Electrónico',
                           validator: (text) {
                             correo = text;
                             return text.trim().length > 0;
@@ -182,7 +197,35 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                         ),
                                       ],
                                     ),
-                                    Text(
+                                    Container(
+                                      padding: EdgeInsets.all(
+                                          responsive.diagonalPorcentaje(1)),
+                                      alignment: Alignment.centerRight,
+                                      child: RichText(
+                                          text: TextSpan(
+                                              text:
+                                                  "Su fecha de nacimiento es: ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontFamily: 'sans'),
+                                              children: <TextSpan>[
+                                            TextSpan(
+                                                text: currentDate.year
+                                                        .toString() +
+                                                    "/" +
+                                                    currentDate.month
+                                                        .toString() +
+                                                    "/" +
+                                                    currentDate.day.toString(),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: responsive
+                                                      .diagonalPorcentaje(2.5),
+                                                  fontFamily: 'sans',
+                                                ))
+                                          ])),
+                                    ),
+                                    /* Text(
                                         'Su fecha de nacimiento es: ' +
                                             currentDate.year.toString() +
                                             "/" +
@@ -192,7 +235,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                         style: TextStyle(
                                             fontFamily: 'sans',
                                             color: Colors.black,
-                                            fontSize: 16)),
+                                            fontSize: 16)),*/
                                   ],
                                 )
                               ],
@@ -204,63 +247,97 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        BotonReusable(
-                            onPressed: () async {
-                              if (cedula != "" &&
-                                  nombres != "" &&
-                                  apellidos != "" &&
-                                  correo != "") {
-                                mostrarAlerta(context,
-                                    "Espere mientras se crea su cuenta", "");
-                                Usuario recibir = save();
+                        Visibility(
+                          visible: isButtonClickable,
+                          child: BotonReusable(
+                              onPressed: () async {
+                                if (isButtonClickable) {
+                                  ocultarBoton();
+                                  if (cedula != "" &&
+                                      nombres != "" &&
+                                      apellidos != "" &&
+                                      correo != "" &&
+                                      ValidacionesGlobales.validacionCedula !=
+                                          false &&
+                                      ValidacionesGlobales.validarNombre !=
+                                          false &&
+                                      ValidacionesGlobales.validarApellido !=
+                                          false &&
+                                      ValidacionesGlobales.validacionCorreo !=
+                                          false) {
+                                    if (currentDate.day != DateTime.now().day) {
+                                      ocultarBoton();
+                                      mostrarAlerta(
+                                          context,
+                                          "Espere mientras se crea su cuenta",
+                                          "");
+                                      Usuario recibir = save();
 
-                                String decodePassword = recibir.contrasena;
-                                final result2 =
-                                    await UsuarioServicio.crearUsuario(
-                                        jsonEncode(recibir.toJson()));
-                                final String outputUser = utf8.decode(
-                                    latin1.encode(recibir.usuario),
-                                    allowMalformed: true);
-                                if (result2 != null) {
-                                  print("llegue");
-                                  Correo correo = Correo();
-                                  correo.correo = recibir.correo;
-                                  correo.asunto =
-                                      "Bienvenido, estos son los datos Iniciales de su Cuenta";
-                                  correo.cuerpo =
-                                      "Su usuario es ${recibir.usuario} y su contraseña es ${recibir.contrasena}";
-                                  final result =
-                                      await CorreoServicio.crearCorreo(
-                                          jsonEncode(correo.toJson()));
-                                  CorreoServicio.correoGlobal = recibir.correo;
+                                      String decodePassword =
+                                          recibir.contrasena;
+                                      final result2 =
+                                          await UsuarioServicio.crearUsuario(
+                                              jsonEncode(recibir.toJson()));
+                                      final String outputUser = utf8.decode(
+                                          latin1.encode(recibir.usuario),
+                                          allowMalformed: true);
+                                      if (result2 != null) {
+                                        print("llegue");
+                                        Correo correo = Correo();
+                                        ValidacionesGlobales.correoEnviar =
+                                            recibir.correo;
+                                        correo.correo = recibir.correo;
+                                        correo.asunto =
+                                            "Bienvenido, estos son los datos Iniciales de su Cuenta";
+                                        correo.cuerpo =
+                                            "Su usuario es ${recibir.usuario} y su contraseña es ${recibir.contrasena}";
+                                        final result =
+                                            await CorreoServicio.crearCorreo(
+                                                jsonEncode(correo.toJson()));
+                                        CorreoServicio.correoGlobal =
+                                            recibir.correo;
 
-                                  mostrarAlerta(
-                                      context,
-                                      "Se ha creado su cuenta",
-                                      "Su usuario y contraseña a sido enviado a su correo");
-                                  print(
-                                      "ENVIEEEEEEEEEEEEEEEEEEEEE EL CORREOOOOOOOOOOO");
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                    return new LoginPage(
-                                      usuario: outputUser,
-                                      contrasena: decode(decodePassword),
-                                    );
-                                  }), (Route<dynamic> route) => false);
-                                  print("LLEGUEEEEEEEEEEEEEEEE A LOGIN");
-                                } else {
-                                  print("SALIOOOOOOOOOOOOO MALLLLL");
-                                  mostrarAlerta(context, "Algo a salido mal",
-                                      "Repita el proceso o espere un tiempo");
+                                        mostrarAlerta(
+                                            context,
+                                            "Se ha creado su cuenta",
+                                            "Su usuario y contraseña a sido enviado a su correo");
+                                        print(
+                                            "ENVIEEEEEEEEEEEEEEEEEEEEE EL CORREOOOOOOOOOOO");
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(builder:
+                                                    (BuildContext context) {
+                                          return new LoginPage(
+                                            usuario: outputUser,
+                                            contrasena: decode(decodePassword),
+                                          );
+                                        }), (Route<dynamic> route) => false);
+                                        print("LLEGUEEEEEEEEEEEEEEEE A LOGIN");
+                                      } else {
+                                        print("SALIOOOOOOOOOOOOO MALLLLL");
+                                        mostrarAlerta(
+                                            context,
+                                            "Algo a salido mal",
+                                            "Repita el proceso o espere un tiempo");
+                                      }
+                                    } else {
+                                      mostrarAlerta(context,
+                                          "Revise la fecha insertada", "");
+
+                                      mostrarBoton();
+                                    }
+                                  } else {
+                                    print("llego");
+                                    mostrarAlerta(
+                                        context,
+                                        "Los campos deben estar llenos y con el visto verde",
+                                        "");
+                                    mostrarBoton();
+                                  }
                                 }
-                              } else {
-                                print("llego");
-                                mostrarAlerta(
-                                    context, "Falta llenar algunos campos", "");
-                              }
-                            },
-                            label: "Crear Cuenta"),
+                              },
+                              label: "Crear Cuenta"),
+                        ),
                       ],
                     ),
                   )

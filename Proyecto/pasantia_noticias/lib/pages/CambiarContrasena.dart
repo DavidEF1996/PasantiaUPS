@@ -8,6 +8,7 @@ import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/servicioCorreo.dart';
+import 'package:pasantia_noticias/utils/ValidacionesGlobales.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 
 class CambioContrasena extends StatefulWidget {
@@ -52,7 +53,7 @@ class _State extends State<CambioContrasena> {
                   child: Text(
                     'Bienvenido',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.blue,
                         fontWeight: FontWeight.w500,
                         fontSize: 50),
                   )),
@@ -134,7 +135,7 @@ class _State extends State<CambioContrasena> {
             "Ahora puede loguearse usando su nueva contraseña");
 
         Correo correo = Correo();
-        correo.correo = "degasf@est.ups.edu.ec";
+        correo.correo = ValidacionesGlobales.correoEnviar;
         correo.asunto = "Contraseña actualizada";
         correo.cuerpo = "Su nueva contraseña es: ${pass.toString()}";
         final result =

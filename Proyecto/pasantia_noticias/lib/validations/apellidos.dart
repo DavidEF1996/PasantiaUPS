@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.Dart';
+import 'package:pasantia_noticias/utils/ValidacionesGlobales.dart';
 
-class InputTextCedula extends StatefulWidget {
+class InputTextApe extends StatefulWidget {
   final String iconosPath;
   final String placeHolder, initValue;
   final bool Function(String text) validator;
   final usuario;
-  const InputTextCedula(
+  const InputTextApe(
       {Key key,
       @required this.iconosPath,
       @required this.placeHolder,
@@ -19,10 +20,10 @@ class InputTextCedula extends StatefulWidget {
         super(key: key);
 
   @override
-  _InputTextCedulaState createState() => _InputTextCedulaState();
+  _InputTextApeState createState() => _InputTextApeState();
 }
 
-class _InputTextCedulaState extends State<InputTextCedula> {
+class _InputTextApeState extends State<InputTextApe> {
   TextEditingController _controller;
   bool _validationOk = false;
 
@@ -43,19 +44,57 @@ class _InputTextCedulaState extends State<InputTextCedula> {
   void _checkValidation() {
     final isOk = widget.validator(_controller.text);
 
-    bool recibir = validarCedula(_controller.text);
-    if (recibir == true) {
+    String recibir = validateName(_controller.text);
+    if (recibir == null) {
       if (_validationOk != isOk) {
         setState(() {
           _validationOk = isOk;
+          ValidacionesGlobales.validarApellido = true;
         });
       }
     } else {
       setState(() {
         _validationOk = false;
+        ValidacionesGlobales.validarApellido = false;
       });
     }
     //   }
+  }
+
+  String validateEmail(String value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return "El correo es necesario";
+    } else if (!regExp.hasMatch(value)) {
+      return "Correo invalido";
+    } else {
+      return null;
+    }
+  }
+
+  String validateName(String value) {
+    //String pattern = r"[ 0-9A-Za-zñÑáéíóúÁÉÍÓÚ¡!¿?@#$%()=+-€/.,]{1,50}";
+    String pattern = r'(^[a-zA-Z-ñÑáéíóúÁÉÍÓÚ ]*$)';
+    List<String> recibir = value.split(" ");
+
+    RegExp regExp = new RegExp(pattern);
+
+    if (value.length == 0) {
+      return "El campo es necesario";
+    } else if (recibir.length < 2) {
+      return "No puede estar solo un numero";
+    } else if (!regExp.hasMatch(value)) {
+      return "El campo debe contener solo letras";
+    }
+
+    if (recibir[1] == "") {
+      return "Falta el segundo nombre";
+    } else {
+      print("RECIBIIIIIIIIIIIIIIR" + recibir[1].toString());
+      return null;
+    }
   }
 
   bool validarCedula(String cedula) {
@@ -79,9 +118,6 @@ class _InputTextCedulaState extends State<InputTextCedula> {
     return CupertinoTextField(
       onChanged: (text) => _checkValidation(),
       controller: _controller,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(10),
-      ],
       decoration: BoxDecoration(color: Colors.white),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       prefix: Container(

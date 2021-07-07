@@ -27,7 +27,7 @@ class UsuarioServicio {
 
       return response;
     } else {
-      return null;
+      return jsonDecode(response.body);
     }
   }
 }

@@ -32,6 +32,7 @@ List<Noticias> noticias = Noticias.noticias_album();
 final _preferences = new Preferences();
 List<int> imageBytes;
 int limite = 250;
+int contador = 0;
 String mostrarlimite = "250";
 var file;
 Widget image;
@@ -40,15 +41,28 @@ List<dynamic> recibir = [];
 class AdministracionState extends State<Administracion> {
   bool status = true;
   int _value = 1;
-  disableButton() {
+  bool isButtonClickable;
+  @override
+  void initState() {
+    super.initState();
+    titulo.text = "";
+    contenido.text = "";
+    enlaces.text = "";
+    foto = null;
+    isButtonClickable = true;
+  }
+
+  void ocultarBoton() {
     setState(() {
-      status = false;
+      isButtonClickable = false;
+      print("Clicked Once");
     });
   }
 
-  enableButton() {
+  void mostrarBoton() {
     setState(() {
-      status = true;
+      isButtonClickable = true;
+      print("Clicked Once");
     });
   }
 
@@ -204,7 +218,11 @@ class AdministracionState extends State<Administracion> {
                                 } else {
                                   mostrarlimite = limite.toString();
                                 }
+
                                 limite = limite - 1;
+                                contador = contador + 1;
+                                print("El contador" + contador.toString());
+                                print("El value" + value.length.toString());
                               });
                             },
                             cursorColor: Colors.black,
@@ -252,54 +270,62 @@ class AdministracionState extends State<Administracion> {
                         ],
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(responsive.diagonalPorcentaje(2)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          BotonReusable(
-                              onPressed: () {
-                                String categoria;
-                                if (_value == 0) {
-                                  categoria = "";
-                                } else if (_value == 1) {
-                                  // print("Noticias");
-                                  categoria = "emergencias";
-                                } else if (_value == 2) {
-                                  categoria = "noticias";
-                                  // print("Estado de solicitudes");
-                                } else if (_value == 3) {
-                                  categoria = "ofertasLaborales";
-                                } else if (_value == 4) {
-                                  categoria = "ofertasCursos";
-                                }
+                    Visibility(
+                      visible: isButtonClickable,
+                      child: Container(
+                        padding:
+                            EdgeInsets.all(responsive.diagonalPorcentaje(2)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            BotonReusable(
+                                onPressed: () {
+                                  if (isButtonClickable) {
+                                    String categoria;
+                                    if (_value == 0) {
+                                      categoria = "";
+                                    } else if (_value == 1) {
+                                      // print("Noticias");
+                                      categoria = "emergencias";
+                                    } else if (_value == 2) {
+                                      categoria = "noticias";
+                                      // print("Estado de solicitudes");
+                                    } else if (_value == 3) {
+                                      categoria = "ofertasLaborales";
+                                    } else if (_value == 4) {
+                                      categoria = "ofertasCursos";
+                                    }
 
-                                if (categoria != "" &&
-                                    foto != null &&
-                                    titulo.text != "" &&
-                                    contenido.text != "") {
-                                  print("tengo datos");
-                                  save(categoria);
-                                } else {
-                                  mostrarAlerta(
-                                      context,
-                                      "Revise la Información",
-                                      "Debe llenar todos los campos, solo el de enlaces es opcional");
-                                }
-                                //
-                              },
-                              label: "Guardar"),
-                          BotonReusable(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  new MaterialPageRoute(
-                                    builder: (context) => new PrincipalNo(),
-                                  ),
-                                );
-                              },
-                              label: "Cancelar")
-                        ],
+                                    if (categoria != "" &&
+                                        foto != null &&
+                                        titulo.text != "" &&
+                                        contenido.text != "") {
+                                      print("tengo datos");
+                                      save(categoria);
+                                    } else {
+                                      mostrarBoton();
+                                      mostrarAlerta(
+                                          context,
+                                          "Revise la Información",
+                                          "Debe llenar todos los campos, solo el de enlaces es opcional");
+                                    }
+                                  }
+
+                                  //
+                                },
+                                label: "Guardar"),
+                            BotonReusable(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                      builder: (context) => new PrincipalNo(),
+                                    ),
+                                  );
+                                },
+                                label: "Cancelar")
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -329,6 +355,7 @@ class AdministracionState extends State<Administracion> {
   }
 
   Future<void> cargar() async {
+    ocultarBoton();
     mostrarAlerta(context, "Espere porfavor...", "Se esta enviando la noticia");
     final result =
         await ServiciosNoticias.crearNoticia(jsonEncode(noticia.toJson()));
@@ -343,6 +370,7 @@ class AdministracionState extends State<Administracion> {
       }), (Route<dynamic> route) => false);
     } else {
       mostrarAlerta(context, "¡Error!", "No se pudo insertar correctamente");
+      mostrarBoton();
     }
   }
 

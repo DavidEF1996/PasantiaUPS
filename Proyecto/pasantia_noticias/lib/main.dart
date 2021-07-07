@@ -69,17 +69,6 @@ class _MyAppState extends State<MyApp> {
         _preferences.noticia4 = contadorOfertasCursos;
       }
 
-      /* if (cont == 0) {
-        _preferences.noticia1 = 0;
-      } else if (cont == 1) {
-        _preferences.noticia2 = 0;
-        _preferences.noticia1 = 1;
-      } else if (cont == 2) {
-        _preferences.noticia3 = 0;
-        _preferences.noticia2 = 1;
-        _preferences.noticia1 = 2;
-      }*/
-
       if (PushNotificationService.abrir == true) {
         /*List<NoticiaM> datos = [];
         Future<void> llenar() async {
@@ -98,13 +87,13 @@ class _MyAppState extends State<MyApp> {
       final snackBar = SnackBar(
           backgroundColor: Color.fromRGBO(255, 0, 122, 1),
           duration: const Duration(seconds: 5),
-          /* action: SnackBarAction(
+          action: SnackBarAction(
             label: 'Ir',
             onPressed: () {
               navigatorKey.currentState
                   ?.pushNamed('message', arguments: message);
             },
-          ),*/
+          ),
           content: Text(
             "Nueva notificación: " +
                 _preferences.idNoticias.toString().toUpperCase(),

@@ -109,4 +109,14 @@ class Preferences {
   set noticia4(int noticia4) {
     _prefs.setInt('noticia4', noticia4);
   }
+
+  get contadorGenerales {
+    return _prefs.getInt('contadorGenerales') ?? '';
+    //return _prefs.getString('id');
+  }
+
+  // SET JSESSIONID
+  set contadorGenerales(int contadorGenerales) {
+    _prefs.setInt('contadorGenerales', contadorGenerales);
+  }
 }

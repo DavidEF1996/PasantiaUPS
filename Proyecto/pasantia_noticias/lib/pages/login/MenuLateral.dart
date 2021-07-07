@@ -244,6 +244,14 @@ class _MenuLateralState extends State<MenuLateral> {
               child: ListTile(
                 title: Text("Administracion"),
                 onTap: () {
+                  /* Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new Administracion(),
+                    ),
+                  );*/
+
+                  Navigator.of(context).pop();
                   Navigator.push(
                     context,
                     new MaterialPageRoute(
