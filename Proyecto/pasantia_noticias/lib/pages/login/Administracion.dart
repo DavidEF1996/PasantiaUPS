@@ -32,7 +32,7 @@ List<Noticias> noticias = Noticias.noticias_album();
 final _preferences = new Preferences();
 List<int> imageBytes;
 int limite = 250;
-int contador = 0;
+int contador = 1;
 String mostrarlimite = "250";
 var file;
 Widget image;
@@ -212,17 +212,37 @@ class AdministracionState extends State<Administracion> {
                           TextField(
                             onChanged: (value) {
                               setState(() {
-                                if (limite < 0) {
-                                  // mostrarlimite =
-                                  //   "No puede tener mas de 250 caracteres";
-                                } else {
-                                  mostrarlimite = limite.toString();
-                                }
-
-                                limite = limite - 1;
-                                contador = contador + 1;
                                 print("El contador" + contador.toString());
                                 print("El value" + value.length.toString());
+                                if (value.length == contador) {
+                                  if (limite < 0) {
+                                    // mostrarlimite =
+                                    //   "No puede tener mas de 250 caracteres";
+                                  } else {
+                                    limite = limite - 1;
+                                    contador = contador + 1;
+                                    mostrarlimite = limite.toString();
+                                  }
+
+                                  print("El contador een este punto" +
+                                      contador.toString());
+                                  print("El value en este punto" +
+                                      value.length.toString());
+                                } else if (value.length < contador) {
+                                  if (limite < 0) {
+                                    // mostrarlimite =
+                                    //   "No puede tener mas de 250 caracteres";
+                                  } else {
+                                    limite = limite + 1;
+                                    contador = contador - 1;
+                                    mostrarlimite = limite.toString();
+                                  }
+
+                                  print("El contador cuando disminuye" +
+                                      contador.toString());
+                                  print("El value cuando disminuye" +
+                                      value.length.toString());
+                                }
                               });
                             },
                             cursorColor: Colors.black,

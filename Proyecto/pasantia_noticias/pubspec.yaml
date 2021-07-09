@@ -71,6 +71,10 @@ flutter:
     - assets/no-image.png
     - assets/giata.png
     - assets/giataLogo.jpg
+    - assets/candado.svg
+    - assets/cedula.svg
+    - assets/escribir.svg
+    - assets/email.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

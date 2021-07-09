@@ -26,8 +26,8 @@ class _MenuLateralState extends State<MenuLateral> {
   void initState() {
     super.initState();
     final _preferences = new Preferences();
-    print(_preferences.nombres);
-    print(_preferences.roles);
+    //print(_preferences.nombres);
+    //print(_preferences.roles);
     rol = _preferences.roles.toString();
     contadorEmeregencias = _preferences.noticia1;
     contadorNoticias = _preferences.noticia2;

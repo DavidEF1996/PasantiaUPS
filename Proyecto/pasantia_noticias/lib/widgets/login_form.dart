@@ -66,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
             height: responsive.diagonalPorcentaje(4),
           ),
           InputPassword(
-            iconosPath: 'assets/contrasena.svg',
+            iconosPath: 'assets/candado.svg',
             placeHolder: 'Contraseña',
             validator: (text) {
               password = text;

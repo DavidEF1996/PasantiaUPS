@@ -85,34 +85,45 @@ class _CrearCuentaState extends State<CrearCuenta> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
+              height: MediaQuery.of(context).size.height * 0.00005,
             ),
-            Container(
-              padding: EdgeInsets.all(4),
-              alignment: Alignment.center,
-              child: Text(
-                "Llene los campos porfavor:",
-                style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 102, 1),
-                    fontSize: responsive.diagonalPorcentaje(4)),
+            Center(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Llene los campos por favor:",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(0, 0, 102, 1),
+                      fontSize: responsive.diagonalPorcentaje(4)),
+                ),
               ),
             ),
             Container(
               child: Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   Container(
                     width: responsive.diagonalPorcentaje(45),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(18, 69, 122, 0.8),
-                    ),
+                        borderRadius: BorderRadius.circular(15),
+                        // color: Color.fromRGBO(18, 69, 122, 0.8),
+
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color.fromRGBO(18, 69, 122, 1),
+                            Colors.grey,
+                          ],
+                        )),
                     padding: EdgeInsets.all(19),
                     child: Column(
                       children: [
                         InputTextCedula(
-                          iconosPath: 'assets/escritura.svg',
+                          iconosPath: 'assets/cedula.svg',
                           placeHolder: 'Cédula',
                           validator: (text) {
                             cedula = text;
@@ -124,7 +135,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
                         InputTextNomApe(
-                          iconosPath: 'assets/escritura.svg',
+                          iconosPath: 'assets/escribir.svg',
                           placeHolder: 'Nombres',
                           validator: (text) {
                             nombres = text;
@@ -135,7 +146,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
                         InputTextApe(
-                          iconosPath: 'assets/escritura.svg',
+                          iconosPath: 'assets/escribir.svg',
                           placeHolder: 'Apellidos',
                           validator: (text) {
                             apellidos = text;
@@ -146,7 +157,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
                         InputTextCorreo(
-                          iconosPath: 'assets/escritura.svg',
+                          iconosPath: 'assets/email.svg',
                           placeHolder: 'Correo Electrónico',
                           validator: (text) {
                             correo = text;
@@ -156,93 +167,99 @@ class _CrearCuentaState extends State<CrearCuenta> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                          child: Column(children: <Widget>[
-                            Container(
-                                child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                            child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.line_style,
-                                                size: 35,
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(255, 255, 255, 1)),
+                            child: Column(children: <Widget>[
+                              Container(
+                                  child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                              child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.rule,
+                                                  size: 35,
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        )),
-                                        Text("  Fecha de Nacimiento:   ",
-                                            style: TextStyle(
-                                                fontFamily: 'sans',
-                                                color: Colors.black,
-                                                fontSize: 16)),
-                                        IconButton(
-                                          onPressed: () => selectDate(context),
-                                          icon: Icon(Icons.date_range),
-                                          iconSize: 30,
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(
-                                          responsive.diagonalPorcentaje(1)),
-                                      alignment: Alignment.centerRight,
-                                      child: RichText(
-                                          text: TextSpan(
-                                              text:
-                                                  "Su fecha de nacimiento es: ",
+                                            ],
+                                          )),
+                                          Text("  Fecha de Nacimiento:   ",
                                               style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily: 'sans'),
-                                              children: <TextSpan>[
-                                            TextSpan(
-                                                text: currentDate.year
-                                                        .toString() +
-                                                    "/" +
-                                                    currentDate.month
-                                                        .toString() +
-                                                    "/" +
-                                                    currentDate.day.toString(),
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: responsive
-                                                      .diagonalPorcentaje(2.5),
                                                   fontFamily: 'sans',
-                                                ))
-                                          ])),
-                                    ),
-                                    /* Text(
-                                        'Su fecha de nacimiento es: ' +
-                                            currentDate.year.toString() +
-                                            "/" +
-                                            currentDate.month.toString() +
-                                            "/" +
-                                            currentDate.day.toString(),
-                                        style: TextStyle(
-                                            fontFamily: 'sans',
-                                            color: Colors.black,
-                                            fontSize: 16)),*/
-                                  ],
-                                )
-                              ],
-                            )),
+                                                  color: Colors.black,
+                                                  fontSize: 16)),
+                                          IconButton(
+                                            onPressed: () =>
+                                                selectDate(context),
+                                            icon: Icon(Icons.date_range),
+                                            iconSize: 30,
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(
+                                            responsive.diagonalPorcentaje(1)),
+                                        alignment: Alignment.centerRight,
+                                        child: RichText(
+                                            text: TextSpan(
+                                                text:
+                                                    "Su fecha de nacimiento es: ",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'sans'),
+                                                children: <TextSpan>[
+                                              TextSpan(
+                                                  text: currentDate.year
+                                                          .toString() +
+                                                      "/" +
+                                                      currentDate.month
+                                                          .toString() +
+                                                      "/" +
+                                                      currentDate.day
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: responsive
+                                                        .diagonalPorcentaje(
+                                                            2.5),
+                                                    fontFamily: 'sans',
+                                                  ))
+                                            ])),
+                                      ),
+                                      /* Text(
+                                          'Su fecha de nacimiento es: ' +
+                                              currentDate.year.toString() +
+                                              "/" +
+                                              currentDate.month.toString() +
+                                              "/" +
+                                              currentDate.day.toString(),
+                                          style: TextStyle(
+                                              fontFamily: 'sans',
+                                              color: Colors.black,
+                                              fontSize: 16)),*/
+                                    ],
+                                  )
+                                ],
+                              )),
 
-                            // Text("Edad: "+ ),
-                          ]),
+                              // Text("Edad: "+ ),
+                            ]),
+                          ),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
@@ -267,10 +284,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                           false) {
                                     if (currentDate.day != DateTime.now().day) {
                                       ocultarBoton();
-                                      mostrarAlerta(
-                                          context,
-                                          "Espere mientras se crea su cuenta",
-                                          "");
+
                                       Usuario recibir = save();
 
                                       String decodePassword =
@@ -319,6 +333,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                             context,
                                             "Algo a salido mal",
                                             "Repita el proceso o espere un tiempo");
+                                        mostrarBoton();
                                       }
                                     } else {
                                       mostrarAlerta(context,

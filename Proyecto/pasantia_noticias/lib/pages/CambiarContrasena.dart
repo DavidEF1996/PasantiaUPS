@@ -51,14 +51,15 @@ class _State extends State<CambioContrasena> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    'Bienvenido',
+                    'Nueva Contraseña',
                     style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 50),
+                        color: Color.fromRGBO(0, 0, 102, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35),
                   )),
               Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                color: Colors.white,
                 child: TextField(
                   obscureText: true,
                   controller: nuevaContrasena,
@@ -70,6 +71,7 @@ class _State extends State<CambioContrasena> {
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                color: Colors.white,
                 child: TextField(
                   obscureText: true,
                   controller: repNuevaContrasena,
