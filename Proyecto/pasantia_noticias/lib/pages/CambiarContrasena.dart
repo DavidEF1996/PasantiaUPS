@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pasantia_noticias/model/CambiarContrasenaModelo.dart';
 import 'package:pasantia_noticias/model/correoModelo.dart';
-import 'package:pasantia_noticias/pages/CrearCuenta.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
@@ -23,6 +23,10 @@ class _State extends State<CambioContrasena> {
   int _id;
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _id = widget.id;
     super.initState();
   }

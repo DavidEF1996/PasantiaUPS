@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pasantia_noticias/model/correoModelo.dart';
 import 'package:pasantia_noticias/model/modeloUsuario.dart';
-import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/servicioCorreo.dart';
@@ -17,11 +16,6 @@ import 'package:pasantia_noticias/validations/cedula.dart';
 import 'package:pasantia_noticias/validations/correo.dart';
 import 'package:pasantia_noticias/validations/nombres.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
-
-import 'package:pasantia_noticias/widgets/inputs_formulario.dart';
-import 'package:pasantia_noticias/widgets/login_form.dart';
-
-import 'CambiarContrasena.dart';
 
 class CrearCuenta extends StatefulWidget {
   @override
@@ -37,6 +31,10 @@ class _CrearCuentaState extends State<CrearCuenta> {
   bool isButtonClickable;
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.initState();
     isButtonClickable = true;
   }
@@ -332,7 +330,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                         mostrarAlerta(
                                             context,
                                             "Algo a salido mal",
-                                            "Repita el proceso o espere un tiempo");
+                                            "Este usuario ya existe o hubo un problema en el servidor");
                                         mostrarBoton();
                                       }
                                     } else {

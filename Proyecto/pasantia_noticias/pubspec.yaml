@@ -18,13 +18,13 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_svg: ^0.22.0
+  flutter_svg: ^0.19.0
   cupertino_icons: ^1.0.0
   syncfusion_flutter_datagrid: ^19.1.54-beta.1
   flutter_pagewise: ^2.0.1
@@ -45,6 +45,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.8.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icono.png"
+  adaptive_icon_background: "assets/icons/icono.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -75,6 +82,7 @@ flutter:
     - assets/cedula.svg
     - assets/escribir.svg
     - assets/email.svg
+    - assets/icons/icono.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
