@@ -303,9 +303,12 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                             "Bienvenido, estos son los datos Iniciales de su Cuenta";
                                         correo.cuerpo =
                                             "Su usuario es ${recibir.usuario} y su contraseña es ${recibir.contrasena}";
+                                        /* final result =
+                                            await CorreoServicio.crearCorreo(
+                                                jsonEncode(correo.toJson()));*/
                                         final result =
                                             await CorreoServicio.crearCorreo(
-                                                jsonEncode(correo.toJson()));
+                                                correo);
                                         CorreoServicio.correoGlobal =
                                             recibir.correo;
 

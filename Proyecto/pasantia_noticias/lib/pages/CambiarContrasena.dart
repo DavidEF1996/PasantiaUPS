@@ -144,8 +144,9 @@ class _State extends State<CambioContrasena> {
         correo.correo = ValidacionesGlobales.correoEnviar;
         correo.asunto = "Contraseña actualizada";
         correo.cuerpo = "Su nueva contraseña es: ${pass.toString()}";
-        final result =
-            await CorreoServicio.crearCorreo(jsonEncode(correo.toJson()));
+        //final result =
+        //  await CorreoServicio.crearCorreo(jsonEncode(correo.toJson()));
+        final result = await CorreoServicio.crearCorreo(correo);
         final _preferences = new Preferences();
         _preferences.id = id.toString();
 

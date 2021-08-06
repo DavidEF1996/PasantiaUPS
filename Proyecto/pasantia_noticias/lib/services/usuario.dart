@@ -18,6 +18,8 @@ class UsuarioServicio {
     http.Response response = await http.post(Uri.parse(URL + servicio_crear),
         body: json, headers: headers, encoding: Encoding.getByName('utf-8'));
 
+    print("La ip es: " + URL + servicio_crear);
+
     if (response.statusCode == 200) {
       print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       print(response.body);
