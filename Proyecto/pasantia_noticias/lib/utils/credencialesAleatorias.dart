@@ -28,8 +28,7 @@ List<String> generateUser(String nombre, String apellido) {
           numeroPassword.toString() +
           inicialSegundoApellido[0] +
           inicialPrimerApellido;
-      print(usuario);
-      print(numero);
+
       break;
     case 1:
       usuario = inicialPrimerNombre[0] +
@@ -40,8 +39,6 @@ List<String> generateUser(String nombre, String apellido) {
           numeroPassword.toString() +
           inicialSegundoApellido[0] +
           inicialPrimerApellido;
-      print(usuario);
-      print(numero);
 
       break;
     case 2:
@@ -53,7 +50,7 @@ List<String> generateUser(String nombre, String apellido) {
           numeroPassword.toString() +
           inicialSegundoApellido[0] +
           inicialPrimerApellido;
-      print(usuario);
+
       break;
     case 3:
       usuario = inicialPrimerApellido.toLowerCase() +
@@ -64,8 +61,7 @@ List<String> generateUser(String nombre, String apellido) {
           numeroPassword.toString() +
           inicialSegundoApellido[0] +
           inicialPrimerApellido;
-      print(usuario);
-      print(numero);
+
       break;
   }
 

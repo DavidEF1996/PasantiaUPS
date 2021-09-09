@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
-import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
-import 'package:pasantia_noticias/pages/login/widgets/ListNotices.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class PrincipalEmergencias extends StatelessWidget {
-  List<Noticias> noticias = Noticias.noticias_album();
-
   @override
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)?.settings.arguments ?? 'No tiene informacion';
 
-    print("Esto es lo que viene en la notificacion" + args);
-    print(UserService.usuariologueado);
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: new AppBar(

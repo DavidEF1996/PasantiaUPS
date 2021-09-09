@@ -45,8 +45,6 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
 
     pageCount =
         (datos.length / rowsPerPage).ceilToDouble(); //cantidad de paginas
-
-    print(datos.length);
   }
 
   void rebuildList() {
@@ -72,7 +70,6 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
       final List<Widget> stackChildren = [];
 
       if (_products.isNotEmpty) {
-        print("Esteeee es el indeeex " + indexBuilder.toString());
         stackChildren.add(ListView.custom(
             childrenDelegate: CustomSliverChildBuilderDelegate(indexBuilder)));
       }
@@ -281,49 +278,6 @@ class _DataPagerWithListView extends State<DataPagerWithListView> {
       ),
     ));
   }
-
-  /* String textoNuevaNotificacion(int index) {
-    print("Se llamo de nuevo");
-
-    print("UNOOOO" + Auxiliar.datosNoticia.toString());
-    print("DOOOSS" + index.toString());
-    DatosNoticia datos = new DatosNoticia();
-    int contador;
-    int valorInicial;
-    final _preferences = new Preferences();
-    //_preferences.numeroNoticia = 0;
-    valorInicial = _preferences.numeroNoticia;
-
-    if (index < valorInicial && indicePaginasAux == 0) {
-      datos.indice = index;
-      datos.estado = true;
-
-      if (Auxiliar.datosNoticia.length <= 2) {
-        Auxiliar.datosNoticia.add(datos);
-      }
-
-      return "Nueva Noticia";
-    } else {
-      datos.indice = index;
-      datos.estado = false;
-      if (Auxiliar.datosNoticia.length <= 2) {
-        Auxiliar.datosNoticia.add(datos);
-      }
-
-      return "";
-    }
-  }*/
-
-  /* String textoNuevaNotificacion(int index) {
-    print("Dato = " + Auxiliar.datosNoticia[0].estado.toString());
-    final _preferences = new Preferences();
-    int valorInicial = _preferences.numeroNoticia;
-    if (index < valorInicial) {
-      return "Nueva Noticia";
-    } else {
-      return "";
-    }
-  }*/
 }
 
 Widget padding(Widget widget) {

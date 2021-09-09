@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:core';
-
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'dart:io' as Io;
 import 'package:image_picker/image_picker.dart';
 import 'package:pasantia_noticias/model/modeloNoticia.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
-import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
+
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/URLService.dart';
 import 'package:pasantia_noticias/services/crearNoticia.dart';
@@ -16,7 +13,6 @@ import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
-import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class Administracion extends StatefulWidget {
   @override
@@ -28,12 +24,11 @@ String base64Image;
 TextEditingController titulo = new TextEditingController();
 TextEditingController contenido = new TextEditingController();
 TextEditingController enlaces = new TextEditingController();
-List<Noticias> noticias = Noticias.noticias_album();
 final _preferences = new Preferences();
 List<int> imageBytes;
-int limite = 250;
-int contador = 1;
-String mostrarlimite = "250";
+int limite;
+int contador;
+String mostrarlimite;
 var file;
 Widget image;
 List<dynamic> recibir = [];
@@ -50,19 +45,20 @@ class AdministracionState extends State<Administracion> {
     enlaces.text = "";
     foto = null;
     isButtonClickable = true;
+    limite = 250;
+    contador = 1;
+    mostrarlimite = "250";
   }
 
   void ocultarBoton() {
     setState(() {
       isButtonClickable = false;
-      print("Clicked Once");
     });
   }
 
   void mostrarBoton() {
     setState(() {
       isButtonClickable = true;
-      print("Clicked Once");
     });
   }
 
@@ -212,8 +208,6 @@ class AdministracionState extends State<Administracion> {
                           TextField(
                             onChanged: (value) {
                               setState(() {
-                                print("El contador" + contador.toString());
-                                print("El value" + value.length.toString());
                                 if (value.length == contador) {
                                   if (limite < 0) {
                                     // mostrarlimite =
@@ -223,11 +217,6 @@ class AdministracionState extends State<Administracion> {
                                     contador = contador + 1;
                                     mostrarlimite = limite.toString();
                                   }
-
-                                  print("El contador een este punto" +
-                                      contador.toString());
-                                  print("El value en este punto" +
-                                      value.length.toString());
                                 } else if (value.length < contador) {
                                   if (limite < 0) {
                                     // mostrarlimite =
@@ -237,11 +226,6 @@ class AdministracionState extends State<Administracion> {
                                     contador = contador - 1;
                                     mostrarlimite = limite.toString();
                                   }
-
-                                  print("El contador cuando disminuye" +
-                                      contador.toString());
-                                  print("El value cuando disminuye" +
-                                      value.length.toString());
                                 }
                               });
                             },
@@ -295,56 +279,56 @@ class AdministracionState extends State<Administracion> {
                       child: Container(
                         padding:
                             EdgeInsets.all(responsive.diagonalPorcentaje(2)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            BotonReusable(
-                                onPressed: () {
-                                  if (isButtonClickable) {
-                                    String categoria;
-                                    if (_value == 0) {
-                                      categoria = "";
-                                    } else if (_value == 1) {
-                                      // print("Noticias");
-                                      categoria = "emergencias";
-                                    } else if (_value == 2) {
-                                      categoria = "noticias";
-                                      // print("Estado de solicitudes");
-                                    } else if (_value == 3) {
-                                      categoria = "ofertasLaborales";
-                                    } else if (_value == 4) {
-                                      categoria = "ofertasCursos";
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              BotonReusable(
+                                  onPressed: () {
+                                    if (isButtonClickable) {
+                                      String categoria;
+                                      if (_value == 0) {
+                                        categoria = "";
+                                      } else if (_value == 1) {
+                                        categoria = "emergencias";
+                                      } else if (_value == 2) {
+                                        categoria = "noticias";
+                                      } else if (_value == 3) {
+                                        categoria = "ofertasLaborales";
+                                      } else if (_value == 4) {
+                                        categoria = "ofertasCursos";
+                                      }
+
+                                      if (categoria != "" &&
+                                          foto != null &&
+                                          titulo.text != "" &&
+                                          contenido.text != "") {
+                                        save(categoria);
+                                      } else {
+                                        mostrarBoton();
+                                        mostrarAlerta(
+                                            context,
+                                            "Revise la Información",
+                                            "Debe llenar todos los campos, solo el de enlaces es opcional");
+                                      }
                                     }
 
-                                    if (categoria != "" &&
-                                        foto != null &&
-                                        titulo.text != "" &&
-                                        contenido.text != "") {
-                                      print("tengo datos");
-                                      save(categoria);
-                                    } else {
-                                      mostrarBoton();
-                                      mostrarAlerta(
-                                          context,
-                                          "Revise la Información",
-                                          "Debe llenar todos los campos, solo el de enlaces es opcional");
-                                    }
-                                  }
-
-                                  //
-                                },
-                                label: "Guardar"),
-                            BotonReusable(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                      builder: (context) => new PrincipalNo(),
-                                    ),
-                                  );
-                                },
-                                label: "Cancelar")
-                          ],
+                                    //
+                                  },
+                                  label: "Guardar"),
+                              BotonReusable(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                        builder: (context) => new PrincipalNo(),
+                                      ),
+                                    );
+                                  },
+                                  label: "Cancelar")
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -437,21 +421,13 @@ class AdministracionState extends State<Administracion> {
   }
 
   imprimir() {
-    print(foto);
     List<int> imageBytes = foto.readAsBytesSync();
-    print(imageBytes);
+
     base64Image = base64Encode(imageBytes);
 
-    print("convertida en base 64--------------------------");
-    print(base64Image);
     recibir[0] = base64Image;
-    print("------------------------------------------------");
 
     final _byteImage = Base64Decoder().convert(base64Image);
     image = Image.memory(_byteImage);
-
-    print("reconstruida -------------------------");
-    print(base64Image);
-    print("------------------------------------------------");
   }
 }

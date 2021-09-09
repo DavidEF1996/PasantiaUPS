@@ -33,7 +33,6 @@ class LoginPageState extends State<LoginPage> {
     _preferences.noticia3 = 0;
     _preferences.noticia4 = 0;
     _preferences.numeroNoticia = 0;
-    print(widget.usuario);
   }
 
   @override

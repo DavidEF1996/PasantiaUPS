@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:mailer/smtp_server.dart';
 import 'package:pasantia_noticias/model/correoModelo.dart';
 import 'package:pasantia_noticias/services/Conn.dart';
-import 'package:http/http.dart' as http;
 import 'package:mailer/mailer.dart';
 
 class CorreoServicio {
@@ -12,39 +10,6 @@ class CorreoServicio {
 
   static const String servicio_crear = "/correoElectronico";
 
-  /* static Future crearCorreo(json) async {
-    print(json);
-    final response = await http.post(Uri.parse(URL + servicio_crear),
-        body: json, headers: headers, encoding: Encoding.getByName('utf-8'));
-    print(response.statusCode);
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      print("EXITO");
-      return response;
-    } else {
-      return null;
-    }
-  }*/
-
-  /*final message = Message()
-    ..from = Address(username, 'Your name')
-    ..recipients.add('destination@example.com')
-    ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
-    ..bccRecipients.add(Address('bccAddress@example.com'))
-    ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
-    ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-    ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
-
-  try {
-    final sendReport = await send(message, smtpServer);
-    print('Message sent: ' + sendReport.toString());
-  } on MailerException catch (e) {
-    print('Message not sent.');
-    for (var p in e.problems) {
-      print('Problem: ${p.code}: ${p.msg}');
-    }
-  }*/
   static crearCorreo(Correo correo) async {
     String username = 'noticiaspolitecnicasalesiana@gmail.com';
     String password = 'noticiasups';
@@ -60,12 +25,8 @@ class CorreoServicio {
 
     try {
       final sendReport = await send(message, smtpServer);
-      print('Message sent: ' + sendReport.toString());
     } on MailerException catch (e) {
-      print('Message not sent.');
-      for (var p in e.problems) {
-        print('Problem: ${p.code}: ${p.msg}');
-      }
+      for (var p in e.problems) {}
     }
   }
 }

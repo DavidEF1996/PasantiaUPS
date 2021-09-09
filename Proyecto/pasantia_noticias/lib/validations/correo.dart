@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter/services.Dart';
 import 'package:pasantia_noticias/utils/ValidacionesGlobales.dart';
 
 class InputTextCorreo extends StatefulWidget {

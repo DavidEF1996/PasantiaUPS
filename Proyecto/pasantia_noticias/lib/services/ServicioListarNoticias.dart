@@ -18,9 +18,7 @@ class ListaNoticias {
       //log('La respuesta obtenida es -----------: ' + data.body);
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
-        print("-------------");
-        print(jsonData);
-        print("-------------");
+
         final doctorL = <NoticiaM>[];
         for (var item in jsonData) {
           doctorL.add(NoticiaM.fromJson(item));
@@ -36,10 +34,8 @@ class ListaNoticias {
     final response =
         await http.get(Uri.parse(URL + servicio_listarNombres + '/$categoria'));
     if (response.statusCode == 200) {
-      print(response.body);
       return _listaNoticias(response.body).toList();
     } else if (response.statusCode == 404) {
-      print(response.statusCode);
       return null;
     } else {
       throw Exception("Error del servidor!!");
@@ -50,10 +46,8 @@ class ListaNoticias {
     final response =
         await http.get(Uri.parse(URL + servicio_listarNoticiasGenerales));
     if (response.statusCode == 200) {
-      print(response.body);
       return _listaNoticias(response.body).toList();
     } else if (response.statusCode == 404) {
-      print(response.statusCode);
       return null;
     } else {
       throw Exception("Error del servidor!!");

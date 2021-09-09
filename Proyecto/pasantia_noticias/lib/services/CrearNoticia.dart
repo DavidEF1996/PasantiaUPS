@@ -13,14 +13,10 @@ class ServiciosNoticias {
   static const headers = {'Content-Type': 'application/json'};
 
   static Future crearNoticia(json) async {
-    print(json);
     final response = await http.post(Uri.parse(URL + servicio_crear),
         body: json, headers: headers, encoding: Encoding.getByName('utf-8'));
-    print(response.statusCode);
-    print(response.body);
 
     if (response.statusCode == 200) {
-      print("EXITO");
       return response;
     } else {
       return null;
@@ -33,7 +29,7 @@ class ServiciosNoticias {
         body: json,
         headers: headers,
         encoding: Encoding.getByName("utf-8"));
-    print(response.body);
+
     if (response.body.contains('true')) {
       return true;
     } else {

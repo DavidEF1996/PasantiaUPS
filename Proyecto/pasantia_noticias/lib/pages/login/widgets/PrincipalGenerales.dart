@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/MenuLateral.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 import 'package:pasantia_noticias/pages/login/widgets/paginador.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
-import 'package:pasantia_noticias/widgets/cabecera.dart';
 
 class PrincipalNo extends StatefulWidget {
   PrincipalNo({Key key}) : super(key: key);
@@ -18,7 +16,7 @@ class PrincipalNo extends StatefulWidget {
 
 class _PrincipalNoState extends State<PrincipalNo> {
   bool _isLoading = false;
-  List<Noticias> noticias = Noticias.noticias_album();
+
   List<NoticiaM> datos = [];
 
   @override
@@ -42,7 +40,6 @@ class _PrincipalNoState extends State<PrincipalNo> {
 
   @override
   Widget build(BuildContext context) {
-    print(UserService.usuariologueado);
     final Responsive responsive = Responsive.of(context);
     return Scaffold(
         appBar: new AppBar(
@@ -71,7 +68,6 @@ class _PrincipalNoState extends State<PrincipalNo> {
 
   Container comprobar() {
     if (datos.length > 0) {
-      print(datos.length);
       return Container(
           color: Color.fromRGBO(250, 250, 250, 1),
           child: DataPagerWithListView(

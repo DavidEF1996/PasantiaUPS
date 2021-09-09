@@ -3,7 +3,6 @@ import 'package:pasantia_noticias/pages/login/Administracion.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
-import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/cabecera.dart';
@@ -26,8 +25,7 @@ class _MenuLateralState extends State<MenuLateral> {
   void initState() {
     super.initState();
     final _preferences = new Preferences();
-    //print(_preferences.nombres);
-    //print(_preferences.roles);
+
     rol = _preferences.roles.toString();
     contadorEmeregencias = _preferences.noticia1;
     contadorNoticias = _preferences.noticia2;
@@ -217,7 +215,6 @@ class _MenuLateralState extends State<MenuLateral> {
   }
 
   Container container() {
-    print(rol);
     if (rol == 'usuarios') {
       return Container(
         color: Color.fromRGBO(101, 91, 80, 0.7),

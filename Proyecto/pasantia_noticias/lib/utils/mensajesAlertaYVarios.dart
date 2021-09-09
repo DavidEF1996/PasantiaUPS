@@ -8,7 +8,7 @@ String encode(String password) {
 
   final encrypter = enc.Encrypter(enc.AES(key));
   final encrypted = encrypter.encrypt(plainText, iv: iv);
-  print(encrypted.base64);
+
   return encrypted.base64;
 }
 
@@ -77,6 +77,6 @@ String decode(String password) {
 
   final encrypter = enc.Encrypter(enc.AES(key));
   final decrypted = encrypter.decrypt(enc.Encrypted.from64(password), iv: iv);
-  print(decrypted);
+
   return (decrypted);
 }

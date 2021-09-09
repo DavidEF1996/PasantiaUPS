@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
-import 'package:pasantia_noticias/utils/cabecera.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,7 +26,7 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
   void initState() {
     super.initState();
     cargarNoticias();
-    print("llego");
+
     noticias = (widget.parametro == null) ? null : widget.parametro;
   }
 
@@ -38,7 +36,6 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
     });
     final _preferences = new Preferences();
 
-    print(_preferences.categorias);
     datos = await ListaNoticias.getNoticias(_preferences.categorias.toString());
     noticias = datos[0];
 
@@ -178,39 +175,42 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
                           SizedBox(
                             height: responsive.diagonalPorcentaje(1),
                           ),
-                          SingleChildScrollView(
-                            child: Container(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Enlace Adjunto:",
-                                    style: TextStyle(
-                                      fontSize:
-                                          responsive.diagonalPorcentaje(3),
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(19, 70, 123, 1),
+                          Container(
+                            width: 500,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Enlace Adjunto:",
+                                  style: TextStyle(
+                                    fontSize: responsive.diagonalPorcentaje(3),
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(19, 70, 123, 1),
+                                  ),
+                                ),
+                                Center(
+                                  child: Container(
+                                    alignment: Alignment.topCenter,
+                                    padding: EdgeInsets.all(
+                                        responsive.diagonalPorcentaje(1)),
+                                    height: responsive.diagonalPorcentaje(10),
+                                    child: SingleChildScrollView(
+                                      child: InkWell(
+                                          child: Text(Url(),
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  fontSize: responsive
+                                                      .diagonalPorcentaje(2.2),
+                                                  color: Colors.blue)),
+                                          onTap: () => launch('${Url()}')),
                                     ),
                                   ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: responsive.diagonalPorcentaje(5),
-                                    child: InkWell(
-                                        child: Text(Url(),
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                fontSize: responsive
-                                                    .diagonalPorcentaje(2.2),
-                                                color: Colors.blue)),
-                                        onTap: () => launch('${Url()}')),
-                                  ),
-                                  SizedBox(
-                                    height: responsive.diagonalPorcentaje(1),
-                                  ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  height: responsive.diagonalPorcentaje(1),
+                                ),
+                              ],
                             ),
                           )
                         ],
@@ -231,7 +231,6 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion2> {
   }
 
   String Url() {
-    print(noticias.enlaces);
     if (noticias.enlaces != "") {
       return "${noticias.enlaces}";
     } else {

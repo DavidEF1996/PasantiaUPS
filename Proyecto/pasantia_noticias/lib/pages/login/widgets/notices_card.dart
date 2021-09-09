@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
-import 'package:pasantia_noticias/pages/login/widgets/notices.dart';
 
 class CardNotices extends StatelessWidget {
   NoticiaM noticias;
@@ -16,7 +15,6 @@ class CardNotices extends StatelessWidget {
         height: 150,
         child: InkWell(
           onTap: () {
-            print(noticias.categoriaNoticia);
             Navigator.push(
               context,
               new MaterialPageRoute(

@@ -31,13 +31,10 @@ class UrlServicio {
     final resp = await http.Response.fromStream(streamResponse);
 
     if (resp.statusCode != 200 && resp.statusCode != 201) {
-      print('Algo salio mal');
-      print(resp.body);
       return null;
     }
 
     final respData = json.decode(resp.body);
-    print(respData);
 
     return respData['secure_url'];
   }

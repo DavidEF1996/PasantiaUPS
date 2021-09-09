@@ -15,7 +15,6 @@ class UserService {
   static const headers = {"Content-type": " application/json"};
 
   Future loginUsuario(String correo, String contrasena) async {
-    //print(correo + ' ' + contrasena);
     final body = {"user": correo, "password": contrasena};
     var body2 = jsonEncode(body);
     final respuesta = await http.post(Uri.parse(URL + "/login"),
@@ -44,7 +43,6 @@ class UserService {
   }
 
   Future loginUsuario2(String correo, String contrasena) async {
-    //print(correo + ' ' + contrasena);
     final body = {"user": correo};
     var body2 = jsonEncode(body);
     final respuesta = await http.post(Uri.parse(URL + "/login2"),
@@ -73,10 +71,9 @@ class UserService {
   }
 
   static Future<bool> changePass(json) async {
-    print("llegue al metodo 2 cambiar contra");
     http.Response response = await http.post(Uri.parse(URL + servicio_change),
         body: json, headers: headers, encoding: Encoding.getByName("utf-8"));
-    print(response.body);
+
     if (response.body.contains('true')) {
       return true;
     } else {
@@ -87,7 +84,7 @@ class UserService {
   Future<bool> actualizarToken(json) async {
     http.Response response = await http.post(Uri.parse(URL + servicio_token),
         body: json, headers: headers, encoding: Encoding.getByName("utf-8"));
-    print(response.body);
+
     if (response.body.contains('true')) {
       return true;
     } else {

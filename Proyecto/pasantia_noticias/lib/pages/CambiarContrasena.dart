@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -100,7 +101,6 @@ class _State extends State<CambioContrasena> {
                     color: Color.fromRGBO(255, 186, 0, 0.85),
                     child: Text('Enviar'),
                     onPressed: () {
-                      print(_id);
                       enviar(context, _id, repNuevaContrasena.text);
                     },
                   )),
@@ -127,7 +127,6 @@ class _State extends State<CambioContrasena> {
     if (nuevaContrasena.text != repNuevaContrasena.text) {
       mostrarAlerta(context, "Las contraseñas no coinciden", "");
     } else if (nuevaContrasena.text == repNuevaContrasena.text) {
-      print("llegue a cambiar de contra");
       Changepass c = Changepass();
       c.codigoUsuario = id;
 
@@ -135,7 +134,7 @@ class _State extends State<CambioContrasena> {
       final resultado = await UserService.changePass(jsonEncode(c.toJson()));
 
       // String valor = resultado;
-      print(resultado.toString());
+
       if (resultado) {
         mostrarAlerta(context, "Cambio de contraseña exitoso",
             "Ahora puede loguearse usando su nueva contraseña");

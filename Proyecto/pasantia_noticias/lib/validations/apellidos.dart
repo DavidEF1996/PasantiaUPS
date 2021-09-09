@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter/services.Dart';
+
 import 'package:pasantia_noticias/utils/ValidacionesGlobales.dart';
 
 class InputTextApe extends StatefulWidget {
@@ -92,7 +92,6 @@ class _InputTextApeState extends State<InputTextApe> {
     if (recibir[1] == "") {
       return "Falta el segundo nombre";
     } else {
-      print("RECIBIIIIIIIIIIIIIIR" + recibir[1].toString());
       return null;
     }
   }

@@ -1,20 +1,14 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:pasantia_noticias/model/NoticiaM.dart';
 import 'package:pasantia_noticias/pages/login/loginPage.dart';
-import 'package:pasantia_noticias/pages/login/noticiasInformacion.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
-import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
 import 'package:pasantia_noticias/utils/rutas.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final _preferences = new Preferences();
   await _preferences.initPreferences();
-
-  //print(_preferences.nombres);
 
   await PushNotificationService.initializeApp();
 
@@ -43,12 +37,10 @@ class _MyAppState extends State<MyApp> {
 
     PushNotificationService.messageStream.listen((message) {
       List categorias = [];
-      print('MyApp: $message');
 
       categorias = message.split(' ');
 
       final _preferences = new Preferences();
-      print(categorias[0].toString());
 
       _preferences.idNoticias = categorias[1]; //este es el titulo
       _preferences.categorias = categorias[0].toString().toLowerCase();
@@ -107,7 +99,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final _preferences = new Preferences();
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'NoticiasUps',
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey, //NAVEGAR
       scaffoldMessengerKey: messengerKey, //MOSTRAR SNACKS

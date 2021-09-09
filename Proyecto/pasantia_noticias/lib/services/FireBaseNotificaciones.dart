@@ -14,10 +14,9 @@ class PushNotificationService {
   static Stream<String> get messageStream => _messageStreamController.stream;
 
   static Future _backgroundHandler(RemoteMessage message) async {
-    //print('Background Handler ${message.messageId}');
     //_messageStreamController
     // .add(message.notification?.title ?? 'No tiene titulo');
-    print(message.data);
+
     _messageStreamController.add(
         message.data['categoria'] + " " + message.data['contenido'] ??
             'No tiene informacion');
@@ -25,10 +24,9 @@ class PushNotificationService {
   }
 
   static Future _onMessageHandler(RemoteMessage message) async {
-    //print('onMessage Handler ${message.messageId}');
     // _messageStreamController
     // .add(message.notification?.title ?? 'No tiene titulo');
-    print(message.data);
+
     _messageStreamController.add(
         message.data['categoria'] + " " + message.data['contenido'] ??
             'No tiene informacion');
@@ -36,10 +34,9 @@ class PushNotificationService {
   }
 
   static Future _onMessageOpenApp(RemoteMessage message) async {
-    //print('onMessageOpenApp Handler ${message.messageId}');
     //_messageStreamController
     //   .add(message.notification?.title ?? 'No tiene titulo');
-    print(message.data);
+
     _messageStreamController.add(
         message.data['categoria'] + " " + message.data['contenido'] ??
             'No tiene informacion');
@@ -52,7 +49,6 @@ class PushNotificationService {
     await Firebase.initializeApp();
 
     token = await FirebaseMessaging.instance.getToken();
-    print("El token es: " + token.toString());
 
     //Hnadlers
     FirebaseMessaging.onBackgroundMessage(_backgroundHandler);

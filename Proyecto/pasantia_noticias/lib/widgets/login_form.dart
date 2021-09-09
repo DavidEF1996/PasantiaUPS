@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pasantia_noticias/model/cambiarTokenModelo.dart';
-import 'package:pasantia_noticias/model/modeloUsuario.dart';
+
 import 'package:pasantia_noticias/pages/CambiarContrasena.dart';
 import 'package:pasantia_noticias/pages/CrearCuenta.dart';
 import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
-import 'package:pasantia_noticias/pages/login/widgets/PrincipalNoticias.dart';
-import 'package:pasantia_noticias/services/usuario.dart';
 import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/LoginService.dart';
@@ -38,7 +36,6 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
-    print("------------------------------------" + widget.usuario);
   }
 
   @override
@@ -79,8 +76,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
           BotonReusable(
               onPressed: () {
-                print(user);
-                print(password);
                 iniciarSesion2();
               },
               label: "Iniciar Sesión"),

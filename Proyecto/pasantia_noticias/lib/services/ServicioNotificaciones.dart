@@ -15,7 +15,7 @@ class ServicioNotificaciones {
         body: json,
         headers: headers,
         encoding: Encoding.getByName("utf-8"));
-    print(response.body);
+
     if (response.body.contains('true')) {
       return true;
     } else {
