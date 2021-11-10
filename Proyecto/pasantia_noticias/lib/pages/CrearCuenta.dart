@@ -108,7 +108,13 @@ class _CrearCuentaState extends State<CrearCuenta> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           // color: Color.fromRGBO(18, 69, 122, 0.8),
-
+                          boxShadow: [
+                            new BoxShadow(
+                              color: Colors.black,
+                              offset: new Offset(0.0, 20.0),
+                              blurRadius: 20.0,
+                            ),
+                          ],
                           gradient: LinearGradient(
                             begin: Alignment.bottomRight,
                             end: Alignment.bottomLeft,
@@ -281,8 +287,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                             false &&
                                         ValidacionesGlobales.validacionCorreo !=
                                             false) {
-                                      if (currentDate.day !=
-                                          DateTime.now().day) {
+                                      if (currentDate != DateTime.now()) {
                                         ocultarBoton();
 
                                         Usuario recibir = save();
@@ -302,10 +307,11 @@ class _CrearCuentaState extends State<CrearCuenta> {
                                           correo.correo = recibir.correo;
                                           correo.asunto =
                                               "Bienvenido, estos son los datos Iniciales de su Cuenta";
+
                                           correo.cuerpo =
                                               "Su usuario es ${recibir.usuario} y su contraseña es ${recibir.contrasena}";
                                           /* final result =
-                                              await CorreoServicio.crearCorreo(
+                                              await CorreoServicio.crearCorreoServidor(
                                                   jsonEncode(correo.toJson()));*/
                                           final result =
                                               await CorreoServicio.crearCorreo(
@@ -370,10 +376,22 @@ class _CrearCuentaState extends State<CrearCuenta> {
   DateTime currentDate = DateTime.now();
   Future<String> selectDate(BuildContext context) async {
     final DateTime pickedDate = await showDatePicker(
-        context: context,
-        initialDate: currentDate,
-        firstDate: DateTime(1930),
-        lastDate: DateTime(2100));
+      context: context,
+      initialDate: currentDate,
+      firstDate: DateTime(1930),
+      lastDate: DateTime(2100),
+      //  locale: const Locale("es", "EC"),
+      locale: const Locale("es", "ES"),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+              //Background color
+
+              ),
+          child: child,
+        );
+      },
+    );
 
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
@@ -386,15 +404,15 @@ class _CrearCuentaState extends State<CrearCuenta> {
     List<String> credenciales = generateUser(nombres, apellidos);
     Usuario d = new Usuario();
 
-    d.cedula = cedula;
-    d.nombres = nombres;
-    d.apellidos = apellidos;
+    d.cedula = cedula.trim();
+    d.nombres = nombres.trim();
+    d.apellidos = apellidos.trim();
     d.fechaNacimiento = currentDate;
     d.token = PushNotificationService.token;
     d.usuario = credenciales[0];
     d.contrasena = encode(credenciales[1]);
     d.tipoUsuario = "usuarios";
-    d.correo = correo;
+    d.correo = correo.trim();
 
     return d;
   }

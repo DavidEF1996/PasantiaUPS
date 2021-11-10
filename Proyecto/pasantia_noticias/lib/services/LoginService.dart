@@ -43,6 +43,7 @@ class UserService {
   }
 
   Future loginUsuario2(String correo, String contrasena) async {
+    print(URL + "/login2");
     final body = {"user": correo};
     var body2 = jsonEncode(body);
     final respuesta = await http.post(Uri.parse(URL + "/login2"),

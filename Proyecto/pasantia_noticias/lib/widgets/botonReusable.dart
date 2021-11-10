@@ -23,9 +23,16 @@ class BotonReusable extends StatelessWidget {
         ),
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
         decoration: BoxDecoration(
-            color: Color.fromRGBO(255, 186, 0, 0.85),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)]),
+          color: Color.fromRGBO(255, 186, 0, 0.85),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            new BoxShadow(
+              color: Colors.black,
+              offset: new Offset(0.0, 10.0),
+              blurRadius: 20.0,
+            ),
+          ],
+        ),
       ),
       onPressed: this.onPressed,
     );

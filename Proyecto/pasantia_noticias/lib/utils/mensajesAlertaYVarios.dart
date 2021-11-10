@@ -47,25 +47,75 @@ aceptarNegar(BuildContext context, String mensaje, void cargar()) {
           ),
           content: Text(mensaje),
           actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'Confirmar',
-                style: TextStyle(color: Colors.black),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop('Confirmar');
-
-                cargar();
-              },
-            ),
-            FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop('Cancelar');
-                },
+            Container(
+              color: Colors.blue,
+              child: FlatButton(
                 child: Text(
-                  'Cancelar',
+                  'Confirmar',
                   style: TextStyle(color: Colors.black),
-                ))
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop('Confirmar');
+
+                  cargar();
+                },
+              ),
+            ),
+            Container(
+              color: Colors.blue,
+              child: FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop('Cancelar');
+                  },
+                  child: Text(
+                    'Cancelar',
+                    style: TextStyle(color: Colors.black),
+                  )),
+            )
+          ],
+        );
+      });
+}
+
+aceptarNegar2(BuildContext context, String mensaje, void cargar()) {
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              '¿Esta noticia no tiene una imagen?',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+          content: Text(mensaje),
+          actions: <Widget>[
+            Container(
+              color: Colors.blue,
+              child: FlatButton(
+                child: Text(
+                  'Confirmar',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop('Confirmar');
+
+                  cargar();
+                },
+              ),
+            ),
+            Container(
+              color: Colors.blue,
+              child: FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop('Cancelar');
+                  },
+                  child: Text(
+                    'Cancelar',
+                    style: TextStyle(color: Colors.black),
+                  )),
+            )
           ],
         );
       });

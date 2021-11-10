@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:diacritic/diacritic.dart';
+
 List<String> generateUser(String nombre, String apellido) {
   var rng = new Random();
   int numero = rng.nextInt(4);
@@ -65,7 +67,7 @@ List<String> generateUser(String nombre, String apellido) {
       break;
   }
 
-  credenciales.add(usuario);
-  credenciales.add(password);
+  credenciales.add(removeDiacritics(usuario));
+  credenciales.add(removeDiacritics(password));
   return credenciales;
 }

@@ -22,13 +22,15 @@ class Cabecera extends StatelessWidget {
                 style: TextStyle(
                   fontSize: responsive.diagonalPorcentaje(2.1),
                   fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(18, 69, 122, 1),
                 ),
                 children: <InlineSpan>[
                   TextSpan(
                       text: utf8.decode(latin1.encode(_preferences.nombres),
                           allowMalformed: true),
                       style: TextStyle(
-                          fontSize: responsive.diagonalPorcentaje(2.1)))
+                          fontSize: responsive.diagonalPorcentaje(2),
+                          color: Colors.black))
                 ]),
           ));
     } else {
@@ -37,13 +39,17 @@ class Cabecera extends StatelessWidget {
         TextSpan(
             text: "Usuario: ",
             style: TextStyle(
-                fontSize: responsive.diagonalPorcentaje(3.5),
-                fontWeight: FontWeight.bold),
+              fontSize: responsive.diagonalPorcentaje(3.5),
+              fontWeight: FontWeight.bold,
+              color: Color.fromRGBO(18, 69, 122, 1),
+            ),
             children: <InlineSpan>[
               TextSpan(
                   text: utf8.decode(latin1.encode(_preferences.nombres),
                       allowMalformed: true),
-                  style: TextStyle(fontSize: responsive.diagonalPorcentaje(3)))
+                  style: TextStyle(
+                      fontSize: responsive.diagonalPorcentaje(3),
+                      color: Colors.black))
             ]),
       ));
     }

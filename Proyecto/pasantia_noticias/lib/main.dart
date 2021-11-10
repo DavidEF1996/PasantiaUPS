@@ -4,6 +4,7 @@ import 'package:pasantia_noticias/pages/login/widgets/PrincipalGenerales.dart';
 import 'package:pasantia_noticias/services/FireBaseNotificaciones.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/utils/rutas.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -99,7 +100,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final _preferences = new Preferences();
     return MaterialApp(
-      title: 'NoticiasUps',
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: [
+        const Locale('en', 'US'), // American English
+        const Locale('es', 'ES'), // Israeli Hebrew
+        // ...
+      ],
+      title: 'Noticias Computación UPS',
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey, //NAVEGAR
       scaffoldMessengerKey: messengerKey, //MOSTRAR SNACKS

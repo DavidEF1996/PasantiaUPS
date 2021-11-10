@@ -36,6 +36,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
+    print(user);
   }
 
   @override
@@ -101,7 +102,9 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> iniciarSesion() async {
-    final String usuario = user;
+    final String usuario =
+        utf8.decode(latin1.encode(user), allowMalformed: true);
+    setState(() {});
     final String contrasena = password;
     var passwordController;
     final result =
@@ -138,7 +141,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> iniciarSesion2() async {
-    final String usuario = user;
+    final String usuario =
+        utf8.decode(latin1.encode(user), allowMalformed: true);
     final String contrasena = password;
     var passwordController;
     final result =

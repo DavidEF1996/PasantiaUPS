@@ -6,6 +6,7 @@ import 'package:pasantia_noticias/services/LoginService.dart';
 import 'package:pasantia_noticias/services/Preferencias.dart';
 import 'package:pasantia_noticias/services/ServicioListarNoticias.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
+import 'package:pasantia_noticias/utils/variablesGlobales.dart';
 
 class PrincipalNo extends StatefulWidget {
   PrincipalNo({Key key}) : super(key: key);
@@ -25,6 +26,7 @@ class _PrincipalNoState extends State<PrincipalNo> {
     super.initState();
     final _preferences = new Preferences();
     _preferences.numeroNoticia = 0;
+    VariablesGlobales.numeroMenuLateral = 2;
   }
 
   cargarNoticias() async {

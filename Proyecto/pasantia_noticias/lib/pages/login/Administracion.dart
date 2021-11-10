@@ -13,6 +13,8 @@ import 'package:pasantia_noticias/utils/mensajesAlertaYVarios.dart';
 import 'package:pasantia_noticias/utils/responsive.dart';
 import 'package:pasantia_noticias/widgets/botonRegresar.dart';
 import 'package:pasantia_noticias/widgets/botonReusable.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
 
 class Administracion extends StatefulWidget {
   @override
@@ -35,7 +37,7 @@ List<dynamic> recibir = [];
 
 class AdministracionState extends State<Administracion> {
   bool status = true;
-  int _value = 1;
+  int _value = 0;
   bool isButtonClickable;
   @override
   void initState() {
@@ -45,9 +47,9 @@ class AdministracionState extends State<Administracion> {
     enlaces.text = "";
     foto = null;
     isButtonClickable = true;
-    limite = 250;
+    limite = 2000;
     contador = 1;
-    mostrarlimite = "250";
+    mostrarlimite = "2000";
   }
 
   void ocultarBoton() {
@@ -113,10 +115,14 @@ class AdministracionState extends State<Administracion> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       color: Colors.grey,
                       child: DropdownButton(
+                          hint: Text("Seleccione"),
                           value: _value,
                           items: [
                             DropdownMenuItem(
-                              child: Text("Seleccione"),
+                              child: Text(
+                                "Seleccione",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               value: 0,
                             ),
                             DropdownMenuItem(
@@ -231,9 +237,9 @@ class AdministracionState extends State<Administracion> {
                             },
                             cursorColor: Colors.black,
                             controller: contenido,
-                            maxLength: 250,
+                            maxLength: 2000,
                             minLines: 1,
-                            maxLines: 10,
+                            maxLines: 100,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 counterText:
@@ -301,10 +307,16 @@ class AdministracionState extends State<Administracion> {
                                       }
 
                                       if (categoria != "" &&
-                                          foto != null &&
                                           titulo.text != "" &&
                                           contenido.text != "") {
-                                        save(categoria);
+                                        if (foto == null) {
+                                          aceptarNegar2(
+                                              context,
+                                              "¿Desea usar la Imagen Por defecto?",
+                                              imagenPorDefecto);
+                                        } else if (foto != null) {
+                                          save(categoria);
+                                        }
                                       } else {
                                         mostrarBoton();
                                         mostrarAlerta(
@@ -317,6 +329,9 @@ class AdministracionState extends State<Administracion> {
                                     //
                                   },
                                   label: "Guardar"),
+                              SizedBox(
+                                width: responsive.diagonalPorcentaje(1),
+                              ),
                               BotonReusable(
                                   onPressed: () {
                                     Navigator.push(
@@ -355,7 +370,7 @@ class AdministracionState extends State<Administracion> {
 
     noticia.codigoUsuario = int.parse(guardarCodigo);
 
-    aceptarNegar(context, "¿Desea Continua?", cargar);
+    aceptarNegar(context, "¿Desea Continuar?", cargar);
   }
 
   Future<void> cargar() async {
@@ -378,6 +393,13 @@ class AdministracionState extends State<Administracion> {
     }
   }
 
+  Future<void> imagenPorDefecto() async {
+    foto = await getImageFileFromAssets('imagen.png');
+    print(foto);
+    if (foto != null) {}
+    setState(() {});
+  }
+
   _mostrarFoto() {
     Noticia noticia = Noticia();
     if (noticia.contenido != "abc") {
@@ -394,10 +416,21 @@ class AdministracionState extends State<Administracion> {
 
   buscarImagen() async {
     foto = await ImagePicker.pickImage(source: ImageSource.gallery);
+
     //imprimir();
 
     if (foto != null) {}
     setState(() {});
+  }
+
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
   }
 
   imagenSinFoto() {
@@ -408,26 +441,5 @@ class AdministracionState extends State<Administracion> {
       width: 300,
       fit: BoxFit.cover,
     );
-  }
-
-  mostrarfotodecodificada() {
-    return Image(
-      // image: AssetImage(foto?.path ?? 'assets/no-image.png'),
-      image: AssetImage(file),
-      height: 300.0,
-      width: 300,
-      fit: BoxFit.cover,
-    );
-  }
-
-  imprimir() {
-    List<int> imageBytes = foto.readAsBytesSync();
-
-    base64Image = base64Encode(imageBytes);
-
-    recibir[0] = base64Image;
-
-    final _byteImage = Base64Decoder().convert(base64Image);
-    image = Image.memory(_byteImage);
   }
 }

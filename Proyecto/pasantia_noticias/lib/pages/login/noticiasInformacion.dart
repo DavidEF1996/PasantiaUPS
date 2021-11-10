@@ -172,7 +172,7 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion> {
                                       color: Colors.black,
                                       fontFamily: 'sans',
                                       fontSize:
-                                          responsive.diagonalPorcentaje(2.2))),
+                                          responsive.diagonalPorcentaje(1.8))),
                             ],
                           ),
                         ),
@@ -196,9 +196,9 @@ class _NoticiasInformacion2State extends State<NoticiasInformacion> {
                             Center(
                               child: Container(
                                 alignment: Alignment.topCenter,
-                                padding: EdgeInsets.all(
-                                    responsive.diagonalPorcentaje(1)),
-                                height: responsive.diagonalPorcentaje(10),
+                                padding: EdgeInsets.only(
+                                    left: responsive.diagonalPorcentaje(2)),
+                                height: responsive.diagonalPorcentaje(12),
                                 child: SingleChildScrollView(
                                   child: InkWell(
                                       child: Text(Url(),
